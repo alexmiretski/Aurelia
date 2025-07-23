@@ -50,17 +50,17 @@ let originalIntro = [];
 
 window.timelinePaused = false;
 
-let timelineStartTime = null;
-let timelinePauseTime = null;
-let isResuming = false;
-let requestId = null;
-let savedBeadParams = { duration: 0, startPercent: 0, endPercent: 100 };
-let wordDisplayTimeout = null;
-let sentenceIndex = 0;
-let wordIndex = 0;
-let currentSentences = [];
-let currentSpans = [];
-let currentP = null;
+window.timelineStartTime = null;
+window.timelinePauseTime = null;
+window.isResuming = false;
+window.requestId = null;
+window.savedBeadParams = { duration: 0, startPercent: 0, endPercent: 100 };
+window.wordDisplayTimeout = null;
+window.sentenceIndex = 0;
+window.wordIndex = 0;
+window.currentSentences = [];
+window.currentSpans = [];
+window.currentP = null;
 
 const themeColors = [
   '#6e9acb',
@@ -256,15 +256,15 @@ function startBeadAnimation(duration, startPercent, endPercent) {
   const bead = window.bead;
   const progressEl = window.progressEl;
 
-  timelinePaused = false;
-  timelineStartTime = performance.now();
-  timelinePauseTime = null;
-  savedBeadParams = { duration, startPercent, endPercent };
+  window.timelinePaused = false;
+  window.timelineStartTime = performance.now();
+  window.timelinePauseTime = null;
+  window.savedBeadParams = { duration, startPercent, endPercent };
 
   function animate(currentTime) {
-    if (timelinePaused) return;
+    if (window.timelinePaused) return;
 
-    const elapsed = currentTime - timelineStartTime;
+    const elapsed = currentTime - window.timelineStartTime;
     const progress = Math.min(elapsed / duration, 1);
     const currentPercent = startPercent + (endPercent - startPercent) * progress;
 
@@ -272,7 +272,7 @@ function startBeadAnimation(duration, startPercent, endPercent) {
     progressEl.style.width = `${currentPercent}%`;
 
     if (progress < 1) {
-      requestId = requestAnimationFrame(animate);
+      window.requestId = requestAnimationFrame(animate);
     } else {
       bead.style.left = `${endPercent}%`;
       progressEl.style.width = `${endPercent}%`;
@@ -280,32 +280,32 @@ function startBeadAnimation(duration, startPercent, endPercent) {
     }
   }
 
-  requestId = requestAnimationFrame(animate);
+  window.requestId = requestAnimationFrame(animate);
 }
 
 function resumeBeadAnimation() {
-  if (!timelinePaused || timelinePauseTime === null) return;
+  if (!window.timelinePaused || window.timelinePauseTime === null) return;
 
-  const { duration, startPercent, endPercent } = savedBeadParams;
-  const timePaused = performance.now() - timelinePauseTime;
-  timelineStartTime += timePaused;
-  timelinePaused = false;
+  const { duration, startPercent, endPercent } = window.savedBeadParams;
+  const timePaused = performance.now() - window.timelinePauseTime;
+  window.timelineStartTime += timePaused;
+  window.timelinePaused = false;
 
   function animate(currentTime) {
-    if (timelinePaused) return;
-    const elapsed = currentTime - timelineStartTime;
+    if (window.timelinePaused) return;
+    const elapsed = currentTime - window.timelineStartTime;
     const progress = Math.min(elapsed / duration, 1);
     const currentPercent = startPercent + (endPercent - startPercent) * progress;
     window.bead.style.left = `${currentPercent}%`;
     window.progressEl.style.width = `${currentPercent}%`;
     if (progress < 1) {
-      requestId = requestAnimationFrame(animate);
+      window.requestId = requestAnimationFrame(animate);
     } else {
       document.dispatchEvent(new Event("timeline-complete"));
     }
   }
 
-  requestId = requestAnimationFrame(animate);
+  window.requestId = requestAnimationFrame(animate);
 }
 
 // KEEPING YOUR ORIGINAL displaySentencesStaggered - NO CHANGES TO AVOID GLITCHES
@@ -336,10 +336,10 @@ function displaySentencesStaggered(sentences, callback) {
   
   isDisplaying = true; // Set flag
 
-  sentenceIndex = 0;
-  wordIndex = 0;
-  currentSentences = sentences;
-  isResuming = false;
+  window.sentenceIndex = 0;
+  window.wordIndex = 0;
+  window.currentSentences = sentences;
+  window.isResuming = false;
 
   if (metaDate.classList.contains('fade-in')) {
     metaDate.classList.remove('fade-in');
@@ -387,28 +387,28 @@ window.clearStaggeredDisplay = function() {
 }
 
 function showNextSentence(callback) {
-  if (sentenceIndex >= currentSentences.length) {
+  if (window.sentenceIndex >= window.currentSentences.length) {
     isDisplaying = false; // Clear flag when animation completes
     document.dispatchEvent(new CustomEvent('sentence-complete'));
     if (callback) callback();
     return;
   }
 
-  const line = currentSentences[sentenceIndex];
+  const line = window.currentSentences[window.sentenceIndex];
 
   // ⚠️ Don't create new DOM if we're resuming
-  if (isResuming && currentP && currentSpans.length > 0) {
-    isResuming = false;
+  if (window.isResuming && window.currentP && window.currentSpans.length > 0) {
+    window.isResuming = false;
     showNextWord(callback);
     return;
   }
 
-  currentP = document.createElement('p');
-  currentP.className = 'sentence';
-  typed.appendChild(currentP);
+  window.currentP = document.createElement('p');
+  window.currentP.className = 'sentence';
+  typed.appendChild(window.currentP);
 
   const words = line.split(' ');
-  currentSpans = words.map(word => {
+  window.currentSpans = words.map(word => {
     const wordSpan = document.createElement('span');
     wordSpan.classList.add('word');
     [...word].forEach(letter => {
@@ -420,37 +420,37 @@ function showNextSentence(callback) {
     return wordSpan;
   });
 
-  currentSpans.forEach((span, i) => {
-    if (i > 0) currentP.appendChild(document.createTextNode(' '));
-    currentP.appendChild(span);
+  window.currentSpans.forEach((span, i) => {
+    if (i > 0) window.currentP.appendChild(document.createTextNode(' '));
+    window.currentP.appendChild(span);
   });
 
   showNextWord(callback);
 }
 
 function showNextWord(callback) {
-  if (timelinePaused) {
+  if (window.timelinePaused) {
     if (!window.resumeSentenceDisplay) {
       window.resumeSentenceDisplay = () => showNextWord(callback);
     }
     return;
   }
 
-  if (wordIndex >= currentSpans.length) {
-    sentenceIndex++;
-    wordIndex = 0;
-    currentP = null; // ← 🧠 this ensures next sentence DOM is built fresh
+  if (window.wordIndex >= window.currentSpans.length) {
+    window.sentenceIndex++;
+    window.wordIndex = 0;
+    window.currentP = null; // ← 🧠 this ensures next sentence DOM is built fresh
     setTimeout(() => showNextSentence(callback), 2000);
     return;
   }
 
-  const span = currentSpans[wordIndex];
+  const span = window.currentSpans[window.wordIndex];
 
 // Force reflow before adding .visible
 void span.offsetWidth;
 span.classList.add('visible');
 
-  wordIndex++;
+  window.wordIndex++;
   const delay = 320 + Math.floor(Math.random() * 250);
   activeTimeouts.push(setTimeout(() => showNextWord(callback), delay));
 }

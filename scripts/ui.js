@@ -491,11 +491,11 @@ timelineToggle?.addEventListener('click', () => {
   }
 
   function stopTimelineProgress() {
-    if (requestId) cancelAnimationFrame(requestId); // cancel bead animation
+    if (window.requestId) cancelAnimationFrame(window.requestId); // cancel bead animation
     if (progressInterval) clearInterval(progressInterval); // if still used
-    if (wordDisplayTimeout) clearTimeout(wordDisplayTimeout);
-  
-    timelinePauseTime = performance.now(); // ✅ store when we paused
+    if (window.wordDisplayTimeout) clearTimeout(window.wordDisplayTimeout);
+
+    window.timelinePauseTime = performance.now(); // ✅ store when we paused
     isTimelinePlaying = false;
   }
 
