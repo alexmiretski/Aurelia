@@ -350,7 +350,7 @@ function displaySentencesStaggered(sentences, callback) {
   typed.classList.remove('fade-in');
   typed.classList.add('fade-out');
 
-  setTimeout(() => {
+  const fadeOutId = setTimeout(() => {
     typed.innerHTML = '';
     plain.textContent = '';
     srText.textContent = '';
@@ -364,14 +364,16 @@ function displaySentencesStaggered(sentences, callback) {
     typed.classList.add('fade-in');
 
     // Delay showing first word slightly after fade begins
-    setTimeout(() => {
+    const startId = setTimeout(() => {
       showNextSentence(callback);
 
       // Bring back meta date smoothly
       metaDate.classList.remove('fade-out');
       metaDate.classList.add('fade-in');
     }, 400); // ← fine-tune this for timing
+    activeTimeouts.push(startId);
   }, 400); // fade-out duration
+  activeTimeouts.push(fadeOutId);
 }
 
 // Add a proper clear function
@@ -469,7 +471,8 @@ window.showThemeMeta = function (theme) {
 function showSentencesInstant(sentences) {
   activeTimeouts.forEach(clearTimeout);
   typed.classList.add('fade-out');
-  setTimeout(() => {
+
+  const showId = setTimeout(() => {
     typed.innerHTML = '';
     plain.textContent = '';
     srText.textContent = '';
@@ -478,7 +481,8 @@ function showSentencesInstant(sentences) {
     srText.textContent = fullText;
     typed.classList.remove('fade-out');
     typed.classList.add('fade-in');
-    setTimeout(() => typed.classList.remove('fade-in'), 800);
+    const removeId = setTimeout(() => typed.classList.remove('fade-in'), 800);
+    activeTimeouts.push(removeId);
     sentences.forEach(line => {
       const p = document.createElement('p');
       p.className = 'sentence';
@@ -498,6 +502,7 @@ function showSentencesInstant(sentences) {
       typed.appendChild(p);
     });
   }, 400);
+  activeTimeouts.push(showId);
 }
 
 const soundStart = document.getElementById('sound-start');
