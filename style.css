@@ -18,7 +18,8 @@
   --glass-medium: rgba(255, 255, 255, 0.12);
   --glass-border: rgba(255, 255, 255, 0.08);
   --dark-bg: rgba(5, 5, 10, 1);
-  --overlay-dark: rgba(0, 0, 0, 0.5);
+  /* Dark overlay with at least 70% opacity */
+  --overlay-dark: rgba(0, 0, 0, 0.7);
   --overlay-mobile: rgba(0, 0, 0, 0.95);
   
   /* Theme Colors */
@@ -94,7 +95,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  overflow-y: auto;
+  /* Prevent scrolling so the overlay stays fixed */
+  overflow: hidden;
   height: 100%;
 }
 
