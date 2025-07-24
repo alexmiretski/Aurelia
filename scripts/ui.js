@@ -90,9 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function toggleMobileOverlay() {
     if (window.innerWidth <= 768) {
       mobileOverlay?.classList.add('show');
+      document.body.classList.add('mobile-overlay-active');
       document.body.style.overflow = 'hidden';
     } else {
       mobileOverlay?.classList.remove('show');
+      document.body.classList.remove('mobile-overlay-active');
       document.body.style.overflow = '';
     }
   }

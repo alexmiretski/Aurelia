@@ -2611,6 +2611,12 @@ body.loaded #timeline-launcher {
   pointer-events: auto;
 }
 
+/* Hide certain UI elements when the mobile overlay is active */
+body.mobile-overlay-active #hi-fab,
+body.mobile-overlay-active #hamburger-button {
+  display: none !important;
+}
+
 .mobile-message {
   padding: var(--space-xl);
   color: var(--off-white);
