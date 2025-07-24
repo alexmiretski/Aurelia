@@ -48,6 +48,29 @@ function revealMetaDate() {
 let activeTimeouts = [];
 let originalIntro = [];
 
+// global flag used to cancel staggered typing early
+window.cancelSentence = false;
+
+function resetAureliaText() {
+  const typedEl = document.getElementById('aurelia-typed');
+  const plainEl = document.getElementById('aurelia-plain');
+  const srEl = document.getElementById('sr-text');
+
+  typedEl.innerHTML = '';
+  plainEl.innerText = '';
+  srEl.innerText = '';
+
+  activeTimeouts.forEach(clearTimeout);
+  activeTimeouts = [];
+
+  window.resumeSentenceDisplay = null;
+  window.cancelSentence = false;
+
+  isDisplaying = false;
+  sentenceIndex = 0;
+  wordIndex = 0;
+}
+
 window.timelinePaused = false;
 
 let timelineStartTime = null;
@@ -315,30 +338,14 @@ function resumeBeadAnimation() {
 
 // KEEPING YOUR ORIGINAL displaySentencesStaggered - NO CHANGES TO AVOID GLITCHES
 function displaySentencesStaggered(sentences, callback) {
+  resetAureliaText();
+
   const typed = document.getElementById('aurelia-typed');
   const plain = document.getElementById('aurelia-plain');
   const srText = window.srText;
 
-  // ✅ FULL CLEAR before rendering again
-  typed.innerHTML = '';
-  plain.innerHTML = '';
-  srText.textContent = '';
+  window.cancelSentence = false;
 
-  // Clear active sentence index / word index if needed
-  window.currentSentenceIndex = 0;
-  window.wordIndex = 0;
-  
-  // Clear any existing animations
-  activeTimeouts.forEach(clearTimeout);
-  activeTimeouts = [];
-  
-  // Clear existing DOM if animation is in progress
-  if (isDisplaying) {
-    typed.innerHTML = '';
-    plain.textContent = '';
-    srText.textContent = '';
-  }
-  
   isDisplaying = true; // Set flag
 
   sentenceIndex = 0;
@@ -381,17 +388,18 @@ function displaySentencesStaggered(sentences, callback) {
 
 // Add a proper clear function
 window.clearStaggeredDisplay = function() {
-  activeTimeouts.forEach(clearTimeout);
-  activeTimeouts = [];
-  isDisplaying = false;
-  typed.innerHTML = '';
-  plain.textContent = '';
-  srText.textContent = '';
+  window.cancelSentence = true;
+  resetAureliaText();
   hideRevealMomentButton(); // Added for reveal moment cleanup
   currentMoment = null; // Added for reveal moment cleanup
 }
 
 function showNextSentence(callback) {
+  if (window.cancelSentence) {
+    isDisplaying = false;
+    window.cancelSentence = false;
+    return;
+  }
   if (sentenceIndex >= currentSentences.length) {
     isDisplaying = false; // Clear flag when animation completes
     document.dispatchEvent(new CustomEvent('sentence-complete'));
@@ -434,6 +442,11 @@ function showNextSentence(callback) {
 }
 
 function showNextWord(callback) {
+  if (window.cancelSentence) {
+    isDisplaying = false;
+    window.cancelSentence = false;
+    return;
+  }
   if (timelinePaused) {
     if (!window.resumeSentenceDisplay) {
       window.resumeSentenceDisplay = () => showNextWord(callback);
@@ -473,6 +486,8 @@ window.showThemeMeta = function (theme) {
 
 function showSentencesInstant(sentences) {
   activeTimeouts.forEach(clearTimeout);
+  resetAureliaText();
+  window.cancelSentence = false;
   typed.classList.add('fade-out');
   setTimeout(() => {
     typed.innerHTML = '';
