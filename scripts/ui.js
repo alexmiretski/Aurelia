@@ -85,6 +85,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const metaDate = document.getElementById('meta-date');
   const timelineControls = document.getElementById('timeline-controls');
   const aboutScreen = document.getElementById('about-screen');
+  const mobileOverlay = document.getElementById('mobile-overlay');
+
+  function toggleMobileOverlay() {
+    if (window.innerWidth <= 768) {
+      mobileOverlay?.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    } else {
+      mobileOverlay?.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+  }
+
+  toggleMobileOverlay();
+  window.addEventListener('resize', toggleMobileOverlay);
 
   // Hamburger menu functionality
 const hamburgerButton = document.getElementById('hamburger-button');
