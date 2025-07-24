@@ -283,7 +283,7 @@ body.ready-for-ui #mute-button {
 }
 
 body.loaded #logo {
-  opacity: 0.85;
+  opacity: 1;
 }
 
 #logo img {
