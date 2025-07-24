@@ -55,7 +55,6 @@ let timelinePauseTime = null;
 let isResuming = false;
 let requestId = null;
 let savedBeadParams = { duration: 0, startPercent: 0, endPercent: 100 };
-let wordDisplayTimeout = null;
 let sentenceIndex = 0;
 let wordIndex = 0;
 let currentSentences = [];
