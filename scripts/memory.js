@@ -39,6 +39,7 @@ window.memoryCanvasManager = new MemoryCanvasManager();
 
 const canvas = document.getElementById('memory-canvas');
 const ctx = canvas.getContext('2d');
+const pixelRatio = window.devicePixelRatio || 1;
 const accessLayer = document.getElementById('blob-access-layer');
 const revealBox = document.getElementById('memory-reveal');
 const revealedText = document.getElementById('revealed-text');
@@ -82,8 +83,14 @@ function getResponsiveRadius() {
 }
 
 function resizeCanvas() {
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
+  const ratio = window.devicePixelRatio || 1;
+  canvas.width = window.innerWidth * ratio;
+  canvas.height = window.innerHeight * ratio;
+  canvas.style.width = `${window.innerWidth}px`;
+  canvas.style.height = `${window.innerHeight}px`;
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  width = window.innerWidth;
+  height = window.innerHeight;
 
   // Reposition and resize all blobs based on their relative coords
   activeBlobs.forEach(blob => {
