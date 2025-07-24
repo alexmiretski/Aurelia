@@ -83,8 +83,15 @@ function getResponsiveRadius() {
 
 function resizeCanvas() {
   dpr = window.devicePixelRatio || 1;
-  width = window.innerWidth;
-  height = window.innerHeight;
+  const screen = document.getElementById('memory-screen');
+  if (screen) {
+    const rect = screen.getBoundingClientRect();
+    width = rect.width;
+    height = rect.height;
+  } else {
+    width = window.innerWidth;
+    height = window.innerHeight;
+  }
   canvas.style.width = `${width}px`;
   canvas.style.height = `${height}px`;
   canvas.width = width * dpr;
