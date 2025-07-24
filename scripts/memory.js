@@ -44,7 +44,7 @@ const revealBox = document.getElementById('memory-reveal');
 const revealedText = document.getElementById('revealed-text');
 window.srText = window.srText || document.getElementById('sr-text');
 
-let width, height;
+let width, height, dpr = window.devicePixelRatio || 1;
 
 // Accessibility helper functions
 function announceToScreenReader(message) {
@@ -82,8 +82,14 @@ function getResponsiveRadius() {
 }
 
 function resizeCanvas() {
-  width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight;
+  dpr = window.devicePixelRatio || 1;
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
   // Reposition and resize all blobs based on their relative coords
   activeBlobs.forEach(blob => {
@@ -436,7 +442,7 @@ function drawConnections() {
   
   ctx.save();
   ctx.globalCompositeOperation = 'screen';
-  ctx.lineWidth = 1.5;
+  ctx.lineWidth = 1.5 * dpr;
   
   for (let i = 0; i < activeBlobs.length; i++) {
     for (let j = i + 1; j < activeBlobs.length; j++) {
