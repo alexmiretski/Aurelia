@@ -722,12 +722,18 @@ const heroCanvas = document.getElementById('hero-blob-canvas');
 const heroCtx = heroCanvas.getContext('2d');
 
 function resizeHeroCanvas() {
-  heroCanvas.width = window.innerWidth;
-  heroCanvas.height = window.innerHeight;
+  const dpr = window.devicePixelRatio || 1;
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  heroCanvas.style.width = `${w}px`;
+  heroCanvas.style.height = `${h}px`;
+  heroCanvas.width = w * dpr;
+  heroCanvas.height = h * dpr;
+  heroCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-  heroBlob.x = window.innerWidth / 2;
-  heroBlob.y = window.innerHeight / 2;
-  heroBlob.radius = Math.min(window.innerWidth, window.innerHeight) * 0.25;
+  heroBlob.x = w / 2;
+  heroBlob.y = h / 2;
+  heroBlob.radius = Math.min(w, h) * 0.25;
 }
 
 resizeHeroCanvas();
