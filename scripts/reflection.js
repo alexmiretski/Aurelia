@@ -728,8 +728,12 @@ const heroCanvas = document.getElementById('hero-blob-canvas');
 const heroCtx = heroCanvas.getContext('2d');
 
 function resizeHeroCanvas() {
-  heroCanvas.width = window.innerWidth;
-  heroCanvas.height = window.innerHeight;
+  const ratio = window.devicePixelRatio || 1;
+  heroCanvas.width = window.innerWidth * ratio;
+  heroCanvas.height = window.innerHeight * ratio;
+  heroCanvas.style.width = `${window.innerWidth}px`;
+  heroCanvas.style.height = `${window.innerHeight}px`;
+  heroCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
 
   heroBlob.x = window.innerWidth / 2;
   heroBlob.y = window.innerHeight / 2;
