@@ -321,6 +321,10 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function update() {
+    if (isPaused) {
+      requestAnimationFrame(update);
+      return;
+    }
     // 🔄 Clear or softly fade canvas each frame
     const fade = true; // toggle to false for full wipe
     context.fillStyle = fade ? "rgba(15, 14, 46, 0.06)" : Configs.backgroundColor;
@@ -389,16 +393,22 @@ document.addEventListener('DOMContentLoaded', function() {
   simplexNoise = new SimplexNoise();
   
   console.log("🌀 Starting ribbon animation with theme colors");
-  update();
+
+  // Track paused state to reduce work when memory screen is active
+  let isPaused = false;
 
   // Screen transition handlers
   window.addEventListener("enter-memory", () => {
     canvas.style.display = "none";
+    isPaused = true;
   });
-  
+
   window.addEventListener("exit-memory", () => {
     canvas.style.display = "block";
+    isPaused = false;
   });
+
+  update();
 
   // About screen handlers - show generated background on about screen
   window.addEventListener("enter-about", () => {
