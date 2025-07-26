@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.clearStaggeredDisplay();
       }
       if (window.originalIntro && window.displaySentencesStaggered) {
-        window.displaySentencesStaggered(window.originalIntro);
+        setTimeout(() => window.displaySentencesStaggered(window.originalIntro), 450);
       }
 
       // Restore memory UI for future use

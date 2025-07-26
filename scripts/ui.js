@@ -74,7 +74,7 @@ function closeFabMenuIfOpen() {
     // Restore original intro if needed
     if (window.originalIntro && window.displaySentencesStaggered) {
       window.clearStaggeredDisplay?.();
-      window.displaySentencesStaggered(window.originalIntro);
+      setTimeout(() => window.displaySentencesStaggered(window.originalIntro), 450);
     }
 
     // Restore the original date line without theme
@@ -246,7 +246,8 @@ fabToggle?.addEventListener("click", () => {
     
     // Restore original intro and date
     if (window.originalIntro) {
-      displaySentencesStaggered(window.originalIntro);
+      window.clearStaggeredDisplay?.();
+      setTimeout(() => window.displaySentencesStaggered(window.originalIntro), 450);
     }
     
     // Restore the original date line without theme
@@ -416,7 +417,8 @@ timelineClose?.addEventListener('click', () => {
       currentSpans = [];
       currentP = null;
 
-      displaySentencesStaggered(window.originalIntro);
+      window.clearStaggeredDisplay?.();
+      setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
 
       // 🩹 Fix: Reset meta date to today's reflection after closing timeline
       const today = new Date();
@@ -640,10 +642,11 @@ timelineToggle?.addEventListener('click', () => {
       }
   
       // Safe version
-      if (window.originalIntro) {
-        window.isDisplaying = false; // force reset
-        displaySentencesStaggered(window.originalIntro);
-      }
+          if (window.originalIntro) {
+            window.isDisplaying = false; // force reset
+            window.clearStaggeredDisplay?.();
+            setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
+          }
     }
   
     if (isAbout) {
@@ -676,7 +679,8 @@ timelineToggle?.addEventListener('click', () => {
         // Safe version
         if (window.originalIntro) {
           window.isDisplaying = false; // force reset
-          displaySentencesStaggered(window.originalIntro);
+          window.clearStaggeredDisplay?.();
+          setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
         }
       
         // 🧠 Delay just a moment to ensure class changes are applied
