@@ -398,12 +398,12 @@ document.addEventListener('DOMContentLoaded', function() {
   let isPaused = false;
 
   // Screen transition handlers
-  window.addEventListener("enter-memory", () => {
+  document.addEventListener("enter-memory", () => {
     canvas.style.display = "none";
     isPaused = true;
   });
 
-  window.addEventListener("exit-memory", () => {
+  document.addEventListener("exit-memory", () => {
     canvas.style.display = "block";
     isPaused = false;
   });
