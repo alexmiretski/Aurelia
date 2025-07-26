@@ -708,8 +708,11 @@ function animate(time = performance.now()) {
 
 function startMemoryScreen() {
   if (!window.memoryCanvasManager.isActive) return; // Don't start if not active
-  
+
   console.log("🧠 Starting memory screen with fresh state");
+
+  // Notify other components that memory screen is entering
+  document.dispatchEvent(new Event('enter-memory'));
   
   // Ensure we start with a clean slate
   activeBlobs.forEach(blob => blob.removeAccessibleButton());
@@ -809,6 +812,8 @@ async function fetchDailyThemeReflections() {
 }
 
 function stopMemoryFlow() {
+  // Notify other components that memory screen is exiting
+  document.dispatchEvent(new Event('exit-memory'));
   // Cancel animation frame
   cancelAnimationFrame(window.memoryAnimationFrame);
   window.memoryAnimationFrame = null;
