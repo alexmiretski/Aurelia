@@ -57,8 +57,15 @@ function announceToScreenReader(message) {
   setTimeout(() => document.body.removeChild(announcement), 1000);
 }
 
+// Cache user's motion preference so matchMedia isn't queried every frame
+const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+let cachedPrefersReducedMotion = reducedMotionQuery.matches;
+reducedMotionQuery.addEventListener('change', (e) => {
+  cachedPrefersReducedMotion = e.matches;
+});
+
 function prefersReducedMotion() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  return cachedPrefersReducedMotion;
 }
 
 function getReducedMotionMultiplier() {
@@ -101,7 +108,16 @@ function updateCanvasDescription() {
     `Memory visualization with ${blobCount} memory bubble${blobCount !== 1 ? 's' : ''} floating. Use Tab to navigate between memory bubbles.`);
 }
 
-window.addEventListener('resize', resizeCanvas);
+// Throttle resize events to avoid excessive recalculations
+let resizeRAF;
+function onResize() {
+  if (resizeRAF) cancelAnimationFrame(resizeRAF);
+  resizeRAF = requestAnimationFrame(() => {
+    resizeCanvas();
+    resizeRAF = null;
+  });
+}
+window.addEventListener('resize', onResize);
 
 // Theme filter state
 let selectedThemes = new Set([
@@ -165,6 +181,7 @@ class MemoryBlob {
     const { base, variation } = getResponsiveRadius();
     this.baseRadius = base + Math.random() * variation;
     this.radius = this.baseRadius;
+    this.lastHitAreaSize = 0;
 
     this.relX = 0.1 + Math.random() * 0.8;
     this.relY = 0.1 + Math.random() * 0.8;
@@ -328,6 +345,10 @@ if (!this.clicked) {
 
   createAccessibleButton() {
     const btn = document.createElement('button');
+
+    // Default positioning so transforms work correctly
+    btn.style.left = '0px';
+    btn.style.top = '0px';
     
     // Enhanced accessibility
     const preview = this.text.length > 50 ? this.text.substring(0, 50) + '...' : this.text;
@@ -379,13 +400,19 @@ if (!this.clicked) {
     // Enhanced touch targets for mobile
     const minTouchTarget = 44; // WCAG minimum
     const hitAreaSize = Math.max(minTouchTarget, this.radius * 2.2);
-    
-    this.el.style.left = `${this.x - hitAreaSize/2}px`;
-    this.el.style.top = `${this.y - hitAreaSize/2}px`;
-    this.el.style.width = `${hitAreaSize}px`;
-    this.el.style.height = `${hitAreaSize}px`;
+
+    // Only write layout affecting properties when size changes
+    if (this.lastHitAreaSize !== hitAreaSize) {
+      this.el.style.width = `${hitAreaSize}px`;
+      this.el.style.height = `${hitAreaSize}px`;
+      this.lastHitAreaSize = hitAreaSize;
+    }
+
+    const translateX = this.x - hitAreaSize / 2;
+    const translateY = this.y - hitAreaSize / 2;
+    this.el.style.transform = `translate(${translateX}px, ${translateY}px)`;
     this.el.style.display = this.clicked ? 'none' : 'block';
-    
+
     // Add visual focus indicator
     this.el.style.borderRadius = '50%';
   }
@@ -466,19 +493,23 @@ function drawConnections() {
   ctx.save();
   ctx.globalCompositeOperation = 'screen';
   ctx.lineWidth = 1.5;
-  
+
+  const maxDist = 300;
+  const maxDistSq = maxDist * maxDist;
+
   for (let i = 0; i < activeBlobs.length; i++) {
     for (let j = i + 1; j < activeBlobs.length; j++) {
       const a = activeBlobs[i];
       const b = activeBlobs[j];
       const dx = a.x - b.x;
       const dy = a.y - b.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      
-      if (dist < 300) {
-        const opacity = (1 - dist / 300) * 0.15;
+      const distSq = dx * dx + dy * dy;
+
+      if (distSq < maxDistSq) {
+        const dist = Math.sqrt(distSq);
+        const opacity = (1 - dist / maxDist) * 0.15;
         ctx.strokeStyle = `rgba(255, 220, 250, ${opacity})`;
-        
+
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
@@ -729,6 +760,12 @@ function startMemoryScreen() {
 
 async function fetchDailyThemeReflections() {
   try {
+    const cached = sessionStorage.getItem('memoryCache');
+    if (cached) {
+      memorySentences = JSON.parse(cached);
+      announceToScreenReader(`Loaded ${memorySentences.length} memories from cache.`);
+      return;
+    }
     announceToScreenReader("Loading memory data...");
     
     const response = await fetch(
@@ -754,6 +791,8 @@ async function fetchDailyThemeReflections() {
         row.source === 'evolution' ? 'evolution' : null),
         created_at: row.created_at
       }));
+
+    sessionStorage.setItem('memoryCache', JSON.stringify(memorySentences));
 
     announceToScreenReader(`Loaded ${memorySentences.length} memories. Memory bubbles will begin appearing.`);
 
