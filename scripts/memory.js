@@ -189,7 +189,8 @@ class MemoryBlob {
     const motionMultiplier = getReducedMotionMultiplier();
 
     // Determine if this is a rising blob
-    this.isRising = (this.theme === 'remember' || this.theme === 'drift');
+    // Only "remember" themed blobs rise from the bottom
+    this.isRising = (this.theme === 'remember');
 
     if (this.isRising) {
       this.x = this.relX * (width || window.innerWidth);
