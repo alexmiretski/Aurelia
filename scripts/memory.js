@@ -687,7 +687,7 @@ function animate(time = performance.now()) {
     lastSpawnTime = time;
   }
 
-  drawConnections();
+  // drawConnections();
 
   activeBlobs.forEach(blob => {
     blob.update();
