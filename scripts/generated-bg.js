@@ -204,10 +204,13 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Get theme color directly
+  let cachedThemeHex = null;
+  let cachedThemeHsl = null;
+
   function getThemeColor() {
     // Check for CSS custom property first
     const rootStyles = getComputedStyle(document.documentElement);
-    
+
     // Try to detect theme from CSS variables
     const themeColors = {
       ache: '#b95858',     // muted rosewood
@@ -234,6 +237,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     return '#e3bdf7'; // default dream
+  }
+
+  // Cache the current theme color so we don't recompute on every particle reset
+  function updateThemeCache() {
+    cachedThemeHex = getThemeColor();
+    cachedThemeHsl = hexToHsl(cachedThemeHex);
   }
 
   // Convert hex to HSL
@@ -265,10 +274,9 @@ document.addEventListener('DOMContentLoaded', function() {
   function initParticle(p) {
     p.x = p.pastX = screenWidth * Math.random();
     p.y = p.pastY = screenHeight * Math.random();
-    
-    // Get actual theme color and convert to HSL
-    const themeHex = getThemeColor();
-    const [h, s, l] = hexToHsl(themeHex);
+
+    // Use cached theme color values
+    const [h, s, l] = cachedThemeHsl;
     
     // Add much more variation for visual interest
     const angle = Math.atan2(centerY - p.y, centerX - p.x);
@@ -373,6 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
   onWindowResize();
   window.addEventListener('resize', onWindowResize);
 
+  updateThemeCache();
   for (var i = 0, len = Configs.particleNum; i < len; i++) {
     initParticle((particles[i] = new Particle()));
   }
@@ -404,6 +413,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Test function
   window.updateRibbonTheme = function() {
+    updateThemeCache();
     for (let i = 0; i < particles.length; i++) {
       initParticle(particles[i]);
     }
