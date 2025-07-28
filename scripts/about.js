@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainScreen = document.getElementById('main-screen');
   const memoryScreen = document.getElementById('memory-screen');
 
+
   // Accessibility helper functions
   function announceToScreenReader(message) {
     const announcement = document.createElement('div');
