@@ -16,7 +16,10 @@
 <body>
   <a href="#main-screen" class="skip-link sr-only">Skip to main content</a>
   <!-- Background audio and video -->
-  <audio id="bg-audio" src="assets/sound.mp3" loop muted></audio>
+  <audio id="bg-audio" loop muted>
+    <source src="assets/sound.ogg" type="audio/ogg">
+    <source src="assets/sound.mp3" type="audio/mpeg">
+  </audio>
 
   <canvas id="hero-blob-canvas"></canvas>
 
