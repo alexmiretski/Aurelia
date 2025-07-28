@@ -57,15 +57,8 @@ function announceToScreenReader(message) {
   setTimeout(() => document.body.removeChild(announcement), 1000);
 }
 
-// Cache user's motion preference so matchMedia isn't queried every frame
-const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-let cachedPrefersReducedMotion = reducedMotionQuery.matches;
-reducedMotionQuery.addEventListener('change', (e) => {
-  cachedPrefersReducedMotion = e.matches;
-});
-
 function prefersReducedMotion() {
-  return cachedPrefersReducedMotion;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
 function getReducedMotionMultiplier() {
@@ -108,16 +101,7 @@ function updateCanvasDescription() {
     `Memory visualization with ${blobCount} memory bubble${blobCount !== 1 ? 's' : ''} floating. Use Tab to navigate between memory bubbles.`);
 }
 
-// Throttle resize events to avoid excessive recalculations
-let resizeRAF;
-function onResize() {
-  if (resizeRAF) cancelAnimationFrame(resizeRAF);
-  resizeRAF = requestAnimationFrame(() => {
-    resizeCanvas();
-    resizeRAF = null;
-  });
-}
-window.addEventListener('resize', onResize);
+window.addEventListener('resize', resizeCanvas);
 
 // Theme filter state
 let selectedThemes = new Set([
@@ -169,31 +153,28 @@ class MemoryBlob {
     this.text = text;
     this.theme = theme;
     this.id = `blob-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    this.isHovered = false;
-
+    this.isHovered = false; // Add hover state
+    
     console.log("🧠 MemoryBlob created:", {
       text: this.text,
       theme: this.theme,
       id: this.id
     });
-
+    
     // Use responsive radius
     const { base, variation } = getResponsiveRadius();
     this.baseRadius = base + Math.random() * variation;
     this.radius = this.baseRadius;
-    this.lastHitAreaSize = 0;
-
+    
     this.relX = 0.1 + Math.random() * 0.8;
     this.relY = 0.1 + Math.random() * 0.8;
+    this.updatePositionFromRelative();
 
+    // Slower movement for reduced motion
     const motionMultiplier = getReducedMotionMultiplier();
-
-    // All blobs behave uniformly – no more bottom-to-top floating
-    this.isRising = false;
-    this.updatePositionFromRelative(); // set this.x and this.y normally
     this.vx = (Math.random() - 0.5) * 0.3 * motionMultiplier;
     this.vy = (Math.random() - 0.5) * 0.3 * motionMultiplier;
-
+    
     this.clicked = false;
     this.age = 0;
     this.maxAge = 1800 + Math.random() * 1200;
@@ -217,10 +198,9 @@ class MemoryBlob {
       };
       this.getThemeColor = () => themeColors[this.theme] || "rgba(255,180,240,0.2)";
     }
-
+    
     this.el = this.createAccessibleButton();
   }
-
 
   updatePositionFromRelative() {
     const safeWidth = width || window.innerWidth;
@@ -235,46 +215,28 @@ class MemoryBlob {
 
   update() {
     if (this.clicked) return;
-  
     this.x += this.vx;
     this.y += this.vy;
-  
-    // Fade-out logic for rising blobs
-    if (this.isRising && this.y + this.radius < 0) {
-      this.age = this.maxAge + 1; // Mark as expired
-    }
-  
-    if (!this.isRising) {
-      // Only bounce for non-rising blobs
-      if (this.x < 0 || this.x > width) this.vx *= -1;
-      if (this.y < 0 || this.y > height) this.vy *= -1;
-    }
-  
+    if (this.x < 0 || this.x > width) this.vx *= -1;
+    if (this.y < 0 || this.y > height) this.vy *= -1;
     this.age++;
     this.points.forEach(p => p.phase += p.speed);
     this.updateAccessibleButton();
   }
-  
 
   draw(ctx, time = performance.now()) {
     ctx.save();
     ctx.translate(this.x, this.y);
   
     let alpha = 1;
-const ratio = this.age / this.maxAge;
-
-if (!this.clicked) {
-  if (this.isRising) {
-    alpha = 1 - (this.y / height); // Fade as it rises
-  } else {
-    if (ratio < 0.2) alpha = ratio / 0.2;
-    else if (ratio > 0.8) alpha = 1 - (ratio - 0.8) / 0.2;
-  }
-}
-
+    const ratio = this.age / this.maxAge;
+    if (!this.clicked) {
+      if (ratio < 0.2) alpha = ratio / 0.2;
+      else if (ratio > 0.8) alpha = 1 - (ratio - 0.8) / 0.2;
+    }
     ctx.globalAlpha = Math.max(alpha * 0.7, 0.05);
     
-    ctx.globalCompositeOperation = 'difference';
+    ctx.globalCompositeOperation = 'screen';
   
     // Reduced pulse for reduced motion users
     const pulseIntensity = prefersReducedMotion() ? 0.02 : 0.04;
@@ -336,10 +298,6 @@ if (!this.clicked) {
 
   createAccessibleButton() {
     const btn = document.createElement('button');
-
-    // Default positioning so transforms work correctly
-    btn.style.left = '0px';
-    btn.style.top = '0px';
     
     // Enhanced accessibility
     const preview = this.text.length > 50 ? this.text.substring(0, 50) + '...' : this.text;
@@ -391,19 +349,13 @@ if (!this.clicked) {
     // Enhanced touch targets for mobile
     const minTouchTarget = 44; // WCAG minimum
     const hitAreaSize = Math.max(minTouchTarget, this.radius * 2.2);
-
-    // Only write layout affecting properties when size changes
-    if (this.lastHitAreaSize !== hitAreaSize) {
-      this.el.style.width = `${hitAreaSize}px`;
-      this.el.style.height = `${hitAreaSize}px`;
-      this.lastHitAreaSize = hitAreaSize;
-    }
-
-    const translateX = this.x - hitAreaSize / 2;
-    const translateY = this.y - hitAreaSize / 2;
-    this.el.style.transform = `translate(${translateX}px, ${translateY}px)`;
+    
+    this.el.style.left = `${this.x - hitAreaSize/2}px`;
+    this.el.style.top = `${this.y - hitAreaSize/2}px`;
+    this.el.style.width = `${hitAreaSize}px`;
+    this.el.style.height = `${hitAreaSize}px`;
     this.el.style.display = this.clicked ? 'none' : 'block';
-
+    
     // Add visual focus indicator
     this.el.style.borderRadius = '50%';
   }
@@ -484,23 +436,19 @@ function drawConnections() {
   ctx.save();
   ctx.globalCompositeOperation = 'screen';
   ctx.lineWidth = 1.5;
-
-  const maxDist = 300;
-  const maxDistSq = maxDist * maxDist;
-
+  
   for (let i = 0; i < activeBlobs.length; i++) {
     for (let j = i + 1; j < activeBlobs.length; j++) {
       const a = activeBlobs[i];
       const b = activeBlobs[j];
       const dx = a.x - b.x;
       const dy = a.y - b.y;
-      const distSq = dx * dx + dy * dy;
-
-      if (distSq < maxDistSq) {
-        const dist = Math.sqrt(distSq);
-        const opacity = (1 - dist / maxDist) * 0.15;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      
+      if (dist < 300) {
+        const opacity = (1 - dist / 300) * 0.15;
         ctx.strokeStyle = `rgba(255, 220, 250, ${opacity})`;
-
+        
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
@@ -678,7 +626,7 @@ function animate(time = performance.now()) {
     lastSpawnTime = time;
   }
 
-  // drawConnections();
+  drawConnections();
 
   activeBlobs.forEach(blob => {
     blob.update();
@@ -699,11 +647,8 @@ function animate(time = performance.now()) {
 
 function startMemoryScreen() {
   if (!window.memoryCanvasManager.isActive) return; // Don't start if not active
-
+  
   console.log("🧠 Starting memory screen with fresh state");
-
-  // Notify other components that memory screen is entering
-  document.dispatchEvent(new Event('enter-memory'));
   
   // Ensure we start with a clean slate
   activeBlobs.forEach(blob => blob.removeAccessibleButton());
@@ -754,12 +699,6 @@ function startMemoryScreen() {
 
 async function fetchDailyThemeReflections() {
   try {
-    const cached = sessionStorage.getItem('memoryCache');
-    if (cached) {
-      memorySentences = JSON.parse(cached);
-      announceToScreenReader(`Loaded ${memorySentences.length} memories from cache.`);
-      return;
-    }
     announceToScreenReader("Loading memory data...");
     
     const response = await fetch(
@@ -786,8 +725,6 @@ async function fetchDailyThemeReflections() {
         created_at: row.created_at
       }));
 
-    sessionStorage.setItem('memoryCache', JSON.stringify(memorySentences));
-
     announceToScreenReader(`Loaded ${memorySentences.length} memories. Memory bubbles will begin appearing.`);
 
   } catch (err) {
@@ -803,8 +740,6 @@ async function fetchDailyThemeReflections() {
 }
 
 function stopMemoryFlow() {
-  // Notify other components that memory screen is exiting
-  document.dispatchEvent(new Event('exit-memory'));
   // Cancel animation frame
   cancelAnimationFrame(window.memoryAnimationFrame);
   window.memoryAnimationFrame = null;
