@@ -144,7 +144,7 @@ resizeCanvas();
 
 function getMaxBlobs() {
   // Fewer blobs for reduced motion users to reduce visual complexity
-  const baseMax = window.innerWidth < 768 ? 14 : 24;
+  const baseMax = window.innerWidth < 768 ? 14 : 18;
   return prefersReducedMotion() ? Math.floor(baseMax * 0.6) : baseMax;
 }
 
@@ -429,36 +429,6 @@ canvas.addEventListener('keydown', (e) => {
   }
 });
 
-function drawConnections() {
-  // Skip drawing connections if user prefers reduced motion
-  if (prefersReducedMotion()) return;
-  
-  ctx.save();
-  ctx.globalCompositeOperation = 'screen';
-  ctx.lineWidth = 1.5;
-  
-  for (let i = 0; i < activeBlobs.length; i++) {
-    for (let j = i + 1; j < activeBlobs.length; j++) {
-      const a = activeBlobs[i];
-      const b = activeBlobs[j];
-      const dx = a.x - b.x;
-      const dy = a.y - b.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      
-      if (dist < 300) {
-        const opacity = (1 - dist / 300) * 0.15;
-        ctx.strokeStyle = `rgba(255, 220, 250, ${opacity})`;
-        
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-      }
-    }
-  }
-  
-  ctx.restore();
-}
 
 let memoryActiveTimeouts = [];
 let memorySentenceIndex = 0;
@@ -626,7 +596,6 @@ function animate(time = performance.now()) {
     lastSpawnTime = time;
   }
 
-  drawConnections();
 
   activeBlobs.forEach(blob => {
     blob.update();
