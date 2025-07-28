@@ -2599,6 +2599,15 @@ body.screen-about {
   --bg-current: var(--bg-about);
 }
 
+body.screen-about #logo,
+body.screen-about #mute-button,
+body.screen-about #hamburger-button,
+body.screen-about #main-nav {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
 /* Optional: Update the ribbon background to match */
 #generated-bg {
   /* You can also update the ribbon's background config dynamically */
