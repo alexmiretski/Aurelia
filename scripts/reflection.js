@@ -49,6 +49,12 @@ function revealMetaDate() {
 
 
 let activeTimeouts = [];
+
+function scheduleTimeout(fn, delay) {
+  const id = setTimeout(fn, delay);
+  activeTimeouts.push(id);
+  return id;
+}
 let originalIntro = [];
 
 window.timelinePaused = false;
@@ -213,7 +219,7 @@ function displaySentencesStaggered(sentences, callback) {
   typed.classList.remove('fade-in');
   typed.classList.add('fade-out');
 
-  setTimeout(() => {
+  scheduleTimeout(() => {
     typed.innerHTML = '';
     plain.textContent = '';
     srText.textContent = '';
@@ -227,7 +233,7 @@ function displaySentencesStaggered(sentences, callback) {
     typed.classList.add('fade-in');
 
     // Delay showing first word slightly after fade begins
-    setTimeout(() => {
+    scheduleTimeout(() => {
       showNextSentence(callback);
 
       // Bring back meta date smoothly
@@ -255,7 +261,7 @@ window.clearStaggeredDisplay = function() {
   typed.classList.remove('fade-in');
   typed.classList.add('fade-out');
 
-  setTimeout(() => {
+  scheduleTimeout(() => {
     typed.innerHTML = '';
     plain.textContent = '';
     srText.textContent = '';
@@ -320,7 +326,7 @@ function showNextWord(callback) {
     sentenceIndex++;
     wordIndex = 0;
     currentP = null; // ← 🧠 this ensures next sentence DOM is built fresh
-    setTimeout(() => showNextSentence(callback), 2000);
+    scheduleTimeout(() => showNextSentence(callback), 2000);
     return;
   }
 
@@ -332,7 +338,7 @@ span.classList.add('visible');
 
   wordIndex++;
   const delay = 320 + Math.floor(Math.random() * 250);
-  activeTimeouts.push(setTimeout(() => showNextWord(callback), delay));
+  scheduleTimeout(() => showNextWord(callback), delay);
 }
 
 
@@ -352,7 +358,7 @@ window.showThemeMeta = function (theme) {
 function showSentencesInstant(sentences) {
   activeTimeouts.forEach(clearTimeout);
   typed.classList.add('fade-out');
-  setTimeout(() => {
+  scheduleTimeout(() => {
     typed.innerHTML = '';
     plain.textContent = '';
     srText.textContent = '';
@@ -361,7 +367,7 @@ function showSentencesInstant(sentences) {
     srText.textContent = fullText;
     typed.classList.remove('fade-out');
     typed.classList.add('fade-in');
-    setTimeout(() => typed.classList.remove('fade-in'), 800);
+    scheduleTimeout(() => typed.classList.remove('fade-in'), 800);
     sentences.forEach(line => {
       const p = document.createElement('p');
       p.className = 'sentence';
