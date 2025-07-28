@@ -12,6 +12,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const mainScreen = document.getElementById('main-screen');
   const memoryScreen = document.getElementById('memory-screen');
 
+  // Prevent overlap with fixed logo on small screens
+  if (aboutScreen) {
+    aboutScreen.style.paddingTop = '140px';
+    aboutScreen.style.overflowY = 'auto';
+  }
+
   // Accessibility helper functions
   function announceToScreenReader(message) {
     const announcement = document.createElement('div');
