@@ -188,21 +188,11 @@ class MemoryBlob {
 
     const motionMultiplier = getReducedMotionMultiplier();
 
-    // Determine if this is a rising blob
-    // Only "remember" themed blobs rise from the bottom
-    this.isRising = (this.theme === 'remember');
-
-    if (this.isRising) {
-      this.x = this.relX * (width || window.innerWidth);
-      this.y = (height || window.innerHeight) + this.baseRadius + Math.random() * 40;
-      this.vx = (Math.random() - 0.5) * 0.1 * motionMultiplier;
-      this.vy = -0.5 - Math.random() * 0.5 * motionMultiplier;
-
-    } else {
-      this.updatePositionFromRelative(); // will set this.x and this.y normally
-      this.vx = (Math.random() - 0.5) * 0.3 * motionMultiplier;
-      this.vy = (Math.random() - 0.5) * 0.3 * motionMultiplier;
-    }
+    // All blobs behave uniformly – no more bottom-to-top floating
+    this.isRising = false;
+    this.updatePositionFromRelative(); // set this.x and this.y normally
+    this.vx = (Math.random() - 0.5) * 0.3 * motionMultiplier;
+    this.vy = (Math.random() - 0.5) * 0.3 * motionMultiplier;
 
     this.clicked = false;
     this.age = 0;
