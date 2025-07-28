@@ -345,7 +345,7 @@ span.classList.add('visible');
 window.showThemeMeta = function (theme) {
   const metaDate = document.getElementById('meta-date');
   const today = new Date();
-  const timelineStartDate = new Date('2025-07-02');
+const timelineStartDate = new Date('2025-07-24');
   const msPerDay = 1000 * 60 * 60 * 24;
   const dayNumber = Math.floor((today - timelineStartDate) / msPerDay) + 1;
   const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -594,7 +594,7 @@ if (window.innerWidth <= 768) {
 });
 
 
-const startDate = new Date('2025-07-02');
+const startDate = new Date('2025-07-24');
 const today = new Date();
 const msPerDay = 1000 * 60 * 60 * 24;
 const dayNumber = Math.floor((today - startDate) / msPerDay) + 1;

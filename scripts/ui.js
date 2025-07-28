@@ -80,7 +80,7 @@ function closeFabMenuIfOpen(skipRestore = false) {
 
       // Restore the original date line without theme
       const today = new Date();
-      const timelineStartDate = new Date('2025-07-02');
+      const timelineStartDate = new Date('2025-07-24');
       const msPerDay = 1000 * 60 * 60 * 24;
       const dayNumber = Math.floor((today - timelineStartDate) / msPerDay) + 1;
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -202,7 +202,7 @@ window.addEventListener('resize', () => {
   window.progressEl = progressEl;
 
   const msPerDay = 1000 * 60 * 60 * 24;
-  const timelineStartDate = new Date('2025-07-02');
+  const timelineStartDate = new Date('2025-07-24');
   const today = new Date();
   const dayNumber = Math.floor((today - timelineStartDate) / msPerDay) + 1;
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -254,7 +254,7 @@ fabToggle?.addEventListener("click", () => {
     
     // Restore the original date line without theme
     const today = new Date();
-    const timelineStartDate = new Date('2025-07-02');
+    const timelineStartDate = new Date('2025-07-24');
     const msPerDay = 1000 * 60 * 60 * 24;
     const dayNumber = Math.floor((today - timelineStartDate) / msPerDay) + 1;
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -426,7 +426,7 @@ timelineClose?.addEventListener('click', () => {
 
         // 🩹 Fix: Reset meta date to today's reflection after closing timeline
         const today = new Date();
-        const timelineStartDate = new Date('2025-07-02');
+        const timelineStartDate = new Date('2025-07-24');
         const msPerDay = 1000 * 60 * 60 * 24;
         const dayNumber = Math.floor((today - timelineStartDate) / msPerDay) + 1;
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
