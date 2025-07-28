@@ -2675,7 +2675,7 @@ body.scrolling .nav-item {
 }
 
 /* Specific enhancement for about screen scrolling */
-#about-screen.scrolling .top-nav-overlay {
+body.screen-about.scrolling .top-nav-overlay {
   background: linear-gradient(
     to bottom,
     rgba(15, 26, 29, 0.9) 0%,  /* Matches about screen theme */
