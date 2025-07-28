@@ -326,9 +326,8 @@ timelineOpen?.addEventListener('click', () => {
   closeFabMenuIfOpen(true);
   // Change background to timeline color
   setScreenBackground('timeline');
-  
-  timelineContainer.classList.add('visible');
-  timelineControls.classList.add('visible');
+
+  // Fade out launcher immediately
   timelineLauncher.classList.add('fade-out');
 
   const memoryBtn = document.getElementById('open-memory');
@@ -346,22 +345,23 @@ timelineOpen?.addEventListener('click', () => {
     memoryBtn.style.pointerEvents = 'none';
   }
 
-  // Hide both after fade finishes
+  // After fade-out, reveal timeline container and start playback
   setTimeout(() => {
     if (fab) fab.style.display = 'none';
     if (memoryBtn) memoryBtn.style.display = 'none';
+
+    timelineContainer.classList.add('visible');
+    timelineControls.classList.add('visible');
+
+    percent = 0;
+    progressEl.style.width = '0%';
+    bead.style.left = '0%';
+    lastTimelineIndex = -1;
+
+    timelineToggle.textContent = 'Pause';
+    isPlaying = true;
+    startTimelinePlayback();
   }, 800); // match transition
-  
-
-  percent = 0;
-  progressEl.style.width = '0%';
-  bead.style.left = '0%';
-  lastTimelineIndex = -1;
-  isPlaying = false;
-
-  timelineToggle.textContent = 'Pause';
-  isPlaying = true;
-  startTimelinePlayback();
 });
 
 
@@ -378,59 +378,61 @@ timelineClose?.addEventListener('click', () => {
   const fab = document.getElementById('hi-fab');
 
   if (!isMemory) {
-    if (fab) {
-      fab.style.display = 'flex';
-      fab.classList.remove('fade-out');
-      fab.classList.add('fade-in');
-      fab.style.pointerEvents = 'auto';
-    }
+    setTimeout(() => {
+      if (fab) {
+        fab.style.display = 'flex';
+        fab.classList.remove('fade-out');
+        fab.classList.add('fade-in');
+        fab.style.pointerEvents = 'auto';
+      }
 
-    if (memoryBtn) {
-      memoryBtn.style.display = 'flex';
-      memoryBtn.classList.remove('fade-out-soft');
-      memoryBtn.classList.add('fade-in-soft');
-      memoryBtn.style.pointerEvents = 'auto';
-    }
-    
-    if (timelineLauncher) {
-      timelineLauncher.style.display = 'flex';
-      timelineLauncher.classList.remove('fade-out');
-      timelineLauncher.classList.add('fade-in');
-      timelineLauncher.style.pointerEvents = 'auto';
-    }
-    
-    // Update to use mainNav instead of aboutLink
-    if (mainNav) {
-      mainNav.style.display = 'flex';
-      mainNav.classList.remove('fade-out-soft');
-      mainNav.classList.add('fade-in-soft');
-      mainNav.style.pointerEvents = 'auto';
-    }
-    
-    // 🌟 Restore the original reflection
-    if (window.originalIntro && window.originalIntro.length > 0) {
-      // 🔧 Clear timeline playback state so reflection plays fresh
-      window.timelinePaused = false;
-      window.resumeSentenceDisplay = null;
+      if (memoryBtn) {
+        memoryBtn.style.display = 'flex';
+        memoryBtn.classList.remove('fade-out-soft');
+        memoryBtn.classList.add('fade-in-soft');
+        memoryBtn.style.pointerEvents = 'auto';
+      }
 
-      // 🔧 Reset reflection playback state
-      sentenceIndex = 0;
-      wordIndex = 0;
-      currentSentences = [];
-      currentSpans = [];
-      currentP = null;
+      if (timelineLauncher) {
+        timelineLauncher.style.display = 'flex';
+        timelineLauncher.classList.remove('fade-out');
+        timelineLauncher.classList.add('fade-in');
+        timelineLauncher.style.pointerEvents = 'auto';
+      }
 
-      window.clearStaggeredDisplay?.();
-      setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
+      // Update to use mainNav instead of aboutLink
+      if (mainNav) {
+        mainNav.style.display = 'flex';
+        mainNav.classList.remove('fade-out-soft');
+        mainNav.classList.add('fade-in-soft');
+        mainNav.style.pointerEvents = 'auto';
+      }
 
-      // 🩹 Fix: Reset meta date to today's reflection after closing timeline
-      const today = new Date();
-      const timelineStartDate = new Date('2025-07-02');
-      const msPerDay = 1000 * 60 * 60 * 24;
-      const dayNumber = Math.floor((today - timelineStartDate) / msPerDay) + 1;
-      const options = { year: 'numeric', month: 'long', day: 'numeric' };
-      updateMetaDateSmoothly(`Day ${dayNumber} of becoming • ${today.toLocaleDateString('en-US', options)}`);
-    }
+      // 🌟 Restore the original reflection
+      if (window.originalIntro && window.originalIntro.length > 0) {
+        // 🔧 Clear timeline playback state so reflection plays fresh
+        window.timelinePaused = false;
+        window.resumeSentenceDisplay = null;
+
+        // 🔧 Reset reflection playback state
+        sentenceIndex = 0;
+        wordIndex = 0;
+        currentSentences = [];
+        currentSpans = [];
+        currentP = null;
+
+        window.clearStaggeredDisplay?.();
+        setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
+
+        // 🩹 Fix: Reset meta date to today's reflection after closing timeline
+        const today = new Date();
+        const timelineStartDate = new Date('2025-07-02');
+        const msPerDay = 1000 * 60 * 60 * 24;
+        const dayNumber = Math.floor((today - timelineStartDate) / msPerDay) + 1;
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        updateMetaDateSmoothly(`Day ${dayNumber} of becoming • ${today.toLocaleDateString('en-US', options)}`);
+      }
+    }, 800); // wait for container to finish hiding
   }
 });
 
