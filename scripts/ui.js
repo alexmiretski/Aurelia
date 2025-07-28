@@ -107,6 +107,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const metaDate = document.getElementById('meta-date');
   const timelineControls = document.getElementById('timeline-controls');
   const aboutScreen = document.getElementById('about-screen');
+  // Scroll detection for navigation overlay
+  let scrollTimeout;
+
+  function handleScroll() {
+    const isAboutScreen = !document.getElementById("about-screen").classList.contains("hidden");
+    const isMemoryScreen = document.getElementById("memory-screen")?.classList.contains("show");
+
+    // Only apply on smaller screens and when on about/memory screens
+    if (window.innerWidth <= 1024 && (isAboutScreen || isMemoryScreen)) {
+      if (window.scrollY > 20) {
+        document.body.classList.add("scrolling");
+      } else {
+        document.body.classList.remove("scrolling");
+      }
+    }
+
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      if (window.scrollY <= 20) {
+        document.body.classList.remove("scrolling");
+      }
+    }, 150);
+  }
+
+  window.addEventListener("scroll", handleScroll, { passive: true });
+
+  function removeScrollingState() {
+    document.body.classList.remove("scrolling");
+  }
 
   // Hamburger menu functionality
 const hamburgerButton = document.getElementById('hamburger-button');
@@ -697,8 +726,11 @@ timelineToggle?.addEventListener('click', () => {
   
     updateActiveNavItem();
   }
-  
-
+  const originalReturnToReflection = returnToReflection;
+  returnToReflection = function() {
+    removeScrollingState();
+    originalReturnToReflection();
+  };
   document.getElementById('open-memory')?.addEventListener('click', () => {
     setScreenBackground('memory');
 
