@@ -2565,7 +2565,12 @@ body.loaded #timeline-launcher {
   to { opacity: 1; }
 }
 
-@media (max-width: 899px) {
+/*
+  Extend the mobile overlay up to typical tablet widths so
+  the experience is blocked on tablet devices as well. This
+  now covers both portrait and landscape orientations.
+*/
+@media (max-width: 1200px) {
   #mobile-overlay {
     display: flex;
   }
