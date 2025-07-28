@@ -1472,7 +1472,7 @@ body.loaded #open-memory {
 .segment.theme-feel,
 .segment.theme-wonder,
 .segment.theme-drift {
-  font-weight: 300; /* Slightly bolder for themed text */
+  font-weight: 400; /* Slightly bolder for themed text */
 }
 
 .segment.visible,
