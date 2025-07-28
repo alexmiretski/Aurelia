@@ -236,7 +236,7 @@ class MemoryBlob {
     }
     ctx.globalAlpha = Math.max(alpha * 0.7, 0.05);
     
-    ctx.globalCompositeOperation = 'screen';
+    ctx.globalCompositeOperation = 'difference';
   
     // Reduced pulse for reduced motion users
     const pulseIntensity = prefersReducedMotion() ? 0.02 : 0.04;
