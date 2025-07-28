@@ -58,7 +58,7 @@ function fadeInHeroBlob() {
   }
 }
 
-function closeFabMenuIfOpen() {
+function closeFabMenuIfOpen(skipRestore = false) {
   const fabToggle = document.getElementById("fab-toggle");
   const fabMenu = document.getElementById("fab-menu");
 
@@ -71,19 +71,21 @@ function closeFabMenuIfOpen() {
     const blobCanvas = document.getElementById("hero-blob-canvas");
     blobCanvas?.classList.remove("theme-locked");
 
-    // Restore original intro if needed
-    if (window.originalIntro && window.displaySentencesStaggered) {
-      window.clearStaggeredDisplay?.();
-      setTimeout(() => window.displaySentencesStaggered(window.originalIntro), 450);
-    }
+    if (!skipRestore) {
+      // Restore original intro if needed
+      if (window.originalIntro && window.displaySentencesStaggered) {
+        window.clearStaggeredDisplay?.();
+        setTimeout(() => window.displaySentencesStaggered(window.originalIntro), 450);
+      }
 
-    // Restore the original date line without theme
-    const today = new Date();
-    const timelineStartDate = new Date('2025-07-02');
-    const msPerDay = 1000 * 60 * 60 * 24;
-    const dayNumber = Math.floor((today - timelineStartDate) / msPerDay) + 1;
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    updateMetaDateSmoothly(`Day ${dayNumber} of becoming • ${today.toLocaleDateString('en-US', options)}`);
+      // Restore the original date line without theme
+      const today = new Date();
+      const timelineStartDate = new Date('2025-07-02');
+      const msPerDay = 1000 * 60 * 60 * 24;
+      const dayNumber = Math.floor((today - timelineStartDate) / msPerDay) + 1;
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      updateMetaDateSmoothly(`Day ${dayNumber} of becoming • ${today.toLocaleDateString('en-US', options)}`);
+    }
   }
 }
 
@@ -321,6 +323,7 @@ document.querySelectorAll('[data-theme]').forEach(btn => {
 
 // Timeline open
 timelineOpen?.addEventListener('click', () => {
+  closeFabMenuIfOpen(true);
   // Change background to timeline color
   setScreenBackground('timeline');
   
