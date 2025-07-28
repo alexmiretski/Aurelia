@@ -2575,6 +2575,16 @@ body.loaded #timeline-launcher {
   }
 }
 
+@media (max-height: 900px), (max-width: 1200px) {
+  #about-screen {
+    align-items: flex-start !important;
+  }
+
+  .about-content {
+    margin-top: clamp(5rem, 12vh, 9rem) !important;
+  }
+}
+
 
 /* Screen-specific classes that update the CSS variable */
 body.screen-reflection {
