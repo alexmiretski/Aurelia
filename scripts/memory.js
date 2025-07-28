@@ -457,7 +457,7 @@ function showMemoryText(text) {
 
   if (memory?.created_at) {
     const createdAt = new Date(memory.created_at);
-    const startDate = new Date('2025-07-02');
+    const startDate = new Date('2025-07-24');
     const dayNumber = Math.floor((createdAt - startDate) / (1000 * 60 * 60 * 24)) + 1;
 
     const monthNames = [
