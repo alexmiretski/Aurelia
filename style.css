@@ -520,7 +520,7 @@ main {
   letter-spacing: 1px;
   text-transform: uppercase;
   padding: 0.9rem 2.1rem;
-  font-family: var(--font-serif);
+  font-family: var(--font-primary);
   background: radial-gradient(circle at 100% 65%, var(--gradient-pink) 0%, var(--gradient-blue) 100%);
   color: var(--dark-overlay);
   border: none;
@@ -1346,7 +1346,7 @@ body.loaded #timeline-launcher {
   gap: 0.6rem;
   height: 3rem;
   padding: 0.9rem 2.1rem;
-  font-family: var(--font-serif);
+  font-family: var(--font-primary);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 1px;
@@ -1513,7 +1513,7 @@ body.loaded #open-memory {
   border: none;
   
   /* Original support button styles */
-  font-family: var(--font-serif);
+  font-family: var(--font-primary);
   font-weight: 600;
   display: inline-block;
   text-align: center;
