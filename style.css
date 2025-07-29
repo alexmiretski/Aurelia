@@ -378,7 +378,7 @@ main {
   margin: 0 auto;
   word-break: break-word;
   transition: all var(--transition-normal);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 
