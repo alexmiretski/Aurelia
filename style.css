@@ -1536,7 +1536,7 @@ body.loaded #open-memory {
               box-shadow var(--transition-normal),
               transform var(--transition-normal);
   margin-top: clamp(1.5rem, 4vw, 3rem);
-  margin-bottom: clamp(1.5rem, 1.5vw, 1.5rem);
+  margin-bottom: clamp(1.6rem, 1.6vw, 1.6rem);
 }
 
 .support-button:hover {
