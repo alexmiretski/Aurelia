@@ -111,31 +111,27 @@ document.addEventListener('DOMContentLoaded', () => {
   let scrollTimeout;
 
   function handleScroll() {
-    const aboutVisible = aboutScreen && !aboutScreen.classList.contains('hidden');
-    const isMemoryScreen = document.getElementById('memory-screen')?.classList.contains('show');
-
-    const scrollPosition = aboutVisible ? aboutScreen.scrollTop : window.scrollY;
+    const isAboutScreen = !document.getElementById("about-screen").classList.contains("hidden");
+    const isMemoryScreen = document.getElementById("memory-screen")?.classList.contains("show");
 
     // Only apply on smaller screens and when on about/memory screens
-    if (window.innerWidth <= 1024 && (aboutVisible || isMemoryScreen)) {
-      if (scrollPosition > 20) {
-        document.body.classList.add('scrolling');
+    if (window.innerWidth <= 1024 && (isAboutScreen || isMemoryScreen)) {
+      if (window.scrollY > 20) {
+        document.body.classList.add("scrolling");
       } else {
-        document.body.classList.remove('scrolling');
+        document.body.classList.remove("scrolling");
       }
     }
 
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => {
-      const pos = aboutVisible ? aboutScreen.scrollTop : window.scrollY;
-      if (pos <= 20) {
-        document.body.classList.remove('scrolling');
+      if (window.scrollY <= 20) {
+        document.body.classList.remove("scrolling");
       }
     }, 150);
   }
 
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  aboutScreen?.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener("scroll", handleScroll, { passive: true });
 
   function removeScrollingState() {
     document.body.classList.remove("scrolling");
