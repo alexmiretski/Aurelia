@@ -547,8 +547,8 @@ main {
 
 .intro-text {
   font-family: var(--font-serif);
-  font-size: 1.8rem;
-  line-height: 2.7rem;
+  font-size: 1.5rem;
+  line-height: 2.25rem;
   margin-bottom: var(--space-3xl);
   color: var(--medium-gray);
   letter-spacing: 1px;
@@ -1440,7 +1440,7 @@ body.loaded #open-memory {
   flex-direction: column;
   gap: clamp(0.8rem, 2.5vw, 1.4rem);
   font-family: var(--font-serif);
-  font-size: clamp(0.85rem, 2.2vw, 1.8rem);
+  font-size: clamp(0.85rem, 2.2vw, 1.5rem);
   color: var(--light-gray);
   text-align: center;
   letter-spacing: clamp(0.2px, 0.4vw, 0.8px);
