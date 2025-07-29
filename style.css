@@ -546,8 +546,8 @@ main {
 }
 
 .intro-text {
-  font-family: var(--font-serif);
-  font-size: 1.8rem;
+  font-family: var(--font-primary);
+  font-size: 1.5rem;
   font-weight: 500;
   line-height: 2.7rem;
   margin-bottom: var(--space-3xl);
