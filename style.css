@@ -1620,7 +1620,7 @@ body.loaded #open-memory {
   /* Original nav-item styles */
   cursor: pointer;
   font-family: var(--font-primary);
-  font-weight: 400;
+  font-weight: 500;
   font-size: 0.9rem;
   letter-spacing: 0.06em;
   color: rgba(255, 255, 255, 0.6);
