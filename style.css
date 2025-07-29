@@ -2693,3 +2693,12 @@ body.screen-memory.scrolling .top-nav-overlay {
     rgba(29, 15, 15, 0) 100%
   );
 }
+
+@media (max-width: 1439px) {
+  .segment.theme-feel,
+  .segment.theme-drift,
+  .segment.theme-ache,
+  .segment:not([class*="theme-"]):not(:first-of-type) {
+    display: none;
+  }
+}
