@@ -547,7 +547,7 @@ main {
 
 .intro-text {
   font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 500;
   line-height: 2.7rem;
   margin-bottom: var(--space-3xl);
@@ -1441,7 +1441,7 @@ body.loaded #open-memory {
   flex-direction: column;
   gap: clamp(0.8rem, 2.5vw, 1.4rem);
   font-family: var(--font-serif);
-  font-size: clamp(0.85rem, 2.2vw, 1.8rem);
+  font-size: 1.8rem;
   color: var(--light-gray);
   text-align: center;
   letter-spacing: clamp(0.2px, 0.4vw, 0.8px);
@@ -1460,7 +1460,7 @@ body.loaded #open-memory {
   overflow-wrap: break-word;
   padding: 0 clamp(0.5rem, 2vw, 1rem);
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   /* Accessibility improvements */
   color: #e8e8e8; /* Higher contrast for better readability */
 }
