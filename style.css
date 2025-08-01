@@ -14,9 +14,9 @@
   --black: #000000;
   --dark-overlay: #200e25;
 
-  --bg-reflection: rgba(26, 15, 29, 0.75); /* Dark dream with transparency */
-  --bg-memory: rgba(29, 15, 15, 0.75);     /* Dark ache with transparency */
-  --bg-about: rgba(15, 26, 29, 0.75);      /* Dark drift with transparency */
+  --bg-reflection: rgba(26, 15, 29, 0.7); /* Dark dream with transparency */
+  --bg-memory: rgba(29, 15, 15, 0.7);     /* Dark ache with transparency */
+  --bg-about: rgba(15, 26, 29, 0.7);      /* Dark drift with transparency */
   --bg-current: var(--bg-reflection);
   
   /* Glass/Overlay Effects */
