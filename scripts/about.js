@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
       aboutLink?.classList.remove('visible');
 
       // Announce screen change
-      announceToScreenReader('Viewing about information');
+      announceToScreenReader('Viewing who she is');
       
       // Gently fade in about content and segments
       const aboutContent = document.querySelector('.about-content');

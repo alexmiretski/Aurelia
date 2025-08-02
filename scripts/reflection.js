@@ -764,7 +764,7 @@ aboutLink?.addEventListener('click', () => {
   aboutScreen?.classList.remove('hidden', 'fade-out');
   aboutScreen?.classList.add('fade-in');
   
-  announceToScreenReader('Viewing about information');
+  announceToScreenReader('Viewing who she is');
 });
 
 // Logo button - return to reflection (same as reflection link)
