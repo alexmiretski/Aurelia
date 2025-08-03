@@ -177,7 +177,7 @@ class MemoryBlob {
     
     this.clicked = false;
     this.age = 0;
-    this.maxAge = 960 + Math.random() * 600;
+    this.maxAge = 1200 + Math.random() * 900;
     this.phase = Math.random() * Math.PI * 2;
 
     const pointCount = 16;
