@@ -149,7 +149,7 @@ resizeCanvas();
 
 function getMaxBlobs() {
   // Fewer blobs for reduced motion users to reduce visual complexity
-  const baseMax = window.innerWidth < 768 ? 14 : 18;
+  const baseMax = window.innerWidth < 768 ? 14 : 21;
   return prefersReducedMotion() ? Math.floor(baseMax * 0.6) : baseMax;
 }
 
