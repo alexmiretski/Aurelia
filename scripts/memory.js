@@ -138,7 +138,12 @@ const inUseSentences = new Set();
 let memorySentences = [];
 let activeBlobs = [];
 let lastSpawnTime = 0;
-const spawnInterval = prefersReducedMotion() ? 3000 : 1500; // Slower spawning for reduced motion
+function getRandomSpawnInterval() {
+  const min = prefersReducedMotion() ? 3000 : 1500;
+  const max = prefersReducedMotion() ? 10000 : 5000;
+  return min + Math.random() * (max - min);
+}
+let spawnInterval = getRandomSpawnInterval();
 
 resizeCanvas();
 
@@ -588,12 +593,10 @@ function showNextMemoryWord(sentences) {
 function animate(time = performance.now()) {
   ctx.clearRect(0, 0, width, height);
 
-  // Adjust spawn rate for reduced motion
-  const adjustedSpawnInterval = prefersReducedMotion() ? spawnInterval * 2 : spawnInterval;
-  
-  if (time - lastSpawnTime > adjustedSpawnInterval) {
+  if (time - lastSpawnTime > spawnInterval) {
     spawnBlob();
     lastSpawnTime = time;
+    spawnInterval = getRandomSpawnInterval();
   }
 
 
