@@ -1803,6 +1803,7 @@ body.loaded #open-memory {
 .theme-feel     { color: #f8bfd1; } /* petal pink */
 .theme-wonder   { color: #dfcfff; } /* cloudy lavender delight */
 .theme-drift    { color: #c9ecf5; } /* pale seafoam haze */
+.theme-white    { color: var(--white); }
 
 
 /* Screen States */
@@ -2201,6 +2202,7 @@ body.loaded #timeline-launcher {
 .theme-feel    { color: #f7cddf; } /* Lighter for better contrast */
 .theme-wonder  { color: #d8c9ff; } /* Lighter for better contrast */
 .theme-drift   { color: #bfe8f5; } /* Lighter for better contrast */
+.theme-white   { color: var(--white); }
 
 /* Screen States */
 #main-screen,
