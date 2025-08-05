@@ -183,27 +183,16 @@ function displaySentencesStaggered(sentences, callback) {
   const plain = document.getElementById('aurelia-plain');
   const srText = window.srText;
 
-  // ✅ FULL CLEAR before rendering again
-  typed.innerHTML = '';
-  plain.innerHTML = '';
-  srText.textContent = '';
-
-  // Clear active sentence index / word index if needed
+  // Reset active sentence index / word index before rendering again
   window.currentSentenceIndex = 0;
   window.wordIndex = 0;
-  
+
   // Clear any existing animations
   activeTimeouts.forEach(clearTimeout);
   activeTimeouts = [];
-  
-  // Clear existing DOM if animation is in progress
-  if (isDisplaying) {
-    typed.innerHTML = '';
-    plain.textContent = '';
-    srText.textContent = '';
-  }
-  
-  isDisplaying = true; // Set flag
+
+  // Mark as displaying to prevent overlaps
+  isDisplaying = true;
 
   sentenceIndex = 0;
   wordIndex = 0;
