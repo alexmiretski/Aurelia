@@ -124,9 +124,12 @@ body::after {
   opacity: 0;
   visibility: hidden;
   text-align: center;
-  margin-top: var(--space-lg);
   transition: opacity var(--transition-very-slow);
   z-index: 2000;
+  position: absolute;
+  bottom: calc(100% + var(--space-lg));
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #meta-date.fade-in {
