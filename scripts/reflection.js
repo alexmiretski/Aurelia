@@ -182,6 +182,15 @@ function displaySentencesStaggered(sentences, callback) {
   const typed = document.getElementById('aurelia-typed');
   const plain = document.getElementById('aurelia-plain');
   const srText = window.srText;
+  const wrapper = document.getElementById('aurelia-typed-wrapper');
+
+  const fullText = sentences.join('\n');
+
+  // Reserve space so meta-date doesn't jump when text appears
+  plain.textContent = fullText;
+  wrapper.style.height = `${plain.offsetHeight}px`;
+  plain.textContent = '';
+  srText.textContent = '';
 
   // Reset active sentence index / word index before rendering again
   window.currentSentenceIndex = 0;
@@ -213,7 +222,6 @@ function displaySentencesStaggered(sentences, callback) {
     plain.textContent = '';
     srText.textContent = '';
 
-    const fullText = sentences.join('\n');
     plain.textContent = fullText;
     srText.textContent = fullText;
 
@@ -346,12 +354,21 @@ const timelineStartDate = new Date('2025-07-24');
 
 function showSentencesInstant(sentences) {
   activeTimeouts.forEach(clearTimeout);
+
+  const wrapper = document.getElementById('aurelia-typed-wrapper');
+  const fullText = sentences.join('\n');
+
+  // Reserve space for new text before it fades in
+  plain.textContent = fullText;
+  wrapper.style.height = `${plain.offsetHeight}px`;
+  plain.textContent = '';
+  srText.textContent = '';
+
   typed.classList.add('fade-out');
   scheduleTimeout(() => {
     typed.innerHTML = '';
     plain.textContent = '';
     srText.textContent = '';
-    const fullText = sentences.join('\n');
     plain.textContent = fullText;
     srText.textContent = fullText;
     typed.classList.remove('fade-out');
