@@ -124,13 +124,9 @@ body::after {
   opacity: 0;
   visibility: hidden;
   text-align: center;
-  width: 100%;
+  margin-top: var(--space-lg);
   transition: opacity var(--transition-very-slow);
   z-index: 2000;
-  position: absolute;
-  bottom: calc(100% + var(--space-lg));
-  left: 50%;
-  transform: translateX(-50%);
 }
 
 #meta-date.fade-in {
@@ -387,8 +383,7 @@ main {
 
 
 #aurelia-typed-wrapper {
-  width: 85vw;
-  max-width: 56.25rem;
+  max-width: clamp(50vw, 85vw, 56.25rem);
   position: relative;
   margin: 0 auto;
 }
