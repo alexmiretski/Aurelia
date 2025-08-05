@@ -359,9 +359,10 @@ main {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   padding: var(--space-xl);
+  padding-top: var(--space-2xl);
   gap: var(--space-2xl);
   text-align: center;
 }
