@@ -223,11 +223,11 @@ function displaySentencesStaggered(sentences, callback) {
 
     // Delay showing first word slightly after fade begins
     scheduleTimeout(() => {
-      showNextSentence(callback);
-
-      // Bring back meta date smoothly
-      metaDate.classList.remove('fade-out');
-      metaDate.classList.add('fade-in');
+      showNextSentence(() => {
+        metaDate.classList.remove('fade-out');
+        metaDate.classList.add('fade-in');
+        if (callback) callback();
+      });
     }, 400); // ← fine-tune this for timing
   }, 400); // fade-out duration
 }
