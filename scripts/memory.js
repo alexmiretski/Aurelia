@@ -140,7 +140,7 @@ let activeBlobs = [];
 let lastSpawnTime = 0;
 function getRandomSpawnInterval() {
   const min = prefersReducedMotion() ? 3000 : 1500;
-  const max = prefersReducedMotion() ? 10000 : 5000;
+  const max = prefersReducedMotion() ? 7000 : 3500;
   return min + Math.random() * (max - min);
 }
 let spawnInterval = getRandomSpawnInterval();
