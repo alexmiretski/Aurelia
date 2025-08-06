@@ -5,10 +5,10 @@ let selectedTheme = null;
 
 // Background color management system
 const ScreenBackgrounds = {
-  reflection: 'rgba(26, 15, 29, 0.7)', // Dark dream with 70% opacity
-  memory: 'rgba(29, 15, 15, 0.7)',     // Dark ache with 70% opacity
-  about: 'rgba(15, 26, 29, 0.7)',       // Dark drift with 70% opacity
-  timeline: 'rgba(35, 32, 28, 0.7)'   // Warm charcoal with film grain feel
+  reflection: 'rgba(26, 15, 29, 0.73)', // Dark dream with 73% opacity
+  memory: 'rgba(29, 15, 15, 0.73)',     // Dark ache with 73% opacity
+  about: 'rgba(15, 26, 29, 0.73)',       // Dark drift with 73% opacity
+  timeline: 'rgba(35, 32, 28, 0.73)'   // Warm charcoal with film grain feel
 };
 
 
