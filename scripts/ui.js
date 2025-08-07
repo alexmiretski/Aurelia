@@ -387,6 +387,10 @@ timelineOpen?.addEventListener('click', () => {
     if (fab) fab.style.display = 'none';
     if (memoryBtn) memoryBtn.style.display = 'none';
 
+    // Remove hidden so we can animate the slide-up
+    timelineContainer.classList.remove('hidden');
+    // Force reflow to ensure starting transform is applied
+    void timelineContainer.offsetWidth;
     timelineContainer.classList.add('visible');
     timelineControls.classList.add('visible');
 
@@ -409,6 +413,15 @@ timelineClose?.addEventListener('click', () => {
 
   timelineContainer.classList.remove('visible');
   timelineControls.classList.remove('visible');
+
+  // After the slide-down animation completes, hide the container
+  const onTransitionEnd = (e) => {
+    if (e.propertyName === 'transform') {
+      timelineContainer.classList.add('hidden');
+      timelineContainer.removeEventListener('transitionend', onTransitionEnd);
+    }
+  };
+  timelineContainer.addEventListener('transitionend', onTransitionEnd);
 
   const isMemory = document.getElementById('memory-screen')?.classList.contains('show');
   const memoryBtn = document.getElementById('open-memory');
