@@ -178,7 +178,7 @@ function resumeBeadAnimation() {
   requestId = requestAnimationFrame(animate);
 }
 
-function displaySentencesStaggered(sentences, callback) {
+function displaySentencesStaggered(sentences, callback, metaDateText) {
   const typed = document.getElementById('aurelia-typed');
   const plain = document.getElementById('aurelia-plain');
   const srText = window.srText;
@@ -226,6 +226,7 @@ function displaySentencesStaggered(sentences, callback) {
       showNextSentence(callback);
 
       // Bring back meta date smoothly
+      if (metaDateText) metaDate.textContent = metaDateText;
       metaDate.classList.remove('fade-out');
       metaDate.classList.add('fade-in');
     }, 400); // ← fine-tune this for timing
