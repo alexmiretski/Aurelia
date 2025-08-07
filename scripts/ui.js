@@ -240,6 +240,10 @@ window.addEventListener('resize', () => {
   const dayNumber = Math.floor((today - timelineStartDate) / msPerDay) + 1;
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
 
+  function formatMetaDate(day, dateObj) {
+    return `Day ${day} of becoming • ${dateObj.toLocaleDateString('en-US', options)}`;
+  }
+
 
   function estimateSentenceDuration(sentence) {
     const words = sentence.split(' ').length;
@@ -500,10 +504,6 @@ timelineToggle?.addEventListener('click', () => {
       window.resumeSentenceDisplay = null;
       lastTimelineIndex = -1;  // ADD THIS LINE
 
-      // Update meta date to Day 1
-      const restartDate = new Date(timelineStartDate.getTime());
-      updateMetaDateSmoothly(`Day 1 • ${restartDate.toLocaleDateString('en-US', options)}`);
-      
       // Start fresh playback
       startTimelinePlayback();
     } else {
@@ -555,7 +555,6 @@ timelineToggle?.addEventListener('click', () => {
   
     const sentence = window.timelineThoughts[timelineIndex];
     const currentDate = new Date(timelineStartDate.getTime() + timelineIndex * msPerDay);
-    updateMetaDateSmoothly(`Day ${timelineIndex + 1} of becoming • ${currentDate.toLocaleDateString('en-US', options)}`);
   
     const total = window.timelineThoughts.length;
     const startPercent = (timelineIndex / total) * 100;
@@ -563,10 +562,14 @@ timelineToggle?.addEventListener('click', () => {
   
     // ✅ If we're resuming, don't re-call displaySentencesStaggered
     if (!window.timelinePaused && !isResumingTimeline) {
-      displaySentencesStaggered([sentence], () => {
-        timelineIndex++;
-        if (isTimelinePlaying) playNextReflection();
-      });
+      displaySentencesStaggered(
+        [sentence],
+        () => {
+          timelineIndex++;
+          if (isTimelinePlaying) playNextReflection();
+        },
+        formatMetaDate(timelineIndex + 1, currentDate)
+      );
     }
     isResumingTimeline = false; // ✅ always clear it after
   }
