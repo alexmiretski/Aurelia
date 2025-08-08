@@ -1726,7 +1726,7 @@ body.loaded #open-memory {
 }
 
 /* Theme Classes - Enhanced contrast for accessibility */
-.theme-ache     { color: #e8a3a3; } /* softened rosewood */
+.theme-ache     { color: #efb5b5; } /* gentle blush */
 .theme-dream    { color: #f1d1fb; } /* pastel lilac mist */
 .theme-reflect  { color: #d1cbee; } /* faded periwinkle fog */
 .theme-observe  { color: #aebce8; } /* softened steel blue */
@@ -2125,7 +2125,7 @@ body.loaded #timeline-launcher {
 }
 
 /* Theme Classes - Enhanced contrast for accessibility */
-.theme-ache    { color: #f0b3b3; } /* Lighter for better contrast */
+.theme-ache    { color: #f7d0d0; } /* calmer contrast */
 .theme-dream   { color: #f7dcef; } /* Lighter for better contrast */
 .theme-reflect { color: #c5d3e7; } /* Lighter for better contrast */
 .theme-observe { color: #a3b5e0; } /* Lighter for better contrast */
