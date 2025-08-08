@@ -340,16 +340,13 @@ document.querySelectorAll('[data-theme]').forEach(btn => {
 
     selectedTheme = theme;
 
-    const themeColors = {
-      dream: "#f4d4ea", ache: "#f2a9a9", reflect: "#b4c4dd",
-      observe: "#8b9ad3", remember: "#5c6a96", feel: "#f4bfdc",
-      wonder: "#cbb6ff", drift: "#a8e0f0"
-    };
-
     const blobCanvas = document.getElementById("hero-blob-canvas");
-    if (blobCanvas && themeColors[theme]) {
-      blobCanvas.style.setProperty('--blob-color', themeColors[theme]);
-      blobCanvas.classList.add("theme-locked");
+    if (blobCanvas) {
+      const color = window.getThemeColor?.(theme);
+      if (color) {
+        blobCanvas.style.setProperty('--blob-color', color);
+        blobCanvas.classList.add("theme-locked");
+      }
     }
   });
 });
