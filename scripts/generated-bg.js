@@ -209,34 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function getThemeColor() {
     // Check for CSS custom property first
-    const rootStyles = getComputedStyle(document.documentElement);
-
-    // Try to detect theme from CSS variables
-    const themeColors = {
-      ache: '#b95858',     // muted rosewood
-      dream: '#e3bdf7',    // dusty lilac  
-      reflect: '#a59ccf',  // muted periwinkle
-      observe: '#7481c4',  // cool steel blue
-      remember: '#7e5a9b', // deep amethyst
-      feel: '#f4a7b9',     // warm blush
-      wonder: '#c6a3f2',   // lavender mist
-      drift: '#9ed0e0'     // soft seafoam
-    };
-
-    // Check if selectedTheme is set
-    if (window.selectedTheme && themeColors[window.selectedTheme]) {
-      return themeColors[window.selectedTheme];
-    }
-
-    // Try to auto-detect from CSS variables
-    for (const [theme, color] of Object.entries(themeColors)) {
-      const cssVar = rootStyles.getPropertyValue(`--theme-${theme}`).trim();
-      if (cssVar && cssVar !== '') {
-        return cssVar;
-      }
-    }
-
-    return '#e3bdf7'; // default dream
+    return window.getThemeColor?.(window.selectedTheme || 'dream') || '#e3bdf7';
   }
 
   // Cache the current theme color so we don't recompute on every particle reset

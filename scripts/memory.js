@@ -196,12 +196,7 @@ class MemoryBlob {
     if (this.theme === 'daily') {
       this.getThemeColor = () => window.heroBlob?.currentColor || '#6e9acb';
     } else {
-      const themeColors = {
-        dream: "#f4d4ea", ache: "#f2a9a9", reflect: "#b4c4dd",
-        observe: "#8b9ad3", remember: "#5c6a96", feel: "#f4bfdc",
-        wonder: "#cbb6ff", drift: "#a8e0f0", evolution: "#ffffff"
-      };
-      this.getThemeColor = () => themeColors[this.theme] || "rgba(255,180,240,0.2)";
+      this.getThemeColor = () => window.getThemeColor?.(this.theme) || "rgba(255,180,240,0.2)";
     }
     
     this.el = this.createAccessibleButton();

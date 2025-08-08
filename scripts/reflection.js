@@ -71,13 +71,9 @@ let currentSentences = [];
 let currentSpans = [];
 let currentP = null;
 
-const themeColors = [
-  '#6e9acb',
-  '#cda6dd',
-  '#f8c6b5',
-  '#ffe89e',
-  '#a3e0d9'
-];
+const themeColors = Object.values(window.themeColors || {
+  dream: '#6e9acb'
+});
 
 const heroBlob = {
   x: window.innerWidth / 2,
