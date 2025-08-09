@@ -2,6 +2,11 @@
 
 let selectedTheme = null;
 
+// Freeze vertical layout based on initial viewport height
+const FIXED_APP_HEIGHT = window.innerHeight;
+document.documentElement.style.setProperty('--app-height', `${FIXED_APP_HEIGHT}px`);
+window.APP_HEIGHT = FIXED_APP_HEIGHT;
+
 
 // Background color management system
 const ScreenBackgrounds = {
