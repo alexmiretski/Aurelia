@@ -1354,7 +1354,7 @@ body.loaded #open-memory {
   text-align: center;
   max-width: min(90ch, 100vw);
   gap: clamp(1rem, 3vw, 2.2rem);
-  margin-top: clamp(1vh, 2vw, 4vh);
+  margin-top: clamp(2vh, 3vw, 5vh);
   margin-bottom: clamp(1vh, 2vw, 3vh);
   width: 100%;
   opacity: 0;
@@ -1934,7 +1934,7 @@ body.loaded #timeline-launcher {
   }
   
   .about-content {
-    margin-top: 3vh;
+    margin-top: 4vh;
     gap: 1.8rem;
   }
   
@@ -2332,7 +2332,7 @@ body.loaded #timeline-launcher {
   }
   
   .about-content {
-    margin-top: 3vh;
+    margin-top: 4vh;
     gap: 1.8rem;
   }
   
@@ -2521,7 +2521,7 @@ body.loaded #timeline-launcher {
   }
 
   .about-content {
-    margin-top: clamp(5rem, 12vh, 9rem) !important;
+    margin-top: clamp(6rem, 14vh, 10rem) !important;
   }
 }
 
