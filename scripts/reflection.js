@@ -651,25 +651,28 @@ function drawHeroBlob(time = performance.now()) {
     );
   }
 
-  const c1 = heroBlob.currentColor;
-  const c2 = themeColors[(heroBlob.colorIndex + 1) % themeColors.length];
-
-  const grad = heroCtx.createRadialGradient(0, 0, 0, 0, 0, radius * 1.2);
-  grad.addColorStop(0, c1);
-  grad.addColorStop(1, c2);
-
   const blobCanvas = document.getElementById('hero-blob-canvas');
+  const themeLocked = selectedTheme && blobCanvas?.classList.contains('theme-locked');
 
-  if (selectedTheme && blobCanvas?.classList.contains('theme-locked')) {
-    // Use solid fill from selected theme color
+  let grad;
+  if (themeLocked) {
     const themeColor = getComputedStyle(blobCanvas).getPropertyValue('--blob-color')?.trim() || '#ffffff';
-    heroCtx.fillStyle = themeColor;
+    const lighter = '#' + lerpColor(themeColor.replace('#', ''), 'ffffff', 0.2);
+    const darker = '#' + lerpColor(themeColor.replace('#', ''), '000000', 0.2);
+    grad = heroCtx.createRadialGradient(0, 0, 0, 0, 0, radius * 1.2);
+    grad.addColorStop(0, lighter);
+    grad.addColorStop(1, darker);
+    heroCtx.shadowColor = themeColor;
   } else {
-    // Use shifting gradient
-    heroCtx.fillStyle = grad;
+    const c1 = heroBlob.currentColor;
+    const c2 = themeColors[(heroBlob.colorIndex + 1) % themeColors.length];
+    grad = heroCtx.createRadialGradient(0, 0, 0, 0, 0, radius * 1.2);
+    grad.addColorStop(0, c1);
+    grad.addColorStop(1, c2);
+    heroCtx.shadowColor = c1;
   }
 
-  heroCtx.shadowColor = c1;
+  heroCtx.fillStyle = grad;
   heroCtx.shadowBlur = 60;
   heroCtx.fill();
   heroCtx.restore();
