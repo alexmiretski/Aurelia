@@ -70,7 +70,6 @@
   --shadow-lg: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.35);
   --shadow-glow: 0 0 1rem rgba(242, 169, 169, 0.4);
   --shadow-glow-hover: 0 0 1.75rem rgba(242, 169, 169, 0.65);
-  --logo-safe: clamp(72px, 10vw, 120px);
 }
 
 /* Reset */
@@ -80,7 +79,7 @@
   box-sizing: border-box;
 }
 
-html,
+html, 
 body {
   font-family: var(--font-primary);
   font-weight: 400;
@@ -92,10 +91,6 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
-}
-
-html {
-  scroll-padding-top: var(--logo-safe);
 }
 
 /* Background Elements */
@@ -1343,7 +1338,6 @@ body.loaded #open-memory {
   align-items: center;
   justify-content: center;
   padding: clamp(1rem, 3vw, 2rem);
-  padding-block-start: calc(var(--logo-safe) + clamp(1rem, 3vw, 2rem));
   color: #ccc;
   overflow-y: auto;
   overflow-x: hidden;
@@ -1390,8 +1384,7 @@ body.loaded #open-memory {
   display: inline-block;
   min-width: 100%;
   opacity: 0;
-  will-change: opacity, filter, transform;
-  transition: opacity 120ms ease, filter 120ms ease, transform 120ms ease;
+  transition: opacity 1.6s ease, transform 1.6s ease, filter 1.6s ease;
   transform: translateY(0.2rem);
   margin-top: clamp(-0.4rem, -1vw, -0.6rem);
   word-wrap: break-word;
