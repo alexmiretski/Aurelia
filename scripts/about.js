@@ -330,91 +330,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   if (aboutScreen) {
-    aboutObserver.observe(aboutScreen, {
-      attributes: true,
-      attributeFilter: ['class']
+    aboutObserver.observe(aboutScreen, { 
+      attributes: true, 
+      attributeFilter: ['class'] 
     });
   }
-
-  // Sequential fade near fixed logo (no spacing or layout changes)
-  (() => {
-    const logoEl = document.querySelector('#logo');
-    const segs = Array.from(document.querySelectorAll('.living-text .segment'));
-    if (!logoEl || !segs.length) return;
-
-    // CONFIG
-    const PROXIMITY = 160;  // px below the logo where fade begins
-    const MAX_BLUR = 0.6;   // px
-    const MAX_SHIFT = 4;    // px
-    const LIMIT_TO_FIRST_N = null; // e.g. 4 to affect only the first 4 segments
-
-    const list = LIMIT_TO_FIRST_N ? segs.slice(0, LIMIT_TO_FIRST_N) : segs;
-
-    if (prefersReducedMotion()) return;
-
-    let ticking = false;
-    const clamp01 = v => Math.max(0, Math.min(1, v));
-
-    function update() {
-      const g = logoEl.getBoundingClientRect();
-      const logoTop = g.top;
-      const logoBottom = g.bottom;
-
-      // Determine which ONE segment is nearest to the logo bottom (from below)
-      let nearestIndex = -1;
-      let nearestDist = Infinity;
-
-      for (let i = 0; i < list.length; i++) {
-        const r = list[i].getBoundingClientRect();
-        const dBelow = r.top - logoBottom; // >= 0 means it's below the logo bottom
-        if (dBelow >= 0 && dBelow <= PROXIMITY && dBelow < nearestDist) {
-          nearestDist = dBelow;
-          nearestIndex = i;
-        }
-      }
-
-      for (let i = 0; i < list.length; i++) {
-        const el = list[i];
-        const r = el.getBoundingClientRect();
-
-        // 1) Overlap-based fade (if any part is under the logo, it should vanish)
-        const overlap = Math.max(0, Math.min(r.bottom, logoBottom) - Math.max(r.top, logoTop));
-        const overlapT = overlap > 0 ? clamp01(overlap / r.height) : 0;
-
-        // 2) Proximity-based fade (only for the one nearest segment)
-        let proxT = 0;
-        if (i === nearestIndex) {
-          const dBelow = r.top - logoBottom; // in [0, PROXIMITY]
-          proxT = clamp01(1 - (dBelow / PROXIMITY)); // 0→1 as it approaches the logo
-        }
-
-        const t = Math.max(overlapT, proxT);
-        const opacity = 1 - t;
-
-        el.style.opacity = opacity.toFixed(3);
-        el.style.filter = `blur(${(t * MAX_BLUR).toFixed(3)}px)`;
-        el.style.transform = `translateY(${(t * MAX_SHIFT).toFixed(3)}px)`;
-        el.style.pointerEvents = opacity < 0.05 ? 'none' : '';
-      }
-
-      ticking = false;
-    }
-
-    function onScroll() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    }
-
-    function onResize() {
-      update();
-    }
-
-    const scrollTarget = aboutScreen || window;
-    scrollTarget.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onResize);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(update);
-    update();
-  })();
 });
