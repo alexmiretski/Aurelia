@@ -1,7 +1,7 @@
 (function () {
   const themeColors = {
     dream: '#e3bdf7',
-    feel: '#f8d2b3',
+    feel: '#f5b5c8',
     wonder: '#c6a3f2',
     remember: '#f8d2b3',
     reflect: '#a59ccf',
