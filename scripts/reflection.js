@@ -11,6 +11,117 @@ function lerpColor(c1, c2, t) {
   return `#${r}${g}${b}`;
 }
 
+function hexToRgb(hex) {
+  const n = parseInt(hex.replace('#', ''), 16);
+  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+}
+
+function hexToHsl(hex) {
+  let { r, g, b } = hexToRgb(hex);
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+  if (max === min) { h = s = 0; }
+  else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+  return { h: h * 360, s, l };
+}
+
+function hslToHex(h, s, l) {
+  h /= 360;
+  let r, g, b;
+  if (s === 0) {
+    r = g = b = l;
+  } else {
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
+  }
+  const toHex = x => Math.round(x * 255).toString(16).padStart(2, '0');
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
+function hexToRgba(hex, a) {
+  const { r, g, b } = hexToRgb(hex);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+function shiftHue(hex, deg) {
+  const hsl = hexToHsl(hex);
+  hsl.h = (hsl.h + deg) % 360;
+  return hslToHex(hsl.h, hsl.s, hsl.l);
+}
+
+function adjustGlowColor(hex) {
+  const hsl = hexToHsl(hex);
+  let { h, s, l } = hsl;
+  if (l < 0.3) {
+    l = Math.min(1, l + 0.1);
+    s = Math.max(0, s - 0.05);
+  }
+  return hslToHex(h, s, l);
+}
+
+function parseColor(c) {
+  if (!c) return '#ffffff';
+  if (c.startsWith('#')) return c;
+  const m = c.match(/hsl\((\d+),\s*(\d+)%?,\s*(\d+)%?\)/i);
+  if (m) return hslToHex(parseInt(m[1]), parseInt(m[2]) / 100, parseInt(m[3]) / 100);
+  return c;
+}
+
+const blobSettings = {
+  glowScale: 1.35,
+  glowAlphaCenter: 0.42,
+  glowAlphaMid: 0.22,
+  blurPx: 90,
+  hueDriftPerSec: 1.5,
+  glowBreathAmplitude: 0.05,
+  glowIntensity: 1,
+  composite: 'screen'
+};
+
+const compositeTest = document.createElement('canvas').getContext('2d');
+compositeTest.globalCompositeOperation = 'screen';
+if (compositeTest.globalCompositeOperation !== 'screen') {
+  blobSettings.composite = 'lighter';
+}
+
+let lockedColor = null;
+
+window.setHeroBlobTheme = function (color) {
+  lockedColor = parseColor(color);
+  heroBlob.startColor = heroBlob.currentColor;
+  heroBlob.targetColor = lockedColor;
+  heroBlob.colorLerpProgress = 0;
+};
+
+window.clearHeroBlobTheme = function () {
+  lockedColor = null;
+};
+
+window.setGlowIntensity = function (v) {
+  blobSettings.glowIntensity = Math.max(0, Math.min(1, v));
+};
+
 let heroBlobStarted = false;
 let isDisplaying = false;
 
@@ -590,23 +701,56 @@ metaDate.textContent = `Day ${dayNumber} of becoming • ${today.toLocaleDateStr
 
 const heroCanvas = document.getElementById('hero-blob-canvas');
 const heroCtx = heroCanvas.getContext('2d');
+const glowCanvas = document.createElement('canvas');
+const glowCtx = glowCanvas.getContext('2d');
+let dpr = window.devicePixelRatio || 1;
 
 function resizeHeroCanvas() {
-  heroCanvas.width = window.innerWidth;
-  heroCanvas.height = window.innerHeight;
+  dpr = window.devicePixelRatio || 1;
+  const maxW = 2200;
+  const maxH = 1400;
+  const cssW = Math.min(window.innerWidth, maxW / dpr);
+  const cssH = Math.min(window.innerHeight, maxH / dpr);
+  heroCanvas.style.width = cssW + 'px';
+  heroCanvas.style.height = cssH + 'px';
+  heroCanvas.width = cssW * dpr;
+  heroCanvas.height = cssH * dpr;
+  heroCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-  heroBlob.x = window.innerWidth / 2;
-  heroBlob.y = window.innerHeight / 2;
-  heroBlob.radius = Math.min(window.innerWidth, window.innerHeight) * 0.25;
+  glowCanvas.width = heroCanvas.width;
+  glowCanvas.height = heroCanvas.height;
+  glowCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  heroBlob.x = cssW / 2;
+  heroBlob.y = cssH / 2;
+  heroBlob.radius = Math.min(cssW, cssH) * 0.25;
 }
 
 resizeHeroCanvas();
 window.addEventListener('resize', resizeHeroCanvas);
 
+let slowFrames = 0;
+let lowPerf = navigator.deviceMemory && navigator.deviceMemory < 4;
+if (lowPerf) {
+  blobSettings.blurPx *= 0.7;
+  heroBlob.points = heroBlob.points.slice(0, Math.floor(heroBlob.points.length * 0.75));
+  blobSettings.composite = 'source-over';
+}
+
 // In your drawHeroBlob function, replace just the drawing part:
 
 function drawHeroBlob(time = performance.now()) {
   heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+  const dt = time - (drawHeroBlob.lastTime || time);
+  drawHeroBlob.lastTime = time;
+  if (dt > 16) slowFrames++; else slowFrames = 0;
+  if (!lowPerf && slowFrames > 30) {
+    lowPerf = true;
+    blobSettings.blurPx *= 0.7;
+    heroBlob.points = heroBlob.points.slice(0, Math.floor(heroBlob.points.length * 0.75));
+    blobSettings.composite = 'source-over';
+  }
+
   const { x, y, radius, points } = heroBlob;
   const coords = points.map(p => {
     const bump = 1 + 0.08 * Math.sin(p.phase + time * 0.0015);
@@ -617,30 +761,7 @@ function drawHeroBlob(time = performance.now()) {
     };
   });
 
-  heroCtx.save();
-  heroCtx.translate(x, y);
-  heroCtx.scale(heroBlob.scale, heroBlob.scale);
-
-  heroCtx.beginPath();
-  
-  // Start between the last and first point (not at first point)
-  const lastIdx = coords.length - 1;
-  heroCtx.moveTo(
-    (coords[lastIdx].x + coords[0].x) / 2, 
-    (coords[lastIdx].y + coords[0].y) / 2
-  );
-  
-  // Draw through all points including wrapping back to start
-  for (let i = 0; i < coords.length; i++) {
-    const curr = coords[i];
-    const next = coords[(i + 1) % coords.length];
-    heroCtx.quadraticCurveTo(curr.x, curr.y, (curr.x + next.x) / 2, (curr.y + next.y) / 2);
-  }
-  
-  heroCtx.closePath();
-
-  // Rest of the function remains exactly the same...
-  // Interpolate using startColor → targetColor
+  // Color interpolation
   if (heroBlob.colorLerpProgress < 1) {
     heroBlob.colorLerpProgress += 0.01;
     if (heroBlob.colorLerpProgress > 1) heroBlob.colorLerpProgress = 1;
@@ -651,15 +772,57 @@ function drawHeroBlob(time = performance.now()) {
     );
   }
 
-  const c1 = heroBlob.currentColor;
-  const c2 = themeColors[(heroBlob.colorIndex + 1) % themeColors.length];
+  let baseColor = lockedColor || heroBlob.currentColor;
+  if (!lockedColor) {
+    const drift = blobSettings.hueDriftPerSec * dt / 1000;
+    heroBlob._hueDrift = (heroBlob._hueDrift || 0) + drift;
+    baseColor = shiftHue(baseColor, heroBlob._hueDrift);
+  }
 
-  const grad = heroCtx.createRadialGradient(0, 0, 0, 0, 0, radius * 1.2);
-  grad.addColorStop(0, c1);
-  grad.addColorStop(1, c2);
+  // --- Glow layer ---
+  const baseRadius = radius * heroBlob.scale;
+  const breath = 1 + blobSettings.glowBreathAmplitude * Math.sin(time * 0.0005);
+  const glowRadius = baseRadius * blobSettings.glowScale * breath;
+  glowCtx.clearRect(0, 0, glowCanvas.width, glowCanvas.height);
+  const blur = blobSettings.blurPx * blobSettings.glowIntensity * dpr;
+  glowCtx.filter = `blur(${blur}px)`;
+  const glowColor = adjustGlowColor(baseColor);
+  const gradGlow = glowCtx.createRadialGradient(x, y, 0, x, y, glowRadius);
+  gradGlow.addColorStop(0, hexToRgba(glowColor, blobSettings.glowAlphaCenter * blobSettings.glowIntensity));
+  gradGlow.addColorStop(0.5, hexToRgba(glowColor, blobSettings.glowAlphaMid * blobSettings.glowIntensity));
+  gradGlow.addColorStop(1, hexToRgba(glowColor, 0));
+  glowCtx.fillStyle = gradGlow;
+  glowCtx.beginPath();
+  glowCtx.arc(x, y, glowRadius, 0, Math.PI * 2);
+  glowCtx.fill();
+  glowCtx.filter = 'none';
+
+  heroCtx.save();
+  heroCtx.globalCompositeOperation = blobSettings.composite;
+  heroCtx.drawImage(glowCanvas, 0, 0);
+  heroCtx.restore();
+
+  // --- Base blob ---
+  heroCtx.save();
+  heroCtx.translate(x, y);
+  heroCtx.scale(heroBlob.scale, heroBlob.scale);
+
+  heroCtx.beginPath();
+  const lastIdx = coords.length - 1;
+  heroCtx.moveTo(
+    (coords[lastIdx].x + coords[0].x) / 2,
+    (coords[lastIdx].y + coords[0].y) / 2
+  );
+
+  for (let i = 0; i < coords.length; i++) {
+    const curr = coords[i];
+    const next = coords[(i + 1) % coords.length];
+    heroCtx.quadraticCurveTo(curr.x, curr.y, (curr.x + next.x) / 2, (curr.y + next.y) / 2);
+  }
+
+  heroCtx.closePath();
 
   const blobCanvas = document.getElementById('hero-blob-canvas');
-
   if (selectedTheme && blobCanvas?.classList.contains('theme-locked')) {
     const themeColor = getComputedStyle(blobCanvas).getPropertyValue('--blob-color')?.trim() || '#ffffff';
     const lighter = lerpColor(themeColor.replace('#', ''), 'ffffff', 0.2);
@@ -669,11 +832,14 @@ function drawHeroBlob(time = performance.now()) {
     lockedGrad.addColorStop(1, darker);
     heroCtx.fillStyle = lockedGrad;
   } else {
-    // Use shifting gradient
+    const c2 = shiftHue(themeColors[(heroBlob.colorIndex + 1) % themeColors.length], heroBlob._hueDrift || 0);
+    const grad = heroCtx.createRadialGradient(0, 0, 0, 0, 0, radius * 1.2);
+    grad.addColorStop(0, baseColor);
+    grad.addColorStop(1, c2);
     heroCtx.fillStyle = grad;
   }
 
-  heroCtx.shadowColor = c1;
+  heroCtx.shadowColor = baseColor;
   heroCtx.shadowBlur = 60;
   heroCtx.fill();
   heroCtx.restore();
@@ -689,6 +855,7 @@ function drawHeroBlob(time = performance.now()) {
 }
 
 setInterval(() => {
+  if (lockedColor) return;
   heroBlob.colorIndex = (heroBlob.colorIndex + 1) % themeColors.length;
   heroBlob.startColor = heroBlob.currentColor;
   heroBlob.targetColor = themeColors[heroBlob.colorIndex];
