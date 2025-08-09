@@ -83,7 +83,7 @@ function getResponsiveRadius() {
 
 function resizeCanvas() {
   width = canvas.width = window.innerWidth;
-  height = canvas.height = window.APP_HEIGHT;
+  height = canvas.height = window.innerHeight;
 
   // Reposition and resize all blobs based on their relative coords
   activeBlobs.forEach(blob => {
@@ -204,7 +204,7 @@ class MemoryBlob {
 
   updatePositionFromRelative() {
     const safeWidth = width || window.innerWidth;
-    const safeHeight = height || window.APP_HEIGHT;
+    const safeHeight = height || window.innerHeight;
     this.x = this.relX * safeWidth;
     this.y = this.relY * safeHeight;
     
