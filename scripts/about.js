@@ -249,6 +249,56 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastIndex = -1;
   let rotationActive = true;
 
+  // Sequential fade on scroll for Essence segments
+  (function setupSequentialFade() {
+    const fadeSegments = Array.from(document.querySelectorAll('.living-text .segment'));
+    if (!fadeSegments.length) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const STEP = 200; // px per segment window
+    const MAX_BLUR = 0.5; // px
+    const MAX_SHIFT = 4;  // px
+
+    let ticking = false;
+    const scroller = aboutScreen || window;
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function clamp01(v) { return Math.max(0, Math.min(1, v)); }
+
+    function update() {
+      const y = scroller === window ? window.scrollY || 0 : scroller.scrollTop || 0;
+
+      fadeSegments.forEach((el, i) => {
+        const start = i * STEP;
+        const end = (i + 1) * STEP;
+        const t = clamp01((y - start) / (end - start));
+
+        const opacity = 1 - t;
+        const blur = lerp(0, MAX_BLUR, t);
+        const shift = lerp(0, MAX_SHIFT, t);
+
+        el.style.opacity = opacity.toFixed(3);
+        el.style.filter = `blur(${blur.toFixed(3)}px)`;
+        el.style.transform = `translateY(${shift.toFixed(3)}px)`;
+        el.style.pointerEvents = opacity === 0 ? 'none' : '';
+      });
+
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }
+
+    scroller.addEventListener('scroll', onScroll, { passive: true });
+    update();
+  })();
+
   // Pause text rotation if user prefers reduced motion
   if (prefersReducedMotion()) {
     rotationActive = false;
