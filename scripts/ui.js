@@ -229,6 +229,25 @@ window.addEventListener('resize', () => {
     }
   });
 
+  // Feature flag to toggle old CTA
+  window.SHOW_STRONG_CTA = false;
+
+  // Attach analytics
+  const link = document.getElementById('support-link');
+  if (link) {
+    link.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('support_link_clicked', {
+        detail: { location: 'footer', variant: 'gentle_v1' }
+      }));
+    });
+  }
+
+  // Quick revert helper if needed
+  if (window.SHOW_STRONG_CTA) {
+    document.getElementById('support-block')?.classList.add('hidden');
+    document.getElementById('strong-cta')?.classList.remove('hidden');
+  }
+
 
   // Global references
   window.bead = bead;
