@@ -377,6 +377,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const el = list[i];
         const r = el.getBoundingClientRect();
 
+        // Keep segments hidden once they've passed above the logo
+        if (r.bottom <= logoTop) {
+          el.style.opacity = '0';
+          el.style.filter = `blur(${MAX_BLUR}px)`;
+          el.style.transform = `translateY(${MAX_SHIFT}px)`;
+          el.style.pointerEvents = 'none';
+          continue;
+        }
+
         // 1) Overlap-based fade (if any part is under the logo, it should vanish)
         const overlap = Math.max(0, Math.min(r.bottom, logoBottom) - Math.max(r.top, logoTop));
         const overlapT = overlap > 0 ? clamp01(overlap / r.height) : 0;
