@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const segments = document.querySelectorAll('.segment');
         segments.forEach((el, i) => {
-          el.classList.remove('visible');
+          el.classList.remove('visible', 'scroll-fade-out');
           // Respect reduced motion preference
           const delay = prefersReducedMotion() ? 0 : i * 100;
           setTimeout(() => el.classList.add('visible'), delay);
@@ -251,6 +251,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Fade segments when they approach the top of the screen
   function handleSegmentScroll() {
+    if (aboutScreen.classList.contains('hidden')) {
+      return;
+    }
     segments.forEach(seg => {
       const rect = seg.getBoundingClientRect();
       if (rect.top < 100) {
