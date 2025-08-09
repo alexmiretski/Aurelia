@@ -234,7 +234,7 @@ class MemoryBlob {
       if (ratio < 0.2) alpha = ratio / 0.2;
       else if (ratio > 0.8) alpha = 1 - (ratio - 0.8) / 0.2;
     }
-    ctx.globalAlpha = Math.max(alpha * 0.7, 0.05);
+    ctx.globalAlpha = Math.max(alpha, 0) * 0.7;
     
     ctx.globalCompositeOperation = 'screen';
   
