@@ -2664,7 +2664,7 @@ body.screen-memory.scrolling .top-nav-overlay {
 .support-link {
   margin-left: 0.35rem;
   text-decoration: underline;
-  color: rgba(255, 255, 255, 0.6);
+  color: inherit;
   transition: color var(--transition-normal);
 }
 
