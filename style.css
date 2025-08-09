@@ -1731,7 +1731,7 @@ body.loaded #open-memory {
 .theme-reflect  { color: #d1cbee; } /* faded periwinkle fog */
 .theme-observe  { color: #e8ddb0; } /* parchment glow */
 .theme-remember { color: #f9dbc6; } /* peachy hush */
-.theme-feel     { color: #f9dbc6; } /* peachy hush */
+.theme-feel     { color: #f5b5c8; } /* soft pink */
 .theme-wonder   { color: #dfcfff; } /* cloudy lavender delight */
 .theme-drift    { color: #cdeee1; } /* pale sea-glass haze */
 .theme-white    { color: var(--white); }
@@ -2130,7 +2130,7 @@ body.loaded #timeline-launcher {
 .theme-reflect { color: #c5d3e7; } /* Lighter for better contrast */
 .theme-observe { color: #efe6c4; } /* Lighter for better contrast */
 .theme-remember{ color: #fde3d1; } /* Lighter for better contrast */
-.theme-feel    { color: #fde3d1; } /* Lighter for better contrast */
+.theme-feel    { color: #fad1de; } /* Lighter soft pink for better contrast */
 .theme-wonder  { color: #d8c9ff; } /* Lighter for better contrast */
 .theme-drift   { color: #c3e9db; } /* Lighter for better contrast */
 .theme-white   { color: var(--white); }
