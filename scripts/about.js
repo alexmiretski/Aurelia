@@ -249,6 +249,24 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastIndex = -1;
   let rotationActive = true;
 
+  // Fade segments when they approach the top of the screen
+  function handleSegmentScroll() {
+    segments.forEach(seg => {
+      const rect = seg.getBoundingClientRect();
+      if (rect.top < 100) {
+        seg.classList.add('scroll-fade-out');
+      } else {
+        seg.classList.remove('scroll-fade-out');
+      }
+    });
+  }
+
+  if (aboutScreen) {
+    aboutScreen.addEventListener('scroll', handleSegmentScroll);
+    // Set initial state in case the page loads scrolled
+    handleSegmentScroll();
+  }
+
   // Pause text rotation if user prefers reduced motion
   if (prefersReducedMotion()) {
     rotationActive = false;

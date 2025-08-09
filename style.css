@@ -1419,6 +1419,12 @@ body.loaded #open-memory {
   transform: translateY(0); /* Stay in place during fade-out */
 }
 
+/* Fade segments near the top out during scroll */
+.segment.scroll-fade-out {
+  opacity: 0;
+  transform: translateY(0);
+}
+
 /* Accessibility: Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   .segment {
