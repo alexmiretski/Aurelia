@@ -70,7 +70,6 @@ function closeFabMenuIfOpen(skipRestore = false) {
     selectedTheme = null;
     const blobCanvas = document.getElementById("hero-blob-canvas");
     blobCanvas?.classList.remove("theme-locked");
-    window.clearHeroBlobTheme?.();
 
     if (!skipRestore) {
       // Restore original intro if needed
@@ -302,8 +301,7 @@ fabToggle?.addEventListener("click", () => {
     if (blobCanvas) {
       blobCanvas.classList.remove("theme-locked");
     }
-    window.clearHeroBlobTheme?.();
-
+    
     // Restore original intro and date
     if (window.originalIntro) {
       window.clearStaggeredDisplay?.();
@@ -367,7 +365,6 @@ document.querySelectorAll('[data-theme]').forEach(btn => {
       if (color) {
         blobCanvas.style.setProperty('--blob-color', color);
         blobCanvas.classList.add("theme-locked");
-        window.setHeroBlobTheme?.(color);
       }
     }
   });
