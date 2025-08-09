@@ -68,10 +68,9 @@
   --shadow-sm: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
   --shadow-md: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.25);
   --shadow-lg: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.35);
-    --shadow-glow: 0 0 1rem rgba(242, 169, 169, 0.4);
-    --shadow-glow-hover: 0 0 1.75rem rgba(242, 169, 169, 0.65);
-    --chrome-h: clamp(56px, 8vh, 88px);
-  }
+  --shadow-glow: 0 0 1rem rgba(242, 169, 169, 0.4);
+  --shadow-glow-hover: 0 0 1.75rem rgba(242, 169, 169, 0.65);
+}
 
 /* Reset */
 * {
@@ -80,7 +79,7 @@
   box-sizing: border-box;
 }
 
-html,
+html, 
 body {
   font-family: var(--font-primary);
   font-weight: 400;
@@ -90,10 +89,9 @@ body {
   transition: background-color 800ms ease-in-out;
   color: var(--light-gray);
   overflow-x: hidden;
-    overflow-y: auto;
-    height: 100%;
-    scroll-padding-top: var(--chrome-h);
-  }
+  overflow-y: auto;
+  height: 100%;
+}
 
 /* Background Elements */
 
@@ -109,18 +107,6 @@ body::after {
   pointer-events: none;
 }
 
-#chroma-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: calc(var(--chrome-h) + env(safe-area-inset-top));
-  padding-top: env(safe-area-inset-top);
-  background: var(--hero-color);
-  z-index: 50;
-  pointer-events: none;
-}
-
 /* Date Display */
 #meta-date {
   font-size: 1.1rem;
@@ -132,7 +118,7 @@ body::after {
   text-align: center;
   margin-top: var(--space-lg);
   transition: opacity var(--transition-very-slow);
-  z-index: 10;
+  z-index: 2000;
 }
 
 #meta-date.fade-in {
@@ -178,7 +164,7 @@ body::after {
               background var(--transition-normal), 
               transform var(--transition-normal);
   cursor: pointer;
-    z-index: 100;
+  z-index: 2;
 }
 
 #mute-button:focus-visible {
@@ -279,7 +265,7 @@ body.ready-for-ui #mute-button {
   top: var(--space-lg);
   left: 50%;
   transform: translateX(-50%);
-  z-index: 100;
+  z-index: 9999;
   cursor: pointer;
   opacity: 1;
   transition: opacity 1.5s ease 1s;
@@ -323,7 +309,6 @@ body.loaded #logo {
     filter: drop-shadow(0 0 0px rgba(255, 255, 255, 0));
     transform: translateX(-50%) scale(0.95);
   }
-
   50% {
     filter: drop-shadow(0 0 16px rgba(255, 255, 255, 0.4))
             drop-shadow(0 0 32px rgba(255, 255, 255, 0.2));
@@ -611,7 +596,7 @@ main {
   flex-direction: column-reverse;
   align-items: flex-end;
   gap: 0.8rem;
-  z-index: 100;
+  z-index: 9999;
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--transition-extra-slow);
@@ -1544,7 +1529,7 @@ body.loaded #open-memory {
   position: fixed;
   top: var(--space-2xl);
   left: var(--space-2xl);
-  z-index: 100;
+  z-index: 10000;
   display: flex;
   gap: 1.4rem;
   opacity: 0;
@@ -1635,7 +1620,7 @@ body.loaded #open-memory {
               background var(--transition-normal), 
               transform var(--transition-normal);
   cursor: pointer;
-  z-index: 100;
+  z-index: 10001;
 }
 
 .hamburger-button.visible {
@@ -1709,7 +1694,7 @@ body.loaded #open-memory {
   padding: 8px;
   text-decoration: none;
   border-radius: 0 0 4px 4px;
-  z-index: 100;
+  z-index: 10000;
 }
 
 .skip-link:focus {
@@ -1965,7 +1950,7 @@ body.loaded #timeline-launcher {
     position: fixed;
     top: var(--space-2xl);
     left: var(--space-2xl);
-    z-index: 100;
+    z-index: 10000;
     display: flex;
     gap: 1.2rem;
     opacity: 0;
@@ -2108,7 +2093,7 @@ body.loaded #timeline-launcher {
   padding: 8px;
   text-decoration: none;
   border-radius: 0 0 4px 4px;
-  z-index: 100;
+  z-index: 10000;
 }
 
 .skip-link:focus {
@@ -2363,7 +2348,7 @@ body.loaded #timeline-launcher {
     position: fixed;
     top: var(--space-2xl);
     left: var(--space-2xl);
-    z-index: 100;
+    z-index: 10000;
     display: flex;
     gap: 1.2rem;
     opacity: 0;
@@ -2579,7 +2564,7 @@ body.transitioning #generated-bg {
     rgba(0, 0, 0, 0) 100%
   );
   backdrop-filter: blur(8px);
-  z-index: 40; /* Below navigation elements but above content */
+  z-index: 999; /* Below navigation elements but above content */
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
