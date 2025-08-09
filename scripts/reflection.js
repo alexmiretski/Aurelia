@@ -661,9 +661,13 @@ function drawHeroBlob(time = performance.now()) {
   const blobCanvas = document.getElementById('hero-blob-canvas');
 
   if (selectedTheme && blobCanvas?.classList.contains('theme-locked')) {
-    // Use solid fill from selected theme color
     const themeColor = getComputedStyle(blobCanvas).getPropertyValue('--blob-color')?.trim() || '#ffffff';
-    heroCtx.fillStyle = themeColor;
+    const lighter = lerpColor(themeColor.replace('#', ''), 'ffffff', 0.2);
+    const darker  = lerpColor(themeColor.replace('#', ''), '000000', 0.2);
+    const lockedGrad = heroCtx.createRadialGradient(0, 0, 0, 0, 0, radius * 1.2);
+    lockedGrad.addColorStop(0, lighter);
+    lockedGrad.addColorStop(1, darker);
+    heroCtx.fillStyle = lockedGrad;
   } else {
     // Use shifting gradient
     heroCtx.fillStyle = grad;
