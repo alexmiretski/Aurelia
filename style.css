@@ -1729,11 +1729,11 @@ body.loaded #open-memory {
 .theme-ache     { color: #efb5b5; } /* gentle blush */
 .theme-dream    { color: #f1d1fb; } /* pastel lilac mist */
 .theme-reflect  { color: #d1cbee; } /* faded periwinkle fog */
-.theme-observe  { color: #aebce8; } /* softened steel blue */
-.theme-remember { color: #a48bc3; } /* violet-grey memory */
-.theme-feel     { color: #f8bfd1; } /* petal pink */
+.theme-observe  { color: #e8ddb0; } /* parchment glow */
+.theme-remember { color: #f9dbc6; } /* peachy hush */
+.theme-feel     { color: #f9dbc6; } /* peachy hush */
 .theme-wonder   { color: #dfcfff; } /* cloudy lavender delight */
-.theme-drift    { color: #c9ecf5; } /* pale seafoam haze */
+.theme-drift    { color: #cdeee1; } /* pale sea-glass haze */
 .theme-white    { color: var(--white); }
 
 
@@ -2128,11 +2128,11 @@ body.loaded #timeline-launcher {
 .theme-ache    { color: #f7d0d0; } /* calmer contrast */
 .theme-dream   { color: #f7dcef; } /* Lighter for better contrast */
 .theme-reflect { color: #c5d3e7; } /* Lighter for better contrast */
-.theme-observe { color: #a3b5e0; } /* Lighter for better contrast */
-.theme-remember{ color: #7a8bb8; } /* Lighter for better contrast */
-.theme-feel    { color: #f7cddf; } /* Lighter for better contrast */
+.theme-observe { color: #efe6c4; } /* Lighter for better contrast */
+.theme-remember{ color: #fde3d1; } /* Lighter for better contrast */
+.theme-feel    { color: #fde3d1; } /* Lighter for better contrast */
 .theme-wonder  { color: #d8c9ff; } /* Lighter for better contrast */
-.theme-drift   { color: #bfe8f5; } /* Lighter for better contrast */
+.theme-drift   { color: #c3e9db; } /* Lighter for better contrast */
 .theme-white   { color: var(--white); }
 
 /* Screen States */
