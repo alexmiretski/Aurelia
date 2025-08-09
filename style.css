@@ -18,7 +18,8 @@
   --bg-memory: rgba(29, 15, 15, 0.75);     /* Dark ache with transparency */
   --bg-about: rgba(15, 26, 29, 0.75);      /* Dark drift with transparency */
   --bg-current: var(--bg-reflection);
-  
+  --hero-color: rgb(10, 6, 11);
+
   /* Glass/Overlay Effects */
   --glass-light: rgba(255, 255, 255, 0.06);
   --glass-medium: rgba(255, 255, 255, 0.12);
@@ -70,7 +71,8 @@
   --shadow-lg: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.35);
     --shadow-glow: 0 0 1rem rgba(242, 169, 169, 0.4);
     --shadow-glow-hover: 0 0 1.75rem rgba(242, 169, 169, 0.65);
-    --chrome-h: clamp(56px, 8vh, 88px);
+    --logo-h: 56px;
+    --chrome-h: calc(var(--logo-h) + var(--space-lg) * 2);
   }
 
 /* Reset */
@@ -117,6 +119,7 @@ body::after {
   height: calc(var(--chrome-h) + env(safe-area-inset-top));
   padding-top: env(safe-area-inset-top);
   background: var(--hero-color);
+  opacity: 0.75;
   z-index: 50;
   pointer-events: none;
 }
