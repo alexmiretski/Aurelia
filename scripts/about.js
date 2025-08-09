@@ -162,15 +162,13 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         aboutContent?.classList.add('visible');
 
-        const segmentEls = document.querySelectorAll('.segment');
-        segmentEls.forEach((el, i) => {
+        const segments = document.querySelectorAll('.segment');
+        segments.forEach((el, i) => {
           el.classList.remove('visible');
           // Respect reduced motion preference
           const delay = prefersReducedMotion() ? 0 : i * 100;
           setTimeout(() => el.classList.add('visible'), delay);
         });
-
-        scatterSegments();
       }, 100);
 
       // Hide reflection-specific background elements
@@ -248,21 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Enhanced text rotation with accessibility improvements
   const segments = document.querySelectorAll('.segment');
-  function scatterSegments() {
-    if (!segments.length) return;
-    if (aboutScreen.classList.contains('hidden')) return;
-    const container = document.querySelector('.living-text');
-    if (!container) return;
-    const containerWidth = container.clientWidth;
-    segments.forEach(seg => {
-      const segWidth = seg.offsetWidth;
-      const maxOffset = Math.max(containerWidth - segWidth, 0);
-      const offset = Math.random() * maxOffset;
-      seg.style.marginLeft = `${offset}px`;
-    });
-  }
-
-  window.addEventListener('resize', scatterSegments);
   let lastIndex = -1;
   let rotationActive = true;
 
