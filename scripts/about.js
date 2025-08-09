@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     segments.forEach(seg => {
       const rect = seg.getBoundingClientRect();
-      if (rect.top < 100) {
+      if (rect.top < 120) {
         seg.classList.add('scroll-fade-out');
       } else {
         seg.classList.remove('scroll-fade-out');
