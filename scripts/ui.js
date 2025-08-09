@@ -11,6 +11,20 @@ const ScreenBackgrounds = {
   timeline: 'rgba(35, 32, 28, 0.75)'   // Warm charcoal with film grain feel
 };
 
+function computeHeroColor(bg) {
+  const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d*\.?\d+))?\)/);
+  if (!match) return bg;
+  const r = parseInt(match[1], 10);
+  const g = parseInt(match[2], 10);
+  const b = parseInt(match[3], 10);
+  const a = match[4] !== undefined ? parseFloat(match[4]) : 1;
+  const overlayAlpha = 0.5;
+  const rF = Math.round(r * a * (1 - overlayAlpha));
+  const gF = Math.round(g * a * (1 - overlayAlpha));
+  const bF = Math.round(b * a * (1 - overlayAlpha));
+  return `rgb(${rF}, ${gF}, ${bF})`;
+}
+
 
 function setScreenBackground(screenName) {
   console.log(`🎨 Setting background for ${screenName} screen`);
@@ -23,8 +37,11 @@ function setScreenBackground(screenName) {
   
   // Update the actual body background color directly
   if (ScreenBackgrounds[screenName]) {
-    document.body.style.backgroundColor = ScreenBackgrounds[screenName];
-    console.log(`🌀 Updated background to: ${ScreenBackgrounds[screenName]}`);
+    const bg = ScreenBackgrounds[screenName];
+    document.body.style.backgroundColor = bg;
+    const hero = computeHeroColor(bg);
+    document.documentElement.style.setProperty('--hero-color', hero);
+    console.log(`🌀 Updated background to: ${bg}`);
   }
 }
 
@@ -109,6 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const aboutScreen = document.getElementById('about-screen');
   // Scroll detection for navigation overlay
   let scrollTimeout;
+
+  setScreenBackground('reflection');
 
   function handleScroll() {
     const aboutVisible = aboutScreen && !aboutScreen.classList.contains('hidden');
@@ -360,12 +379,10 @@ document.querySelectorAll('[data-theme]').forEach(btn => {
     selectedTheme = theme;
 
     const blobCanvas = document.getElementById("hero-blob-canvas");
-    if (blobCanvas) {
-      const color = window.getThemeColor?.(theme);
-      if (color) {
-        blobCanvas.style.setProperty('--blob-color', color);
-        blobCanvas.classList.add("theme-locked");
-      }
+    const color = window.getThemeColor?.(theme);
+    if (color && blobCanvas) {
+      blobCanvas.style.setProperty('--blob-color', color);
+      blobCanvas.classList.add("theme-locked");
     }
   });
 });
