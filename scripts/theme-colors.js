@@ -3,11 +3,11 @@
     dream: '#e3bdf7',
     feel: '#f5b5c8',
     wonder: '#c6a3f2',
-    remember: '#f8d2b3',
+    remember: '#f5dbc7',
     reflect: '#a59ccf',
     observe: '#f2e9bf',
     drift: '#bae1d2',
-    ache: '#d27b7b',
+    ache: '#dba4a4',
     evolution: '#ffffff'
   };
 
