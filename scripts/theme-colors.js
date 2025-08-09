@@ -7,7 +7,7 @@
     reflect: '#a59ccf',
     observe: '#f2e9bf',
     drift: '#bae1d2',
-    ache: '#d27b7b',
+    ache: '#f7d0d0',
     evolution: '#ffffff'
   };
 
