@@ -77,8 +77,8 @@ const themeColors = Object.values(window.themeColors || {
 
 const heroBlob = {
   x: window.innerWidth / 2,
-  y: window.APP_HEIGHT / 2,
-  radius: Math.min(window.innerWidth, window.APP_HEIGHT) * 0.25,
+  y: window.innerHeight / 2,
+  radius: Math.min(window.innerWidth, window.innerHeight) * 0.25,
   colorIndex: 0,
   points: [],
   scale: 0.25,
@@ -593,11 +593,11 @@ const heroCtx = heroCanvas.getContext('2d');
 
 function resizeHeroCanvas() {
   heroCanvas.width = window.innerWidth;
-  heroCanvas.height = window.APP_HEIGHT;
+  heroCanvas.height = window.innerHeight;
 
   heroBlob.x = window.innerWidth / 2;
-  heroBlob.y = window.APP_HEIGHT / 2;
-  heroBlob.radius = Math.min(window.innerWidth, window.APP_HEIGHT) * 0.25;
+  heroBlob.y = window.innerHeight / 2;
+  heroBlob.radius = Math.min(window.innerWidth, window.innerHeight) * 0.25;
 }
 
 resizeHeroCanvas();

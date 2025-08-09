@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     top: 0;
     left: 0;
     width: 100vw;
-    height: var(--app-height);
+    height: 100vh;
     z-index: -5;
     pointer-events: none;
     display: block;
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function onWindowResize() {
     screenWidth = canvas.width = window.innerWidth;
-    screenHeight = canvas.height = window.APP_HEIGHT;
+    screenHeight = canvas.height = window.innerHeight;
     centerX = screenWidth / 2;
     centerY = screenHeight / 2;
     context = canvas.getContext('2d');
