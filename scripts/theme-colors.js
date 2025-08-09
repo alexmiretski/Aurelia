@@ -1,13 +1,13 @@
 (function () {
   const themeColors = {
-    dream: '#daa4f7',
-    feel: '#f59cb6',
-    wonder: '#b889f2',
-    remember: '#f3cdaf',
-    reflect: '#9387cb',
-    observe: '#f0e3a7',
-    drift: '#a5dcc7',
-    ache: '#d88e8e',
+    dream: '#e3bdf7',
+    feel: '#f5b5c8',
+    wonder: '#c6a3f2',
+    remember: '#f5dbc7',
+    reflect: '#a59ccf',
+    observe: '#f2e9bf',
+    drift: '#bae1d2',
+    ache: '#dba4a4',
     evolution: '#ffffff'
   };
 

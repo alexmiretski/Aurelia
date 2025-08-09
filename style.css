@@ -1732,14 +1732,14 @@ body.loaded #open-memory {
 }
 
 /* Theme Classes - Enhanced contrast for accessibility */
-.theme-ache     { color: #e1a8a8; } /* dusty rose */
-.theme-dream    { color: #ebb8fb; } /* pastel lilac mist */
-.theme-reflect  { color: #beb5ea; } /* faded periwinkle fog */
-.theme-observe  { color: #e5d699; } /* parchment glow */
-.theme-remember { color: #f6d8c1; } /* peach-beige nostalgia */
-.theme-feel     { color: #f59cb6; } /* soft pink */
-.theme-wonder   { color: #ceb5ff; } /* cloudy lavender delight */
-.theme-drift    { color: #b8ead6; } /* pale sea-glass haze */
+.theme-ache     { color: #e5bdbd; } /* dusty rose */
+.theme-dream    { color: #f1d1fb; } /* pastel lilac mist */
+.theme-reflect  { color: #d1cbee; } /* faded periwinkle fog */
+.theme-observe  { color: #e8ddb0; } /* parchment glow */
+.theme-remember { color: #f8e6d8; } /* peach-beige nostalgia */
+.theme-feel     { color: #f5b5c8; } /* soft pink */
+.theme-wonder   { color: #dfcfff; } /* cloudy lavender delight */
+.theme-drift    { color: #cdeee1; } /* pale sea-glass haze */
 .theme-white    { color: var(--white); }
 
 
@@ -2131,14 +2131,14 @@ body.loaded #timeline-launcher {
 }
 
 /* Theme Classes - Enhanced contrast for accessibility */
-.theme-ache    { color: #eac3c3; } /* calmer contrast */
-.theme-dream   { color: #f4c6e6; } /* Lighter for better contrast */
-.theme-reflect { color: #b0c5e2; } /* Lighter for better contrast */
-.theme-observe { color: #ecdfad; } /* Lighter for better contrast */
-.theme-remember{ color: #f8e3d2; } /* Lighter for better contrast */
-.theme-feel    { color: #f9b8cd; } /* Lighter soft pink for better contrast */
-.theme-wonder  { color: #c6afff; } /* Lighter for better contrast */
-.theme-drift   { color: #aee5d1; } /* Lighter for better contrast */
+.theme-ache    { color: #efd7d7; } /* calmer contrast */
+.theme-dream   { color: #f7dcef; } /* Lighter for better contrast */
+.theme-reflect { color: #c5d3e7; } /* Lighter for better contrast */
+.theme-observe { color: #efe6c4; } /* Lighter for better contrast */
+.theme-remember{ color: #fbf1e9; } /* Lighter for better contrast */
+.theme-feel    { color: #fad1de; } /* Lighter soft pink for better contrast */
+.theme-wonder  { color: #d8c9ff; } /* Lighter for better contrast */
+.theme-drift   { color: #c3e9db; } /* Lighter for better contrast */
 .theme-white   { color: var(--white); }
 
 /* Screen States */
