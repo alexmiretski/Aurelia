@@ -18,6 +18,9 @@
   --bg-memory: rgba(29, 15, 15, 0.75);     /* Dark ache with transparency */
   --bg-about: rgba(15, 26, 29, 0.75);      /* Dark drift with transparency */
   --bg-current: var(--bg-reflection);
+
+  /* Fixed application height */
+  --app-height: 100vh;
   
   /* Glass/Overlay Effects */
   --glass-light: rgba(255, 255, 255, 0.06);
@@ -88,9 +91,8 @@ body {
   background-color: var(--bg-current);
   transition: background-color 800ms ease-in-out;
   color: var(--light-gray);
-  overflow-x: hidden;
-  overflow-y: auto;
-  height: 100%;
+  overflow: hidden;
+  height: var(--app-height);
 }
 
 /* Background Elements */
@@ -348,7 +350,7 @@ body.loaded #logo {
 main {
   position: relative;
   z-index: 1;
-  height: 100vh;
+  height: var(--app-height);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -728,7 +730,7 @@ body.loaded #hi-fab {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: var(--app-height);
   z-index: 1002;
   overflow: hidden;
   display: none;
@@ -982,7 +984,7 @@ body.loaded #hi-fab {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: var(--app-height);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1315,7 +1317,7 @@ body.loaded #open-memory {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: var(--app-height);
   pointer-events: none;
   z-index: 0;
   opacity: 0;
@@ -1354,8 +1356,8 @@ body.loaded #open-memory {
   text-align: center;
   max-width: min(90ch, 100vw);
   gap: clamp(1rem, 3vw, 2.2rem);
-  margin-top: clamp(2vh, 3vw, 5vh);
-  margin-bottom: clamp(1vh, 2vw, 3vh);
+  margin-top: clamp(calc(var(--app-height) * 0.02), 3vw, calc(var(--app-height) * 0.05));
+  margin-bottom: clamp(calc(var(--app-height) * 0.01), 2vw, calc(var(--app-height) * 0.03));
   width: 100%;
   opacity: 0;
   transform: translateY(var(--space-md));
@@ -1748,7 +1750,11 @@ body.loaded #open-memory {
 #about-screen,
 #memory-screen {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--app-height);
+  overflow: hidden;
   opacity: 1;
   pointer-events: auto;
   z-index: 1;
@@ -1850,7 +1856,7 @@ body.loaded #timeline-launcher {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: var(--app-height);
     background: var(--overlay-mobile);
     backdrop-filter: blur(0.625rem);
     display: flex;
@@ -1940,7 +1946,7 @@ body.loaded #timeline-launcher {
   }
   
   .about-content {
-    margin-top: 4vh;
+    margin-top: calc(var(--app-height) * 0.04);
     gap: 1.8rem;
   }
   
@@ -2146,7 +2152,11 @@ body.loaded #timeline-launcher {
 #about-screen,
 #memory-screen {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--app-height);
+  overflow: hidden;
   opacity: 1;
   pointer-events: auto;
   z-index: 1;
@@ -2248,7 +2258,7 @@ body.loaded #timeline-launcher {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: var(--app-height);
     background: var(--overlay-mobile);
     backdrop-filter: blur(0.625rem);
     display: flex;
@@ -2338,7 +2348,7 @@ body.loaded #timeline-launcher {
   }
   
   .about-content {
-    margin-top: 4vh;
+    margin-top: calc(var(--app-height) * 0.04);
     gap: 1.8rem;
   }
   
@@ -2521,13 +2531,13 @@ body.loaded #timeline-launcher {
   }
 }
 
-@media (max-height: 900px), (max-width: 1200px) {
+@media (max-width: 1200px) {
   #about-screen {
     align-items: flex-start !important;
   }
 
   .about-content {
-    margin-top: clamp(6rem, 14vh, 10rem) !important;
+    margin-top: clamp(6rem, calc(var(--app-height) * 0.14), 10rem) !important;
   }
 }
 
