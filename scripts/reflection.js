@@ -72,7 +72,7 @@ let currentSpans = [];
 let currentP = null;
 
 const themeColors = Object.values(window.themeColors || {
-  dream: '#6e9acb'
+  dream: '#508ccf'
 });
 
 const heroBlob = {
@@ -82,9 +82,9 @@ const heroBlob = {
   colorIndex: 0,
   points: [],
   scale: 0.25,
-  currentColor: '#6e9acb',
-  startColor: '#6e9acb',       // ← add this line
-  targetColor: '#6e9acb',
+  currentColor: '#508ccf',
+  startColor: '#508ccf',       // ← add this line
+  targetColor: '#508ccf',
   colorLerpProgress: 1
 };
 
