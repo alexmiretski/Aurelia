@@ -15,7 +15,7 @@
   --dark-overlay: #200e25;
 
   --bg-reflection: rgba(26, 15, 29, 0.75); /* Dark dream with transparency */
-  --bg-memory: rgba(90, 45, 45, 0.75);     /* Soft ache with transparency */
+  --bg-memory: rgba(29, 15, 15, 0.75);     /* Dark ache with transparency */
   --bg-about: rgba(15, 26, 29, 0.75);      /* Dark drift with transparency */
   --bg-current: var(--bg-reflection);
   
@@ -1726,7 +1726,7 @@ body.loaded #open-memory {
 }
 
 /* Theme Classes - Enhanced contrast for accessibility */
-.theme-ache     { color: #f7d0d0; } /* softer blush */
+.theme-ache     { color: #efb5b5; } /* gentle blush */
 .theme-dream    { color: #f1d1fb; } /* pastel lilac mist */
 .theme-reflect  { color: #d1cbee; } /* faded periwinkle fog */
 .theme-observe  { color: #e8ddb0; } /* parchment glow */
@@ -2125,7 +2125,7 @@ body.loaded #timeline-launcher {
 }
 
 /* Theme Classes - Enhanced contrast for accessibility */
-.theme-ache    { color: #f7d0d0; } /* softer blush */
+.theme-ache    { color: #f7d0d0; } /* calmer contrast */
 .theme-dream   { color: #f7dcef; } /* Lighter for better contrast */
 .theme-reflect { color: #c5d3e7; } /* Lighter for better contrast */
 .theme-observe { color: #efe6c4; } /* Lighter for better contrast */

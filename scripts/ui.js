@@ -6,7 +6,7 @@ let selectedTheme = null;
 // Background color management system
 const ScreenBackgrounds = {
   reflection: 'rgba(26, 15, 29, 0.75)', // Dark dream with 75% opacity
-  memory: 'rgba(90, 45, 45, 0.75)',     // Soft ache with 75% opacity
+  memory: 'rgba(29, 15, 15, 0.75)',     // Dark ache with 75% opacity
   about: 'rgba(15, 26, 29, 0.75)',      // Dark drift with 75% opacity
   timeline: 'rgba(35, 32, 28, 0.75)'   // Warm charcoal with film grain feel
 };
