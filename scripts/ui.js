@@ -727,20 +727,20 @@ timelineToggle?.addEventListener('click', () => {
       
       // Add fadeInHeroBlob here too!
       fadeInHeroBlob();
-  
+
         // backButton?.classList.remove('fade-in-soft');
         // backButton?.classList.add('fade-out-soft');
-  
+
+      // Clear old reflection content before showing main screen
+      if (window.originalIntro) {
+        metaDate.classList.remove('fade-in');
+        metaDate.classList.add('fade-out');
+        window.isDisplaying = false; // force reset
+        window.clearStaggeredDisplay?.();
+      }
+
       setTimeout(() => {
         aboutScreen.classList.add('hidden');
-
-        // Clear old reflection content before showing main screen
-        if (window.originalIntro) {
-          metaDate.classList.remove('fade-in');
-          metaDate.classList.add('fade-out');
-          window.isDisplaying = false; // force reset
-          window.clearStaggeredDisplay?.();
-        }
 
         // Show main screen when coming from about
         mainScreen?.classList.remove('hidden', 'fade-out');
