@@ -490,10 +490,10 @@ main {
   height: 100%;
   color: var(--light-gray);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   overflow-y: auto;
-  padding-top: 20vh;
+  padding-top: 2rem;
   z-index: 2;
   transition: opacity var(--transition-slow), visibility var(--transition-slow);
 }
