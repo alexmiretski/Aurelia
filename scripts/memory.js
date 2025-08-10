@@ -367,14 +367,21 @@ class MemoryBlob {
     }
   }
 
-  reveal() {
+  async reveal() {
     if (this.clicked) return;
+
+    const revealBox = document.getElementById('memory-reveal');
+    const overlayVisible = revealBox && revealBox.classList.contains('show');
+    if (overlayVisible) {
+      await hideMemoryText();
+    }
+
     this.clicked = true;
-    
+
     // Enhanced screen reader announcement
     const preview = this.text.length > 50 ? this.text.substring(0, 50) + '...' : this.text;
     announceToScreenReader(`Revealing memory: ${preview}`);
-    
+
     showMemoryText(this.text);
   }
 }
@@ -391,22 +398,32 @@ function spawnBlob() {
   updateCanvasDescription();
 }
 
-// Enhanced canvas click with better feedback
-canvas.addEventListener("click", (e) => {
+// Enhanced canvas click with better feedback and overlay handling
+canvas.addEventListener("click", async (e) => {
   const rect = canvas.getBoundingClientRect();
   const mx = e.clientX - rect.left;
   const my = e.clientY - rect.top;
-  
-  let found = false;
+
+  const revealBox = document.getElementById('memory-reveal');
+  const overlayVisible = revealBox && revealBox.classList.contains('show');
+
+  let clickedBlob = null;
   for (let blob of activeBlobs) {
     if (!blob.clicked && blob.isClicked(mx, my)) {
-      blob.reveal();
-      found = true;
+      clickedBlob = blob;
       break;
     }
   }
-  
-  if (!found) {
+
+  if (clickedBlob) {
+    clickedBlob.reveal();
+    return;
+  }
+
+  if (overlayVisible) {
+    await hideMemoryText();
+    announceToScreenReader('Memory closed. Returned to memory canvas.');
+  } else {
     // Provide feedback when clicking empty space
     announceToScreenReader("No memory bubble found at this location. Use Tab to navigate between bubbles.");
   }
@@ -508,8 +525,12 @@ function showMemoryText(text) {
 }
 
 function hideMemoryText() {
-  document.getElementById('memory-reveal')?.classList.remove("show");
-  
+  const box = document.getElementById('memory-reveal');
+  if (!box || !box.classList.contains('show')) return Promise.resolve();
+
+  box.classList.add('fade-out');
+  box.classList.remove('fade-in', 'show');
+
   // Restore canvas brightness
   const memoryCanvas = document.getElementById('memory-canvas');
   memoryCanvas?.classList.remove('dimmed');
@@ -519,10 +540,13 @@ function hideMemoryText() {
   dateLabel.classList.add('fade-out');
 
   activeBlobs.forEach(b => b.clicked = false);
-  
+
   // Clear timeouts
   memoryActiveTimeouts.forEach(clearTimeout);
   memoryActiveTimeouts = [];
+
+  // Match CSS transition duration for fade-out (1.5s)
+  return new Promise(resolve => setTimeout(resolve, 1500));
 }
 
 function showNextMemorySentence(sentences) {
