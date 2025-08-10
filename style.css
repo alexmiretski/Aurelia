@@ -493,7 +493,7 @@ main {
   align-items: flex-start;
   justify-content: center;
   overflow-y: auto;
-  padding-top: 10vh;
+  padding-top: 20vh;
   z-index: 2;
   transition: opacity var(--transition-slow), visibility var(--transition-slow);
 }
