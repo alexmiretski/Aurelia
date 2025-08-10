@@ -2685,13 +2685,6 @@ body.screen-memory.scrolling .top-nav-overlay {
   transition: color var(--transition-normal), background-size var(--transition-normal), filter var(--transition-normal);
 }
 
-.support-link:hover,
-.support-link:focus-visible {
-  color: var(--white);
-  background-size: 100% 2px;
-  filter: brightness(1.25);
-}
-
 .support-link:active {
   opacity: 0.85;
 }
