@@ -1064,8 +1064,7 @@ body.loaded #hi-fab {
 }
 
 .arrow-icon {
-  /* Enlarge the arrow 20% and extend the horizontal line */
-  transform: scale(1.2) scaleX(1.1) translateY(1px);
+  transform: scale(1) translateY(1px);
   transform-origin: left center;
   opacity: 1;
   vertical-align: middle;
