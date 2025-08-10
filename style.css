@@ -1358,7 +1358,7 @@ body.loaded #open-memory {
   text-align: center;
   max-width: min(90ch, 100vw);
   gap: clamp(1rem, 3vw, 2.2rem);
-  margin-top: clamp(2vh, 3vw, 5vh);
+  margin-top: calc(clamp(2vh, 3vw, 5vh) + var(--space-xl));
   margin-bottom: clamp(1vh, 2vw, 3vh);
   width: 100%;
   opacity: 0;
@@ -1942,9 +1942,9 @@ body.loaded #timeline-launcher {
     font-size: 1.1rem;
     gap: 1.1rem;
   }
-  
+
   .about-content {
-    margin-top: 4vh;
+    margin-top: calc(4vh + var(--space-xl));
     gap: 1.8rem;
   }
   
@@ -2340,9 +2340,9 @@ body.loaded #timeline-launcher {
     font-size: 1.1rem;
     gap: 1.1rem;
   }
-  
+
   .about-content {
-    margin-top: 4vh;
+    margin-top: calc(4vh + var(--space-xl));
     gap: 1.8rem;
   }
   
@@ -2531,7 +2531,7 @@ body.loaded #timeline-launcher {
   }
 
   .about-content {
-    margin-top: clamp(6rem, 14vh, 10rem) !important;
+    margin-top: calc(clamp(6rem, 14vh, 10rem) + var(--space-xl)) !important;
   }
 }
 
