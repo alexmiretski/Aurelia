@@ -829,17 +829,6 @@ body.loaded #hi-fab {
   text-transform: lowercase;
 }
 
-#memory-close-hint {
-  margin-top: var(--space-lg);
-  opacity: 0;
-  transition: opacity var(--transition-slow);
-  pointer-events: none;
-}
-
-#memory-close-hint.show {
-  opacity: 0.6;
-}
-
 .memory-sentence {
   display: block;
   text-align: center;

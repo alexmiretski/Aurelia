@@ -42,7 +42,6 @@ const ctx = canvas.getContext('2d');
 const accessLayer = document.getElementById('blob-access-layer');
 const revealBox = document.getElementById('memory-reveal');
 const revealedText = document.getElementById('revealed-text');
-const closeHint = document.getElementById('memory-close-hint');
 window.srText = window.srText || document.getElementById('sr-text');
 
 let width, height;
@@ -491,13 +490,9 @@ function showMemoryText(text) {
   revealedText.style.removeProperty('display');
   revealedText.classList.remove('hidden');
   revealBox.classList.add('fade-in', 'show');
+
   memoryActiveTimeouts.forEach(clearTimeout);
   memoryActiveTimeouts = [];
-
-  if (closeHint) {
-    closeHint.classList.add('show');
-    memoryActiveTimeouts.push(setTimeout(() => closeHint.classList.remove('show'), 1500));
-  }
 
   memorySentenceIndex = 0;
   memoryWordIndex = 0;
@@ -514,8 +509,7 @@ function showMemoryText(text) {
 
 function hideMemoryText() {
   document.getElementById('memory-reveal')?.classList.remove("show");
-  closeHint?.classList.remove('show');
-
+  
   // Restore canvas brightness
   const memoryCanvas = document.getElementById('memory-canvas');
   memoryCanvas?.classList.remove('dimmed');
