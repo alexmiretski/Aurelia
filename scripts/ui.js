@@ -733,30 +733,33 @@ timelineToggle?.addEventListener('click', () => {
   
       setTimeout(() => {
         aboutScreen.classList.add('hidden');
-      
+
+        // Clear old reflection content before showing main screen
+        if (window.originalIntro) {
+          metaDate.classList.remove('fade-in');
+          metaDate.classList.add('fade-out');
+          window.isDisplaying = false; // force reset
+          window.clearStaggeredDisplay?.();
+        }
+
         // Show main screen when coming from about
         mainScreen?.classList.remove('hidden', 'fade-out');
         mainScreen?.classList.add('fade-in');
-      
+
         fab?.classList.remove('hidden', 'fade-out');
         fab?.classList.add('fade-in');
-      
+
         timelineLauncher?.classList.remove('hidden', 'fade-out');
         timelineLauncher?.classList.add('fade-in');
-      
+
           // backButton?.classList.add('hidden');
           // backButton?.classList.remove('fade-out-soft'); // cleanup
-      
+
         // Restart reflection when coming from about
-        // Safe version
         if (window.originalIntro) {
-            metaDate.classList.remove('fade-in');
-            metaDate.classList.add('fade-out');
-            window.isDisplaying = false; // force reset
-          window.clearStaggeredDisplay?.();
           setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
         }
-      
+
         // 🧠 Delay just a moment to ensure class changes are applied
         setTimeout(() => {
           updateActiveNavItem();
@@ -875,7 +878,11 @@ timelineToggle?.addEventListener('click', () => {
   
     timelineLauncher.classList.remove('fade-in');
     timelineLauncher.classList.add('fade-out');
-  
+
+    metaDate?.classList.remove('fade-in');
+    metaDate?.classList.add('fade-out');
+    window.clearStaggeredDisplay?.();
+
     // Step 2: Wait for fade-out to complete
     setTimeout(() => {
       mainScreen.classList.add('hidden');
