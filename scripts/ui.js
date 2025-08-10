@@ -713,6 +713,8 @@ timelineToggle?.addEventListener('click', () => {
   
       // Safe version
           if (window.originalIntro) {
+            metaDate.classList.remove('fade-in');
+            metaDate.classList.add('fade-out');
             window.isDisplaying = false; // force reset
             window.clearStaggeredDisplay?.();
             setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
@@ -748,7 +750,9 @@ timelineToggle?.addEventListener('click', () => {
         // Restart reflection when coming from about
         // Safe version
         if (window.originalIntro) {
-          window.isDisplaying = false; // force reset
+            metaDate.classList.remove('fade-in');
+            metaDate.classList.add('fade-out');
+            window.isDisplaying = false; // force reset
           window.clearStaggeredDisplay?.();
           setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
         }
