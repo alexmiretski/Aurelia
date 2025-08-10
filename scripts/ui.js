@@ -677,67 +677,67 @@ timelineToggle?.addEventListener('click', () => {
 
     const isMemory = memoryScreen?.classList.contains('show');
     const isAbout = aboutScreen?.classList.contains('fade-in');
-  
+
+    // Quickly clear any existing reflection content before showing the screen again
+    const resetReflection = () => {
+      const typed = document.getElementById('aurelia-typed');
+      const plain = document.getElementById('aurelia-plain');
+      const srText = document.getElementById('sr-text');
+
+      if (typed) typed.innerHTML = '';
+      if (plain) plain.textContent = '';
+      if (srText) srText.textContent = '';
+
+      const now = new Date();
+      const dayNum = Math.floor((now - timelineStartDate) / msPerDay) + 1;
+      metaDate.textContent = formatMetaDate(dayNum, now);
+      metaDate.classList.remove('fade-in');
+      metaDate.classList.add('fade-out');
+
+      window.isDisplaying = false;
+    };
+
     if (isMemory) {
       // DEACTIVATE MEMORY CANVAS FIRST
       window.memoryCanvasManager?.deactivate();
-      
+
       memoryScreen.classList.remove('show', 'fade-in');
       memoryScreen.classList.add('fade-out');
       fadeInHeroBlob();
-  
+
+      resetReflection();
+
       mainScreen.classList.remove('hidden', 'fade-out');
       mainScreen.classList.add('fade-in');
-  
+
       fab.style.display = 'flex';
       fab.classList.remove('hidden', 'fade-out');
       fab.classList.add('fade-in');
-  
+
       timelineLauncher.classList.remove('hidden', 'fade-out');
       timelineLauncher.style.display = 'flex';
       timelineLauncher.classList.add('fade-in');
-  
+
       revealBox.classList.add('hidden');
-        // backButton.classList.add('hidden');
       document.body.classList.remove('noscroll');
-  
+
       setTimeout(() => {
         memoryScreen.classList.add('hidden');
         memoryScreen.classList.remove('fade-out');
       }, 1000);
-  
-      // Clear old sentence display before restarting
-      if (window.clearStaggeredDisplay) {
-        window.clearStaggeredDisplay();
+
+      if (window.originalIntro) {
+        setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
       }
-  
-      // Safe version
-          if (window.originalIntro) {
-            metaDate.classList.remove('fade-in');
-            metaDate.classList.add('fade-out');
-            window.isDisplaying = false; // force reset
-            window.clearStaggeredDisplay?.();
-            setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
-          }
     }
-  
+
     if (isAbout) {
       aboutScreen.classList.remove('fade-in');
       aboutScreen.classList.add('fade-out');
-      
-      // Add fadeInHeroBlob here too!
+
       fadeInHeroBlob();
 
-        // backButton?.classList.remove('fade-in-soft');
-        // backButton?.classList.add('fade-out-soft');
-
-      // Clear old reflection content before showing main screen
-      if (window.originalIntro) {
-        metaDate.classList.remove('fade-in');
-        metaDate.classList.add('fade-out');
-        window.isDisplaying = false; // force reset
-        window.clearStaggeredDisplay?.();
-      }
+      resetReflection();
 
       setTimeout(() => {
         aboutScreen.classList.add('hidden');
@@ -752,10 +752,6 @@ timelineToggle?.addEventListener('click', () => {
         timelineLauncher?.classList.remove('hidden', 'fade-out');
         timelineLauncher?.classList.add('fade-in');
 
-          // backButton?.classList.add('hidden');
-          // backButton?.classList.remove('fade-out-soft'); // cleanup
-
-        // Restart reflection when coming from about
         if (window.originalIntro) {
           setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
         }
@@ -766,7 +762,7 @@ timelineToggle?.addEventListener('click', () => {
         }, 10);
       }, 500);
     }
-  
+
     updateActiveNavItem();
   }
   const originalReturnToReflection = returnToReflection;
