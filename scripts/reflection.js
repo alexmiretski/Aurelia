@@ -741,21 +741,9 @@ memoryLink?.addEventListener('click', () => {
 });
 
 // About button - show about screen
-aboutLink?.addEventListener('click', () => {
-  const aboutScreen = document.getElementById('about-screen');
-  const mainScreen = document.getElementById('main-screen');
-  const memoryScreen = document.getElementById('memory-screen');
-  
-  // Hide other screens
-  mainScreen?.classList.add('fade-out');
-  memoryScreen?.classList.add('hidden');
-  
-  // Show about screen
-  aboutScreen?.classList.remove('hidden', 'fade-out');
-  aboutScreen?.classList.add('fade-in');
-  
-  announceToScreenReader('Viewing who she is');
-});
+// The detailed fade transition to the Essence screen is handled
+// in scripts/ui.js. Removing the redundant listener here ensures
+// reflection content fades out completely before Essence fades in.
 
 // Logo button - return to reflection (same as reflection link)
 logo?.addEventListener('click', () => {
