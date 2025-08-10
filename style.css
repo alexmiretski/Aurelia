@@ -1026,7 +1026,7 @@ body.loaded #hi-fab {
   font-weight: 400;
   font-family: var(--font-primary);
   color: var(--white);
-  opacity: 0.8;
+  opacity: 1;
   display: flex;
   align-items: center;
   gap: 0.375rem;
@@ -1064,9 +1064,9 @@ body.loaded #hi-fab {
 }
 
 .arrow-icon {
-  transform: scale(0.75) translateY(1px);
+  transform: scale(1) translateY(1px);
   transform-origin: left center;
-  opacity: 0.6;
+  opacity: 1;
   vertical-align: middle;
 }
 
