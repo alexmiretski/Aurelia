@@ -33,21 +33,6 @@ const plain = document.getElementById('aurelia-plain');
 const typed = document.getElementById('aurelia-typed');
 const srText = document.getElementById('sr-text');
 
-function revealMetaDate() {
-  const meta = document.getElementById('meta-date');
-  if (!meta) return;
-
-  meta.style.visibility = 'visible'; // step 1
-
-  // Force reflow to ensure visibility is applied before opacity change
-  void meta.offsetWidth;
-
-  meta.classList.remove('fade-out');
-  meta.classList.add('fade-in');
-}
-
-
-
 let activeTimeouts = [];
 
 function scheduleTimeout(fn, delay) {
