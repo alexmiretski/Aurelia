@@ -1,14 +1,14 @@
 (function () {
   // Slightly darkened theme palette
   const themeColors = {
-    dream: '#BDA0EC',
-    feel: '#E5A2E4',
-    wonder: '#C08BC8',
-    remember: '#D1B8A4',
-    reflect: '#858FBB',
-    observe: '#D2C393',
-    drift: '#84BBB3',
-    ache: '#D19393',
+    dream: '#C4B4F0',
+    feel: '#F4B3C5',
+    wonder: '#D9A8E3',
+    remember: '#E5CDA8',
+    reflect: '#A9BDE6',
+    observe: '#C9C17F',
+    drift: '#9ED0C2',
+    ache: '#C98E8E',
     evolution: '#e5e5e5'
   };
 
