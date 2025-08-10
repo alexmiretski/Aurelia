@@ -982,14 +982,6 @@ addTimelineKeyboardSupport(muteButton, () => muteButton?.click());
 
 }); // ← This closes the DOMContentLoaded event listener
 
-function revealMetaDate() {
-  const metaDate = document.getElementById('meta-date');
-  metaDate.style.display = 'block';
-  setTimeout(() => {
-    metaDate.style.opacity = 0.8;
-  }, 10); // slight delay ensures transition works
-}
-
 function updateMetaDateSmoothly(newText) {
   const metaDate = document.getElementById('meta-date');
   if (!metaDate) return;
