@@ -3,9 +3,9 @@
   const themeColors = {
     dream: '#BDA0EC',
     feel: '#E5A2E4',
-    wonder: '#B292D9',
+    wonder: '#C08BC8',
     remember: '#D1B8A4',
-    reflect: '#8C94BA',
+    reflect: '#858FBB',
     observe: '#D2C393',
     drift: '#84BBB3',
     ache: '#D19393',
