@@ -2,7 +2,7 @@
   // Slightly darkened theme palette
   const themeColors = {
     dream: '#BDA0EC',
-    feel: '#E5A2E4',
+    feel: '#E5A2B1',
     wonder: '#B292D9',
     remember: '#D1B8A4',
     reflect: '#8C94BA',
