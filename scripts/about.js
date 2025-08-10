@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const aboutScreen = document.getElementById('about-screen');
   const aboutLink = document.getElementById('about-link');
-  const backButton = document.getElementById('about-back');
+    // const backButton = document.getElementById('about-back');
   const logo = document.getElementById('logo');
   const fab = document.getElementById('hi-fab');
   const timelineLauncher = document.getElementById('timeline-launcher');
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Restore memory UI for future use
       document.getElementById('blob-access-layer')?.classList.add('hidden');
       document.getElementById('memory-reveal')?.classList.add('hidden');
-      document.getElementById('about-back')?.classList.add('hidden');
+        // document.getElementById('about-back')?.classList.add('hidden');
       
       const mainNav = document.getElementById('main-nav');
       mainNav?.classList.add('visible');
@@ -115,12 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
       // Hide memory UI elements
       const blobAccessLayer = document.getElementById('blob-access-layer');
       const revealBox = document.getElementById('memory-reveal');
-      const backButton = document.getElementById('about-back');
-      
-      blobAccessLayer?.classList.add('hidden');
-      revealBox?.classList.add('hidden');
-      backButton?.classList.remove('fade-in');
-      backButton?.classList.add('fade-out');
+        // const backButton = document.getElementById('about-back');
+
+        blobAccessLayer?.classList.add('hidden');
+        revealBox?.classList.add('hidden');
+        // backButton?.classList.remove('fade-in');
+        // backButton?.classList.add('fade-out');
       
       // Stop memory animation
       window.stopMemoryFlow?.();
@@ -130,9 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // Clean up memory screen after fade
       setTimeout(() => {
-        memoryScreen.classList.add('hidden');
-        memoryScreen.classList.remove('fade-out');
-        backButton?.classList.add('hidden');
+          memoryScreen.classList.add('hidden');
+          memoryScreen.classList.remove('fade-out');
+          // backButton?.classList.add('hidden');
       
       }, 800);
     } else {
@@ -219,15 +219,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (backButton) {
-    backButton.addEventListener('click', handleBackNavigation);
-    backButton.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        handleBackNavigation();
-      }
-    });
-  }
+    // if (backButton) {
+    //   backButton.addEventListener('click', handleBackNavigation);
+    //   backButton.addEventListener('keydown', (e) => {
+    //     if (e.key === 'Enter' || e.key === ' ') {
+    //       e.preventDefault();
+    //       handleBackNavigation();
+    //     }
+    //   });
+    // }
 
   if (logo) {
     logo.addEventListener('click', () => {
