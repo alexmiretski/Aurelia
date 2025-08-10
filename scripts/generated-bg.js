@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function getThemeColor() {
     // Check for CSS custom property first
-    return window.getThemeColor?.(window.selectedTheme || 'dream') || '#e3bdf7';
+    return window.getThemeColor?.(window.selectedTheme || 'dream') || '#d39af6';
   }
 
   // Cache the current theme color so we don't recompute on every particle reset
