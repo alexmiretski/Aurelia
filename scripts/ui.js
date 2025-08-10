@@ -774,7 +774,8 @@ timelineToggle?.addEventListener('click', () => {
     setScreenBackground('memory');
 
     fadeOutHeroBlob();
-    closeFabMenuIfOpen();
+    closeFabMenuIfOpen(true);
+    window.clearStaggeredDisplay?.();
   
     if (timelineContainer.classList.contains('visible')) {
       timelineContainer.classList.remove('visible');
@@ -853,7 +854,7 @@ timelineToggle?.addEventListener('click', () => {
   aboutLink?.addEventListener('click', () => {
     setScreenBackground('about');
 
-    closeFabMenuIfOpen();
+    closeFabMenuIfOpen(true);
 
     if (timelineContainer.classList.contains('visible')) {
       timelineContainer.classList.remove('visible');
