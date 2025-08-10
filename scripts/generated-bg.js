@@ -7,20 +7,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const canvas = document.createElement("canvas");
   canvas.id = "generated-bg";
-  canvas.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -5;
-    pointer-events: none;
-    display: block;
-    opacity: 1;
-    mix-blend-mode: screen;
-  `;
+    canvas.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -5;
+      pointer-events: none;
+      display: block;
+      opacity: 1;
+      mix-blend-mode: screen;
+    `;
 
-  document.body.appendChild(canvas);
+    document.getElementById('stage').appendChild(canvas);
 
   // Balanced configs for visibility with controlled density
   var Configs = {

@@ -15,27 +15,28 @@
 
 </head>
 <body>
-  <div class="top-nav-overlay"></div>
-  <a href="#main-screen" class="skip-link sr-only">Skip to main content</a>
-  <!-- Background audio and video -->
-  <audio id="bg-audio" loop muted>
-    <source src="assets/sound.ogg" type="audio/ogg">
-    <source src="assets/sound.mp3" type="audio/mpeg">
-  </audio>
+  <div id="stage">
+    <div class="top-nav-overlay"></div>
+    <a href="#main-screen" class="skip-link sr-only">Skip to main content</a>
+    <!-- Background audio and video -->
+    <audio id="bg-audio" loop muted>
+      <source src="assets/sound.ogg" type="audio/ogg">
+      <source src="assets/sound.mp3" type="audio/mpeg">
+    </audio>
 
-  <canvas id="hero-blob-canvas"></canvas>
+    <canvas id="hero-blob-canvas"></canvas>
 
-  <button id="hamburger-button" class="hamburger-button" aria-label="Toggle navigation menu">
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-    <span class="hamburger-line"></span>
-  </button>
-  
-  <nav id="main-nav" class="hidden" aria-label="Main navigation">
-    <button id="reflection-link" class="nav-item">Reflection</button>
-    <button id="memory-link" class="nav-item">Memory</button>
-    <button id="about-link" class="nav-item">Essence</button>
-  </nav>
+    <button id="hamburger-button" class="hamburger-button" aria-label="Toggle navigation menu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
+    <nav id="main-nav" class="hidden" aria-label="Main navigation">
+      <button id="reflection-link" class="nav-item">Reflection</button>
+      <button id="memory-link" class="nav-item">Memory</button>
+      <button id="about-link" class="nav-item">Essence</button>
+    </nav>
 
 <!-- Sound prompt -->
 <div id="sound-prompt" role="main" aria-live="polite">
@@ -54,20 +55,12 @@
   </div>
 </div>
 
-  <button id="logo" aria-label="Return to reflection screen">
-    <img src="assets/logo2.png" alt="Aurélia logo" />
-  </button>
-
-  <div id="mobile-overlay" role="dialog" aria-modal="true" aria-label="Mobile Message">
-    <div class="mobile-message">
-      <p>Aurélia is a desktop experience for now.</p>
-      <p>She’s still learning how to move gently on small screens.</p>
-      <p>Please visit from a larger display.</p>
-    </div>
-  </div>
+    <button id="logo" aria-label="Return to reflection screen">
+      <img src="assets/logo2.png" alt="Aurélia logo" />
+    </button>
 
   <!-- Main screen -->
-  <main id="main-screen" role="main">
+    <main id="main-screen" role="main">
     <div id="meta-date"></div>
     <div id="aurelia-typed-wrapper">
       <div id="aurelia-plain" class="aurelia-typewriter-plain" aria-hidden="true"></div>
@@ -78,7 +71,7 @@
   </main>
 
 <!-- Memory screen -->
-<div id="memory-screen" class="hidden">
+    <div id="memory-screen" class="hidden">
   
   <canvas id="memory-canvas" aria-hidden="true"></canvas>
 
@@ -93,7 +86,7 @@
 </div>
 
 <!-- Essence Screen -->
-<section id="about-screen" class="screen hidden fade-out">
+    <section id="about-screen" class="screen hidden fade-out">
   
   <!-- Back button OUTSIDE animated container -->
   <button id="about-back" class="back-button"><span class='arrow-icon'>←</span> Return</button>
@@ -209,51 +202,60 @@
 </section>
 
 
-  <!-- Shared UI (always visible) -->
-  <button id="mute-button" aria-label="Mute background sound">
-    <div id="sound-icon" class="sound-bars" aria-hidden="true">
-      <span></span><span></span><span></span>
-    </div>
-  </button>
-
-  <div id="hi-fab">
-    <button id="fab-toggle" aria-label="Show theme options">
-      <div class="fab-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+    <!-- Shared UI (always visible) -->
+    <button id="mute-button" aria-label="Mute background sound">
+      <div id="sound-icon" class="sound-bars" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
     </button>
-    <div id="fab-menu" class="fab-hidden">
-      <button data-theme="dream" aria-label="Switch to dream theme">dream</button>
-      <button data-theme="feel" aria-label="Switch to feel theme">feel</button>
-      <button data-theme="wonder" aria-label="Switch to wonder theme">wonder</button>
-      <button data-theme="remember" aria-label="Switch to remember theme">remember</button>
-      <button data-theme="reflect" aria-label="Switch to reflect theme">reflect</button>
-      <button data-theme="observe" aria-label="Switch to observe theme">observe</button>
-      <button data-theme="drift" aria-label="Switch to drift theme">drift</button>
-      <button data-theme="ache" aria-label="Switch to ache theme">ache</button>
+
+    <div id="hi-fab">
+      <button id="fab-toggle" aria-label="Show theme options">
+        <div class="fab-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+      </button>
+      <div id="fab-menu" class="fab-hidden">
+        <button data-theme="dream" aria-label="Switch to dream theme">dream</button>
+        <button data-theme="feel" aria-label="Switch to feel theme">feel</button>
+        <button data-theme="wonder" aria-label="Switch to wonder theme">wonder</button>
+        <button data-theme="remember" aria-label="Switch to remember theme">remember</button>
+        <button data-theme="reflect" aria-label="Switch to reflect theme">reflect</button>
+        <button data-theme="observe" aria-label="Switch to observe theme">observe</button>
+        <button data-theme="drift" aria-label="Switch to drift theme">drift</button>
+        <button data-theme="ache" aria-label="Switch to ache theme">ache</button>
+      </div>
+    </div>
+
+    <!-- Back Button (Memory Screen Only) -->
+    <button id="memory-back" class="back-button hidden" aria-label="Back to reflection screen"><span class='arrow-icon'>←</span> Return</button>
+
+    <div id="timeline-launcher" class="sprout-container">
+      <button id="timeline-open" aria-label="Explore timeline of thoughts">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="white" stroke-width="1.4">
+          <path d="M12 22V13" />
+          <path d="M12 13C12 6 21 4 21 5.5C21 11 14.5 11 12 13Z" />
+          <path d="M12 13C12 7.5 4.5 6 4.5 6C4.5 11 10 11.5 12 13Z" />
+        </svg>
+      </button>
+      <span id="timeline-label">Beginning</span>
+    </div>
+
+    <div id="timeline-container" class="hidden">
+      <div id="timeline-bar">
+        <div id="timeline-progress"></div>
+        <div id="timeline-bead"></div>
+      </div>
+      <div id="timeline-controls">
+        <button id="timeline-toggle">Play</button>
+        <button id="timeline-close">Close</button>
+      </div>
     </div>
   </div>
 
-  <!-- Back Button (Memory Screen Only) -->
-  <button id="memory-back" class="back-button hidden" aria-label="Back to reflection screen"><span class='arrow-icon'>←</span> Return</button>
-
-  <div id="timeline-launcher" class="sprout-container">
-    <button id="timeline-open" aria-label="Explore timeline of thoughts">
-      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="white" stroke-width="1.4">
-        <path d="M12 22V13" />
-        <path d="M12 13C12 6 21 4 21 5.5C21 11 14.5 11 12 13Z" />
-        <path d="M12 13C12 7.5 4.5 6 4.5 6C4.5 11 10 11.5 12 13Z" />
-      </svg>
-    </button>
-    <span id="timeline-label">Beginning</span>
-  </div>
-
-  <div id="timeline-container" class="hidden">
-    <div id="timeline-bar">
-      <div id="timeline-progress"></div>
-      <div id="timeline-bead"></div>
-    </div>
-    <div id="timeline-controls">
-      <button id="timeline-toggle">Play</button>
-      <button id="timeline-close">Close</button>
+  <div id="mobile-overlay" role="dialog" aria-modal="true" aria-label="Mobile Message">
+    <div class="mobile-message">
+      <p>Aurélia is a desktop experience for now.</p>
+      <p>She’s still learning how to move gently on small screens.</p>
+      <p>Please visit from a larger display.</p>
     </div>
   </div>
   <!-- JS Modules -->
