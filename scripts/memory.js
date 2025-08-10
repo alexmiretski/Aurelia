@@ -676,7 +676,7 @@ function startMemoryScreen() {
   const timelineContainer = document.getElementById("timeline-container");
   const mute = document.getElementById("mute-button");
   const logo = document.getElementById("logo");
-  const backButton = document.getElementById("memory-back");
+    // const backButton = document.getElementById("memory-back");
 
   // Hide FAB gracefully but keep layout safe
   fab.classList.remove("fade-in");
@@ -690,13 +690,13 @@ function startMemoryScreen() {
   mute.classList.remove("hidden", "fade-out");
   mute.style.display = "flex";
 
-  backButton?.classList.remove("hidden");
+    // backButton?.classList.remove("hidden");
   logo.style.display = "block";
 
   // Focus management - focus the first interactive element after screen loads
   setTimeout(() => {
-    const firstFocusable = accessLayer.querySelector('button') || backButton;
-    firstFocusable?.focus();
+      const firstFocusable = accessLayer.querySelector('button');
+      firstFocusable?.focus();
   }, 1000);
 
   animate();

@@ -651,7 +651,7 @@ timelineToggle?.addEventListener('click', () => {
   const memoryScreen = document.getElementById('memory-screen');
   const mainScreen = document.getElementById('main-screen');
   const revealBox = document.getElementById('memory-reveal');
-  const backButton = document.getElementById('memory-back');
+    // const backButton = document.getElementById('memory-back');
 
   // Update active navigation state
   function updateActiveNavItem() {
@@ -698,7 +698,7 @@ timelineToggle?.addEventListener('click', () => {
       timelineLauncher.classList.add('fade-in');
   
       revealBox.classList.add('hidden');
-      backButton.classList.add('hidden');
+        // backButton.classList.add('hidden');
       document.body.classList.remove('noscroll');
   
       setTimeout(() => {
@@ -726,8 +726,8 @@ timelineToggle?.addEventListener('click', () => {
       // Add fadeInHeroBlob here too!
       fadeInHeroBlob();
   
-      backButton?.classList.remove('fade-in-soft');
-      backButton?.classList.add('fade-out-soft');
+        // backButton?.classList.remove('fade-in-soft');
+        // backButton?.classList.add('fade-out-soft');
   
       setTimeout(() => {
         aboutScreen.classList.add('hidden');
@@ -742,8 +742,8 @@ timelineToggle?.addEventListener('click', () => {
         timelineLauncher?.classList.remove('hidden', 'fade-out');
         timelineLauncher?.classList.add('fade-in');
       
-        backButton?.classList.add('hidden');
-        backButton?.classList.remove('fade-out-soft'); // cleanup
+          // backButton?.classList.add('hidden');
+          // backButton?.classList.remove('fade-out-soft'); // cleanup
       
         // Restart reflection when coming from about
         // Safe version
@@ -808,8 +808,8 @@ timelineToggle?.addEventListener('click', () => {
       // Restore memory UI elements after coming from About
       document.getElementById('blob-access-layer')?.classList.remove('hidden');
       document.getElementById('memory-reveal')?.classList.add('hidden');
-      document.getElementById('memory-back')?.classList.remove('hidden');
-      document.getElementById('memory-back')?.classList.add('fade-in');
+    // document.getElementById('memory-back')?.classList.remove('hidden');
+    // document.getElementById('memory-back')?.classList.add('fade-in');
   
       // Disable scroll on body again
       document.body.classList.add('noscroll');
@@ -833,16 +833,16 @@ timelineToggle?.addEventListener('click', () => {
     }
   });
 
-  backButton?.addEventListener('click', () => {
-    returnToReflection();
-  });
-  
-  backButton?.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      returnToReflection();
-    }
-  });
+    // backButton?.addEventListener('click', () => {
+    //   returnToReflection();
+    // });
+
+    // backButton?.addEventListener('keydown', e => {
+    //   if (e.key === 'Enter' || e.key === ' ') {
+    //     e.preventDefault();
+    //     returnToReflection();
+    //   }
+    // });
 
   // Navigation link handlers
   
