@@ -1,14 +1,15 @@
 (function () {
+  // Slightly darkened theme palette
   const themeColors = {
-    dream: '#e3bdf7',
-    feel: '#f5b5c8',
-    wonder: '#c6a3f2',
-    remember: '#f5dbc7',
-    reflect: '#a59ccf',
-    observe: '#f2e9bf',
-    drift: '#bae1d2',
-    ache: '#dba4a4',
-    evolution: '#ffffff'
+    dream: '#ccaade',
+    feel: '#dca2b4',
+    wonder: '#b292d9',
+    remember: '#dcc5b3',
+    reflect: '#948cba',
+    observe: '#d9d1ab',
+    drift: '#a7cabd',
+    ache: '#c59393',
+    evolution: '#e5e5e5'
   };
 
   function setCssVariables() {
