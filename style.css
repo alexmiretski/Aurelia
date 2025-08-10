@@ -2673,14 +2673,22 @@ body.screen-memory.scrolling .top-nav-overlay {
 
 .support-link {
   margin-left: 0.35rem;
-  text-decoration: underline;
+  display: inline-block;
   color: inherit;
-  transition: color var(--transition-normal);
+  text-decoration: none;
+  padding-bottom: 0.15rem;
+  background-image: linear-gradient(to right, var(--gradient-pink), var(--gradient-blue));
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  filter: brightness(1);
+  transition: color var(--transition-normal), filter var(--transition-normal);
 }
 
 .support-link:hover,
 .support-link:focus-visible {
   color: var(--white);
+  filter: brightness(1.25);
 }
 
 .support-link:active {
