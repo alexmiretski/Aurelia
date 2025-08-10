@@ -42,6 +42,7 @@ const ctx = canvas.getContext('2d');
 const accessLayer = document.getElementById('blob-access-layer');
 const revealBox = document.getElementById('memory-reveal');
 const revealedText = document.getElementById('revealed-text');
+const memoryScreen = document.getElementById('memory-screen');
 window.srText = window.srText || document.getElementById('sr-text');
 
 let width, height;
@@ -444,6 +445,20 @@ canvas.addEventListener('keydown', (e) => {
       announceToScreenReader('Memory closed. Returned to memory canvas.');
     }
   }
+});
+
+
+// Allow closing the revealed memory by clicking outside the text box
+memoryScreen?.addEventListener('click', (e) => {
+  if (!revealBox) return;
+  if (revealBox.contains(e.target)) {
+    e.stopPropagation();
+    return;
+  }
+  if (!revealBox.classList.contains('show')) return;
+  if (e.target === canvas) return;
+  hideMemoryText();
+  announceToScreenReader('Memory closed. Returned to memory canvas.');
 });
 
 
