@@ -88,7 +88,8 @@ body {
   background-color: var(--bg-current);
   transition: background-color 800ms ease-in-out;
   color: var(--light-gray);
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   height: 100%;
 }
 
@@ -96,7 +97,7 @@ body {
 
 body::after {
   content: '';
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -104,15 +105,6 @@ body::after {
   background: var(--overlay-dark);
   z-index: 0;
   pointer-events: none;
-}
-
-/* Stage container ensures content height matches viewport and prevents reflow */
-#stage {
-  position: relative;
-  height: 100dvh;
-  width: 100%;
-  overflow: hidden;
-  overflow: clip;
 }
 
 /* Date Display */
@@ -156,7 +148,7 @@ body::after {
   font-family: inherit;
   
   /* Original positioning and styling */
-  position: fixed;
+  position: absolute;
   top: var(--space-lg);
   right: var(--space-lg);
   width: 56px;
@@ -356,7 +348,7 @@ body.loaded #logo {
 main {
   position: relative;
   z-index: 1;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -734,11 +726,11 @@ body.loaded #hi-fab {
 
 /* Memory Components */
 #memory-screen {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: 1002;
   overflow: hidden;
   display: none;
@@ -988,11 +980,11 @@ body.loaded #hi-fab {
 }
 
 .fullscreen-memory {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1321,11 +1313,11 @@ body.loaded #open-memory {
 
 /* Hero Background */
 #hero-blob-canvas {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
   z-index: 0;
   opacity: 0;
@@ -1341,7 +1333,7 @@ body.loaded #open-memory {
 #about-screen {
   opacity: 0;
   transition: opacity var(--transition-very-slow);
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 100;
   display: flex;
@@ -1364,8 +1356,8 @@ body.loaded #open-memory {
   text-align: center;
   max-width: min(90ch, 100vw);
   gap: clamp(1rem, 3vw, 2.2rem);
-  margin-top: clamp(1.5rem, 3vw, 5rem);
-  margin-bottom: clamp(1rem, 2vw, 3rem);
+  margin-top: clamp(2vh, 3vw, 5vh);
+  margin-bottom: clamp(1vh, 2vw, 3vh);
   width: 100%;
   opacity: 0;
   transform: translateY(var(--space-md));
@@ -1757,7 +1749,7 @@ body.loaded #open-memory {
 #main-screen,
 #about-screen,
 #memory-screen {
-  position: absolute;
+  position: fixed;
   inset: 0;
   opacity: 1;
   pointer-events: auto;
@@ -1856,10 +1848,11 @@ body.loaded #timeline-launcher {
   }
 
   #main-nav {
-    position: absolute;
-    inset: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background: var(--overlay-mobile);
     backdrop-filter: blur(0.625rem);
     display: flex;
@@ -1949,7 +1942,7 @@ body.loaded #timeline-launcher {
   }
   
   .about-content {
-    margin-top: 4rem;
+    margin-top: 4vh;
     gap: 1.8rem;
   }
   
@@ -2154,7 +2147,7 @@ body.loaded #timeline-launcher {
 #main-screen,
 #about-screen,
 #memory-screen {
-  position: absolute;
+  position: fixed;
   inset: 0;
   opacity: 1;
   pointer-events: auto;
@@ -2253,10 +2246,11 @@ body.loaded #timeline-launcher {
   }
 
   #main-nav {
-    position: absolute;
-    inset: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background: var(--overlay-mobile);
     backdrop-filter: blur(0.625rem);
     display: flex;
@@ -2346,7 +2340,7 @@ body.loaded #timeline-launcher {
   }
   
   .about-content {
-    margin-top: 4rem;
+    margin-top: 4vh;
     gap: 1.8rem;
   }
   
@@ -2535,7 +2529,7 @@ body.loaded #timeline-launcher {
   }
 
   .about-content {
-    margin-top: clamp(6rem, 14vw, 10rem) !important;
+    margin-top: clamp(6rem, 14vh, 10rem) !important;
   }
 }
 
@@ -2689,20 +2683,4 @@ body.screen-memory.scrolling .top-nav-overlay {
 
 .support-link:active {
   opacity: 0.85;
-}
-
-/* Short viewport adjustments */
-@media (max-height: 640px) {
-  #timeline-launcher,
-  #timeline-container {
-    display: none;
-  }
-
-  #hi-fab {
-    transform: scale(0.85);
-  }
-
-  #logo img {
-    max-width: 6rem;
-  }
 }
