@@ -380,11 +380,20 @@ timelineOpen?.addEventListener('click', () => {
   // Change background to timeline color
   setScreenBackground('timeline');
 
-  // Fade out launcher immediately
+  // Fade out launcher and other controls
+  timelineLauncher.classList.remove('fade-in');
+  timelineLauncher.classList.remove('fade-in-soft');
   timelineLauncher.classList.add('fade-out-soft');
+  timelineLauncher.style.pointerEvents = 'none';
 
   const memoryBtn = document.getElementById('open-memory');
   const fab = document.getElementById('hi-fab');
+
+  if (mainNav) {
+    mainNav.classList.remove('fade-in-soft');
+    mainNav.classList.add('fade-out-soft');
+    mainNav.style.pointerEvents = 'none';
+  }
 
   if (fab) {
     fab.classList.remove('fade-in');
@@ -402,6 +411,8 @@ timelineOpen?.addEventListener('click', () => {
   setTimeout(() => {
     if (fab) fab.style.display = 'none';
     if (memoryBtn) memoryBtn.style.display = 'none';
+    timelineLauncher.style.display = 'none';
+    if (mainNav) mainNav.style.display = 'none';
 
     // Remove hidden so we can animate the slide-up
     timelineContainer.classList.remove('hidden');
