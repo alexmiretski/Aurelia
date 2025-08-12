@@ -1098,6 +1098,12 @@ body.loaded #timeline-launcher {
   visibility: hidden;
 }
 
+#timeline-launcher.fade-out-soft {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
 #timeline-open {
   background: var(--glass-light);
   border: 1px solid var(--glass-border);

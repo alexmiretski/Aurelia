@@ -381,14 +381,14 @@ timelineOpen?.addEventListener('click', () => {
   setScreenBackground('timeline');
 
   // Fade out launcher immediately
-  timelineLauncher.classList.add('fade-out');
+  timelineLauncher.classList.add('fade-out-soft');
 
   const memoryBtn = document.getElementById('open-memory');
   const fab = document.getElementById('hi-fab');
 
   if (fab) {
     fab.classList.remove('fade-in');
-    fab.classList.add('fade-out');
+    fab.classList.add('fade-out-soft');
     fab.style.pointerEvents = 'none';
   }
 
@@ -447,7 +447,7 @@ timelineClose?.addEventListener('click', () => {
     setTimeout(() => {
       if (fab) {
         fab.style.display = 'flex';
-        fab.classList.remove('fade-out');
+        fab.classList.remove('fade-out-soft');
         fab.classList.add('fade-in');
         fab.style.pointerEvents = 'auto';
       }
@@ -461,7 +461,7 @@ timelineClose?.addEventListener('click', () => {
 
       if (timelineLauncher) {
         timelineLauncher.style.display = 'flex';
-        timelineLauncher.classList.remove('fade-out');
+        timelineLauncher.classList.remove('fade-out-soft');
         timelineLauncher.classList.add('fade-in');
         timelineLauncher.style.pointerEvents = 'auto';
       }
@@ -711,10 +711,10 @@ timelineToggle?.addEventListener('click', () => {
       mainScreen.classList.add('fade-in');
 
       fab.style.display = 'flex';
-      fab.classList.remove('hidden', 'fade-out');
+      fab.classList.remove('hidden', 'fade-out', 'fade-out-soft');
       fab.classList.add('fade-in');
 
-      timelineLauncher.classList.remove('hidden', 'fade-out');
+      timelineLauncher.classList.remove('hidden', 'fade-out-soft');
       timelineLauncher.style.display = 'flex';
       timelineLauncher.classList.add('fade-in');
 
