@@ -510,9 +510,9 @@ main {
 #sound-start {
   margin-top: var(--space-xl);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   letter-spacing: 1px;
-  text-transform: none;
+  text-transform: uppercase;
   padding: 0.9rem 2.1rem;
   font-family: var(--font-primary);
   background: radial-gradient(circle at 100% 65%, var(--gradient-pink) 0%, var(--gradient-blue) 100%);
@@ -1289,7 +1289,7 @@ body.loaded #timeline-launcher {
   height: 3rem;
   padding: 0.9rem 2.1rem;
   font-family: var(--font-primary);
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 1px;
   background: radial-gradient(circle at 100% 65%, var(--gradient-pink) 0%, var(--gradient-blue) 100%);
@@ -1297,7 +1297,7 @@ body.loaded #timeline-launcher {
   border: none;
   border-radius: var(--radius-pill);
   cursor: pointer;
-  text-transform: none;
+  text-transform: uppercase;
   box-shadow: inset 0 0 0.625rem rgba(242, 169, 169, 0.25),
               var(--shadow-glow),
               var(--shadow-lg);
