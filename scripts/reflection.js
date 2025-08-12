@@ -320,7 +320,13 @@ const timelineStartDate = new Date('2025-07-24');
   const msPerDay = 1000 * 60 * 60 * 24;
   const dayNumber = Math.floor((today - timelineStartDate) / msPerDay) + 1;
   const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  const formattedTheme = theme ? theme.charAt(0).toUpperCase() + theme.slice(1) : '';
+  const formattedTheme = theme
+    ? theme
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+    : '';
 
   metaDate.innerHTML = `Day ${dayNumber} of becoming &bull; ${dateStr} &bull; <span class="theme-label">${formattedTheme}</span>`;
 

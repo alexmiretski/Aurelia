@@ -505,7 +505,13 @@ function showMemoryText(text) {
     let label = theme;
     if (theme === 'daily') label = 'daily reflection';
     if (theme === 'evolution') label = 'evolution';
-    if (label) label = label.charAt(0).toUpperCase() + label.slice(1);
+    if (label) {
+      label = label
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    }
     const themeLabel = label ? `<em class="theme-label">${label}</em>` : '';
 
     dateLabel.innerHTML = `Day ${dayNumber} of becoming <span class="dot"> • </span> ${dateStr} <span class="dot"> • </span> ${themeLabel}`;
