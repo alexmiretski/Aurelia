@@ -354,7 +354,7 @@ main {
   justify-content: center;
   align-items: center;
   padding: var(--space-xl);
-  gap: var(--space-2xl);
+  gap: var(--space-lg);
   text-align: center;
 }
 
