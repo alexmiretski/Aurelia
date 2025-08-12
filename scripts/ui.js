@@ -381,7 +381,9 @@ timelineOpen?.addEventListener('click', () => {
   setScreenBackground('timeline');
 
   // Fade out launcher immediately
+  timelineLauncher.classList.remove('fade-in');
   timelineLauncher.classList.add('fade-out');
+  timelineLauncher.style.pointerEvents = 'none';
 
   const memoryBtn = document.getElementById('open-memory');
   const fab = document.getElementById('hi-fab');
@@ -402,6 +404,7 @@ timelineOpen?.addEventListener('click', () => {
   setTimeout(() => {
     if (fab) fab.style.display = 'none';
     if (memoryBtn) memoryBtn.style.display = 'none';
+    timelineLauncher.style.display = 'none';
 
     // Remove hidden so we can animate the slide-up
     timelineContainer.classList.remove('hidden');

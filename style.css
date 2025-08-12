@@ -1095,7 +1095,6 @@ body.loaded #timeline-launcher {
 #timeline-launcher.fade-out {
   opacity: 0;
   pointer-events: none;
-  visibility: hidden;
 }
 
 #timeline-open {
