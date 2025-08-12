@@ -110,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const metaDate = document.getElementById('meta-date');
   const timelineControls = document.getElementById('timeline-controls');
   const aboutScreen = document.getElementById('about-screen');
+  const returnButton = document.getElementById('return-button');
   // Scroll detection for navigation overlay
   let scrollTimeout;
 
@@ -688,6 +689,7 @@ timelineToggle?.addEventListener('click', () => {
 
   function returnToReflection() {
     setScreenBackground('reflection');
+    returnButton?.classList.add('hidden');
 
     const isMemory = memoryScreen?.classList.contains('show');
     const isAbout = aboutScreen?.classList.contains('fade-in');
@@ -822,7 +824,8 @@ timelineToggle?.addEventListener('click', () => {
       // Show memory screen
       memoryScreen?.classList.remove('hidden');
       memoryScreen?.classList.add('show', 'fade-in');
-      
+      returnButton?.classList.remove('hidden');
+
       // Restore memory UI elements after coming from About
       document.getElementById('blob-access-layer')?.classList.remove('hidden');
       document.getElementById('memory-reveal')?.classList.add('hidden');
@@ -845,6 +848,17 @@ timelineToggle?.addEventListener('click', () => {
   });
   
   document.getElementById('logo')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      returnToReflection();
+    }
+  });
+
+  returnButton?.addEventListener('click', () => {
+    returnToReflection();
+  });
+
+  returnButton?.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       returnToReflection();
@@ -899,7 +913,8 @@ timelineToggle?.addEventListener('click', () => {
       mainScreen.classList.add('hidden');
       fab.classList.add('hidden');
       timelineLauncher.classList.add('hidden');
-  
+      returnButton?.classList.remove('hidden');
+
       // Step 3: Show About screen but keep it transparent at first
       aboutScreen.classList.remove('hidden', 'fade-out');
       aboutScreen.style.opacity = '0';
