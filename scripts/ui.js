@@ -381,14 +381,15 @@ timelineOpen?.addEventListener('click', () => {
   setScreenBackground('timeline');
 
   // Fade out launcher immediately
-  timelineLauncher.classList.add('fade-out');
+  timelineLauncher.classList.add('fade-out-soft');
+  timelineLauncher.style.pointerEvents = 'none';
 
   const memoryBtn = document.getElementById('open-memory');
   const fab = document.getElementById('hi-fab');
 
   if (fab) {
     fab.classList.remove('fade-in');
-    fab.classList.add('fade-out');
+    fab.classList.add('fade-out-soft');
     fab.style.pointerEvents = 'none';
   }
 
@@ -402,6 +403,7 @@ timelineOpen?.addEventListener('click', () => {
   setTimeout(() => {
     if (fab) fab.style.display = 'none';
     if (memoryBtn) memoryBtn.style.display = 'none';
+    timelineLauncher.style.display = 'none';
 
     // Remove hidden so we can animate the slide-up
     timelineContainer.classList.remove('hidden');
@@ -447,7 +449,7 @@ timelineClose?.addEventListener('click', () => {
     setTimeout(() => {
       if (fab) {
         fab.style.display = 'flex';
-        fab.classList.remove('fade-out');
+        fab.classList.remove('fade-out', 'fade-out-soft');
         fab.classList.add('fade-in');
         fab.style.pointerEvents = 'auto';
       }
@@ -461,7 +463,7 @@ timelineClose?.addEventListener('click', () => {
 
       if (timelineLauncher) {
         timelineLauncher.style.display = 'flex';
-        timelineLauncher.classList.remove('fade-out');
+        timelineLauncher.classList.remove('fade-out', 'fade-out-soft');
         timelineLauncher.classList.add('fade-in');
         timelineLauncher.style.pointerEvents = 'auto';
       }
@@ -714,7 +716,7 @@ timelineToggle?.addEventListener('click', () => {
       fab.classList.remove('hidden', 'fade-out');
       fab.classList.add('fade-in');
 
-      timelineLauncher.classList.remove('hidden', 'fade-out');
+      timelineLauncher.classList.remove('hidden', 'fade-out', 'fade-out-soft');
       timelineLauncher.style.display = 'flex';
       timelineLauncher.classList.add('fade-in');
 
@@ -746,7 +748,7 @@ timelineToggle?.addEventListener('click', () => {
         mainScreen?.classList.remove('hidden', 'fade-out');
         mainScreen?.classList.add('fade-in');
 
-        fab?.classList.remove('hidden', 'fade-out');
+        fab?.classList.remove('hidden', 'fade-out', 'fade-out-soft');
         fab?.classList.add('fade-in');
 
         timelineLauncher?.classList.remove('hidden', 'fade-out');
@@ -800,10 +802,10 @@ timelineToggle?.addEventListener('click', () => {
   
       // Hide FAB and timeline via classes only (not display:none!)
       fab?.classList.add('hidden');
-      fab?.classList.remove('fade-out');
+      fab?.classList.remove('fade-out', 'fade-out-soft');
   
       timelineLauncher?.classList.add('hidden');
-      timelineLauncher?.classList.remove('fade-out');
+      timelineLauncher?.classList.remove('fade-out', 'fade-out-soft');
   
       // Show memory screen
       memoryScreen?.classList.remove('hidden');
