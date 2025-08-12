@@ -135,7 +135,7 @@ body::after {
   opacity: 1;
   font-style: italic;
   letter-spacing: var(--space-xs);
-  text-transform: lowercase;
+  text-transform: capitalize;
 }
 
 /* Control Buttons */
@@ -808,7 +808,7 @@ body.loaded #hi-fab {
   opacity: 1;
   font-style: italic;
   letter-spacing: var(--space-xs);
-  text-transform: lowercase;
+  text-transform: capitalize;
 }
 
 .memory-sentence {
