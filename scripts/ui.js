@@ -393,12 +393,6 @@ timelineOpen?.addEventListener('click', () => {
   const memoryBtn = document.getElementById('open-memory');
   const fab = document.getElementById('hi-fab');
 
-  if (mainNav) {
-    mainNav.classList.remove('fade-in-soft');
-    mainNav.classList.add('fade-out-soft');
-    mainNav.style.pointerEvents = 'none';
-  }
-
   if (fab) {
     fab.classList.remove('fade-in');
     fab.classList.add('fade-out-soft');
@@ -416,7 +410,6 @@ timelineOpen?.addEventListener('click', () => {
     if (fab) fab.style.display = 'none';
     if (memoryBtn) memoryBtn.style.display = 'none';
     timelineLauncher.style.display = 'none';
-    if (mainNav) mainNav.style.display = 'none';
 
     // Remove hidden so we can animate the slide-up
     timelineContainer.classList.remove('hidden');
@@ -479,14 +472,6 @@ timelineClose?.addEventListener('click', () => {
         timelineLauncher.classList.remove('fade-out-soft');
         timelineLauncher.classList.add('fade-in');
         timelineLauncher.style.pointerEvents = 'auto';
-      }
-
-      // Update to use mainNav instead of aboutLink
-      if (mainNav) {
-        mainNav.style.display = 'flex';
-        mainNav.classList.remove('fade-out-soft');
-        mainNav.classList.add('fade-in-soft');
-        mainNav.style.pointerEvents = 'auto';
       }
 
       // 🌟 Restore the original reflection
