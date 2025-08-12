@@ -1724,9 +1724,11 @@ body.loaded #open-memory {
   transition: opacity var(--transition-extra-slow);
 }
 
+
+/* Standard fade-out: allow a gentle exit */
 .fade-out {
   opacity: 0;
-  transition: opacity var(--transition-very-slow);
+  transition: opacity var(--transition-extra-slow);
 }
 
 .fade-in-soft {
@@ -1734,9 +1736,10 @@ body.loaded #open-memory {
   transition: opacity var(--transition-very-slow);
 }
 
+/* Softer fade-out variant */
 .fade-out-soft {
   opacity: 0;
-  transition: opacity var(--transition-very-slow);
+  transition: opacity var(--transition-extra-slow);
 }
 
 /* Theme Classes - Enhanced contrast for accessibility */
@@ -2123,9 +2126,10 @@ body.loaded #timeline-launcher {
   transition: opacity var(--transition-extra-slow);
 }
 
+/* Standard fade-out: allow a gentle exit */
 .fade-out {
   opacity: 0;
-  transition: opacity var(--transition-very-slow);
+  transition: opacity var(--transition-extra-slow);
 }
 
 .fade-in-soft {
@@ -2133,9 +2137,10 @@ body.loaded #timeline-launcher {
   transition: opacity var(--transition-very-slow);
 }
 
+/* Softer fade-out variant */
 .fade-out-soft {
   opacity: 0;
-  transition: opacity var(--transition-very-slow);
+  transition: opacity var(--transition-extra-slow);
 }
 
 /* Theme Classes - Enhanced contrast for accessibility */

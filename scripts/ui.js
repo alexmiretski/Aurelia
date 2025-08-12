@@ -2,6 +2,9 @@
 
 let selectedTheme = null;
 
+// Duration (ms) to keep elements visible during fade-out before hiding
+const FADE_OUT_DURATION = 1000;
+
 
 // Background color management system
 const ScreenBackgrounds = {
@@ -429,7 +432,7 @@ timelineOpen?.addEventListener('click', () => {
     timelineToggle.textContent = 'Pause';
     isPlaying = true;
     startTimelinePlayback();
-  }, 800); // match transition
+  }, FADE_OUT_DURATION); // allow fade-out to complete
 });
 
 
@@ -833,7 +836,7 @@ timelineToggle?.addEventListener('click', () => {
       window.memoryCanvasManager?.activate();
       
       updateActiveNavItem();
-    }, 800);
+    }, FADE_OUT_DURATION);
   });
   
 
@@ -910,7 +913,7 @@ timelineToggle?.addEventListener('click', () => {
       });
       
       updateActiveNavItem();
-    }, 800); // ⏳ match fade-out
+    }, FADE_OUT_DURATION); // ⏳ match fade-out
   });
   
 
