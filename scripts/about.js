@@ -101,45 +101,50 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Enhanced about link handler with keyboard support
-  function handleAboutNavigation(e) {
+  function showEssenceScreen(e) {
     e?.preventDefault();
+
+    setScreenBackground?.('about');
+    closeFabMenuIfOpen?.(true);
+
+    const timelineContainer = document.getElementById('timeline-container');
+    const timelineControls = document.getElementById('timeline-controls');
+    if (timelineContainer?.classList.contains('visible')) {
+      timelineContainer.classList.remove('visible');
+      timelineControls?.classList.remove('visible');
+      window.stopTimelineProgress?.();
+    }
 
     // Check if we're coming from memory screen
     const isMemory = memoryScreen?.classList.contains('show');
-    
+
     if (isMemory) {
       // Fade out memory screen
       memoryScreen.classList.remove('show', 'fade-in');
       memoryScreen.classList.add('fade-out');
-      
+
       // Hide memory UI elements
       const blobAccessLayer = document.getElementById('blob-access-layer');
       const revealBox = document.getElementById('memory-reveal');
-        // const backButton = document.getElementById('about-back');
+      blobAccessLayer?.classList.add('hidden');
+      revealBox?.classList.add('hidden');
 
-        blobAccessLayer?.classList.add('hidden');
-        revealBox?.classList.add('hidden');
-        // backButton?.classList.remove('fade-in');
-        // backButton?.classList.add('fade-out');
-      
       // Stop memory animation
       window.stopMemoryFlow?.();
-      
+
       // Re-enable scrolling
       document.body.classList.remove('noscroll');
-      
+
       // Clean up memory screen after fade
       setTimeout(() => {
-          memoryScreen.classList.add('hidden');
-          memoryScreen.classList.remove('fade-out');
-          // backButton?.classList.add('hidden');
-      
+        memoryScreen.classList.add('hidden');
+        memoryScreen.classList.remove('fade-out');
       }, 800);
     } else {
       // Coming from reflection screen - hide FAB and timeline
       fab?.classList.add('fade-out');
       timelineLauncher?.classList.add('fade-out');
-      
+
       setTimeout(() => {
         fab?.classList.add('hidden');
         timelineLauncher?.classList.add('hidden');
@@ -154,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Announce screen change
       announceToScreenReader('Viewing who she is');
-      
+
       // Gently fade in about content and segments
       const aboutContent = document.querySelector('.about-content');
       aboutContent?.classList.remove('visible');
@@ -192,7 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
           aboutContent?.focus();
         }
       }, 600);
-      
+
+      window.updateActiveNavItem?.();
     }, isMemory ? 800 : 500);
   }
 
@@ -209,12 +215,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Event listeners with keyboard support
+  window.showEssenceScreen = showEssenceScreen;
+
   if (aboutLink) {
-    aboutLink.addEventListener('click', handleAboutNavigation);
+    aboutLink.addEventListener('click', showEssenceScreen);
     aboutLink.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        handleAboutNavigation();
+        showEssenceScreen();
       }
     });
   }
