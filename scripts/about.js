@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const logo = document.getElementById('logo');
   const fab = document.getElementById('hi-fab');
   const timelineLauncher = document.getElementById('timeline-launcher');
+  const memoryBtn = document.getElementById('open-memory');
   const soundPrompt = document.getElementById('sound-prompt');
   const heroCanvas = document.getElementById('hero-blob-canvas');
   const mainScreen = document.getElementById('main-screen');
@@ -54,15 +55,25 @@ document.addEventListener('DOMContentLoaded', () => {
       mainScreen?.classList.remove('fade-out');
       mainScreen?.classList.add('fade-in');
 
-      // Show FAB and timeline launcher
-      fab?.classList.remove('hidden', 'fade-out');
-      fab?.classList.add('fade-in');
+      // Restore FAB, timeline launcher, and memory button
+      if (fab) {
+        fab.style.display = 'flex';
+        fab.classList.remove('hidden', 'fade-out');
+        fab.classList.add('fade-in');
+      }
 
-      timelineLauncher?.classList.remove('hidden', 'fade-out');
-      timelineLauncher?.classList.add('fade-in');
-      // Reset pointer events in case timeline was left open
       if (timelineLauncher) {
+        timelineLauncher.style.display = 'flex';
+        timelineLauncher.classList.remove('hidden', 'fade-out');
+        timelineLauncher.classList.add('fade-in');
         timelineLauncher.style.pointerEvents = 'auto';
+      }
+
+      if (memoryBtn) {
+        memoryBtn.style.display = 'flex';
+        memoryBtn.classList.remove('hidden', 'fade-out');
+        memoryBtn.classList.add('fade-in-soft');
+        memoryBtn.style.pointerEvents = 'auto';
       }
 
       // Restore background elements
