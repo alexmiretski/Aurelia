@@ -1096,14 +1096,14 @@ body.loaded #timeline-launcher {
 
 #timeline-container {
   position: fixed;
-  bottom: 0;
+  bottom: var(--space-lg);
   left: 0;
   width: 100%;
   /* background-color: #121212; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--space-md) var(--space-lg) var(--space-2xl);
+  padding: var(--space-md) var(--space-lg) 0;
   gap: 1.2rem;
   z-index: 10;
   transform: translateY(100%);
