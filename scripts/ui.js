@@ -3,7 +3,7 @@
 let selectedTheme = null;
 
 // Duration (ms) to keep elements visible during fade-out before hiding
-const FADE_OUT_DURATION = 1000;
+const FADE_OUT_DURATION = 400;
 
 
 // Background color management system
@@ -750,14 +750,27 @@ timelineToggle?.addEventListener('click', () => {
         mainScreen?.classList.remove('hidden', 'fade-out');
         mainScreen?.classList.add('fade-in');
 
-        fab?.classList.remove('hidden', 'fade-out');
-        fab?.classList.add('fade-in');
+        const memoryBtn = document.getElementById('open-memory');
 
-        timelineLauncher?.classList.remove('hidden', 'fade-out');
-        timelineLauncher?.classList.add('fade-in');
-        // Restore clickability in case timeline was open previously
+        if (fab) {
+          fab.style.display = 'flex';
+          fab.classList.remove('hidden', 'fade-out');
+          fab.classList.add('fade-in');
+          fab.style.pointerEvents = 'auto';
+        }
+
         if (timelineLauncher) {
+          timelineLauncher.style.display = 'flex';
+          timelineLauncher.classList.remove('hidden', 'fade-out');
+          timelineLauncher.classList.add('fade-in');
           timelineLauncher.style.pointerEvents = 'auto';
+        }
+
+        if (memoryBtn) {
+          memoryBtn.style.display = 'flex';
+          memoryBtn.classList.remove('hidden', 'fade-out');
+          memoryBtn.classList.add('fade-in-soft');
+          memoryBtn.style.pointerEvents = 'auto';
         }
 
         if (window.originalIntro) {
