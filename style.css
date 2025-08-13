@@ -1103,7 +1103,7 @@ body.loaded #timeline-launcher {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--space-md) var(--space-lg) var(--space-2xl);
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
   gap: 1.2rem;
   z-index: 10;
   transform: translateY(100%);
