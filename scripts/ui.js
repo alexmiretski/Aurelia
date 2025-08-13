@@ -717,6 +717,10 @@ timelineToggle?.addEventListener('click', () => {
       timelineLauncher.classList.remove('hidden', 'fade-out-soft');
       timelineLauncher.style.display = 'flex';
       timelineLauncher.classList.add('fade-in');
+      // Ensure launcher remains interactive after returning
+      if (timelineLauncher) {
+        timelineLauncher.style.pointerEvents = 'auto';
+      }
 
       revealBox.classList.add('hidden');
       document.body.classList.remove('noscroll');
@@ -751,6 +755,10 @@ timelineToggle?.addEventListener('click', () => {
 
         timelineLauncher?.classList.remove('hidden', 'fade-out');
         timelineLauncher?.classList.add('fade-in');
+        // Restore clickability in case timeline was open previously
+        if (timelineLauncher) {
+          timelineLauncher.style.pointerEvents = 'auto';
+        }
 
         if (window.originalIntro) {
           setTimeout(() => displaySentencesStaggered(window.originalIntro), 450);
