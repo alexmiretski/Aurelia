@@ -216,7 +216,6 @@ window.addEventListener('resize', () => {
 
   // Navigation elements
   const mainNav = document.getElementById('main-nav');
-  const aboutLink = document.getElementById('about-link');
   const reflectionLink = document.getElementById('reflection-link');
   const memoryLink = document.getElementById('memory-link');
 
@@ -771,41 +770,42 @@ timelineToggle?.addEventListener('click', () => {
     removeScrollingState();
     originalReturnToReflection();
   };
-  document.getElementById('open-memory')?.addEventListener('click', () => {
+
+  function showMemoryScreen() {
     setScreenBackground('memory');
 
     fadeOutHeroBlob();
     closeFabMenuIfOpen(true);
     window.clearStaggeredDisplay?.();
-  
+
     if (timelineContainer.classList.contains('visible')) {
       timelineContainer.classList.remove('visible');
       timelineControls.classList.remove('visible');
       stopTimelineProgress();
     }
-    
+
     // Fade out reflection screen elements
     mainScreen?.classList.remove('fade-in');
     mainScreen?.classList.add('fade-out');
-  
+
     fab?.classList.remove('fade-in');
     fab?.classList.add('fade-out');
-  
+
     timelineLauncher?.classList.remove('fade-in');
     timelineLauncher?.classList.add('fade-out');
-  
+
     setTimeout(() => {
       // Hide reflection screen
       mainScreen?.classList.add('hidden');
       mainScreen?.classList.remove('fade-out');
-  
+
       // Hide FAB and timeline via classes only (not display:none!)
       fab?.classList.add('hidden');
       fab?.classList.remove('fade-out');
-  
+
       timelineLauncher?.classList.add('hidden');
       timelineLauncher?.classList.remove('fade-out');
-  
+
       // Show memory screen
       memoryScreen?.classList.remove('hidden');
       memoryScreen?.classList.add('show', 'fade-in');
@@ -816,16 +816,21 @@ timelineToggle?.addEventListener('click', () => {
       document.getElementById('memory-reveal')?.classList.add('hidden');
     // document.getElementById('memory-back')?.classList.remove('hidden');
     // document.getElementById('memory-back')?.classList.add('fade-in');
-  
+
       // Disable scroll on body again
       document.body.classList.add('noscroll');
-  
+
       // ACTIVATE MEMORY CANVAS
       window.memoryCanvasManager?.activate();
-      
+
       updateActiveNavItem();
     }, FADE_OUT_DURATION);
-  });
+  }
+
+  window.showMemoryScreen = showMemoryScreen;
+  window.returnToReflection = returnToReflection;
+
+  document.getElementById('open-memory')?.addEventListener('click', showMemoryScreen);
   
 
   document.getElementById('logo')?.addEventListener('click', () => {
@@ -862,67 +867,6 @@ timelineToggle?.addEventListener('click', () => {
     // });
 
   // Navigation link handlers
-  
-  // About link (existing, but updated to work with navigation)
-  aboutLink?.addEventListener('click', () => {
-    setScreenBackground('about');
-
-    closeFabMenuIfOpen(true);
-
-    if (timelineContainer.classList.contains('visible')) {
-      timelineContainer.classList.remove('visible');
-      timelineControls.classList.remove('visible');
-      stopTimelineProgress();
-    }
-    const aboutScreen = document.getElementById('about-screen');
-    const fab = document.getElementById('hi-fab');
-    const timelineLauncher = document.getElementById('timeline-launcher');
-    const mainScreen = document.getElementById('main-screen');
-  
-    // Step 1: Fade out current reflection elements
-    mainScreen.classList.remove('fade-in');
-    mainScreen.classList.add('fade-out');
-  
-    fab.classList.remove('fade-in');
-    fab.classList.add('fade-out');
-  
-    timelineLauncher.classList.remove('fade-in');
-    timelineLauncher.classList.add('fade-out');
-
-    metaDate?.classList.remove('fade-in');
-    metaDate?.classList.add('fade-out');
-    window.clearStaggeredDisplay?.();
-
-    // Step 2: Wait for fade-out to complete
-    setTimeout(() => {
-      mainScreen.classList.add('hidden');
-      fab.classList.add('hidden');
-      timelineLauncher.classList.add('hidden');
-      returnButton?.classList.remove('hidden');
-
-      // Step 3: Show About screen but keep it transparent at first
-      aboutScreen.classList.remove('hidden', 'fade-out');
-      aboutScreen.style.opacity = '0';
-  
-      // Step 4: Now fade in more gently
-      requestAnimationFrame(() => {
-        // Force reflow
-        void aboutScreen.offsetWidth;
-        aboutScreen.classList.add('fade-in');
-        aboutScreen.style.opacity = ''; // let CSS control opacity again
-      });
-      
-      updateActiveNavItem();
-    }, FADE_OUT_DURATION); // ⏳ match fade-out
-  });
-  
-
-  aboutLink?.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      aboutLink.click();
-    }
-  });
 
   // Reflection link - same behavior as clicking the logo
   reflectionLink?.addEventListener('click', () => {
@@ -959,24 +903,18 @@ memoryLink?.addEventListener('click', () => {
       aboutScreen.classList.add('hidden');
       
       // Now trigger the memory screen
-      const openMemoryBtn = document.getElementById('open-memory');
-      if (openMemoryBtn) {
-        openMemoryBtn.click();
-      }
+      window.showMemoryScreen?.();
     }, 500); // Wait for about fade-out
   } else {
     // Coming from reflection screen - use existing behavior
-    const openMemoryBtn = document.getElementById('open-memory');
-    if (openMemoryBtn) {
-      openMemoryBtn.click();
-    }
+    window.showMemoryScreen?.();
   }
 });
 
 memoryLink?.addEventListener('keydown', e => {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
-    memoryLink.click();
+    window.showMemoryScreen?.();
   }
 });
 
