@@ -55,6 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       timelineLauncher?.classList.remove('hidden', 'fade-out');
       timelineLauncher?.classList.add('fade-in');
+      // Reset pointer events in case timeline was left open
+      if (timelineLauncher) {
+        timelineLauncher.style.pointerEvents = 'auto';
+      }
 
       // Restore background elements
       soundPrompt?.style.removeProperty('display');
