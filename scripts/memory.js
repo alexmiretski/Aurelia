@@ -482,6 +482,10 @@ function showMemoryText(text) {
   revealBox.setAttribute('aria-modal', 'false'); // Not truly modal as canvas is still interactive
 
   dateLabel.classList.remove('fade-in', 'fade-out');
+  void dateLabel.offsetWidth;
+  setTimeout(() => {
+    dateLabel.classList.add('fade-in');
+  }, 1000);
 
   if (memory?.created_at) {
     const createdAt = new Date(memory.created_at);
@@ -512,9 +516,6 @@ function showMemoryText(text) {
 
     dateLabel.innerHTML = `Day ${dayNumber} of becoming <span class="dot"> • </span> ${dateStr} <span class="dot"> • </span> ${themeLabel}`;
   }
-
-  void dateLabel.offsetWidth;
-  dateLabel.classList.add('fade-in');
 
   // Update screen reader text
   if (window.srText) {
